@@ -142,7 +142,7 @@
     /* ===== TOP OVERVIEW ===== */
     .top-overview {
       display: grid;
-      grid-template-columns: 320px 1fr;
+      grid-template-columns: 360px 1fr;
       gap: 24px;
       margin-bottom: 32px;
     }
@@ -484,6 +484,17 @@
 
     .book-table-wrap {
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Ẩn scrollbar trên bảng nhưng vẫn cuộn ngang được (tuỳ chọn thẩm mỹ) */
+    .book-table-wrap::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .book-table-wrap::-webkit-scrollbar-thumb {
+      background-color: #cbd5e1;
+      border-radius: 4px;
     }
 
     .book-table {
@@ -608,6 +619,8 @@
     .book-table-wrap-scroll {
       max-height: 420px;
       overflow-y: auto;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .chart-container.bar-ytd {
@@ -619,10 +632,9 @@
     }
 
     .chart-container.pie {
-      height: 280px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      height: 420px;
+      position: relative;
+      width: 100%;
     }
 
     .chart-container.line {
@@ -775,7 +787,7 @@
         grid-template-columns: 1fr;
       }
 
-      .summary-cards {
+      .summary-cards-grid {
         grid-template-columns: repeat(2, 1fr);
       }
 
@@ -793,12 +805,33 @@
     }
 
     @media (max-width: 600px) {
-      .summary-cards {
+      .summary-cards-grid {
         grid-template-columns: 1fr;
       }
 
       .table-wrapper {
         overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .container {
+        padding: 16px 12px;
+      }
+
+      .chart-card,
+      .yoy-card {
+        padding: 16px;
+      }
+
+      .yoy-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .chart-container.bar-ytd {
+        height: 320px;
+        /* Cột YTD cao hơn chút để dễ nhìn trên mobile */
       }
     }
 
@@ -824,6 +857,87 @@
         border: 1px solid #ddd;
       }
     }
+
+    /* ===== TAB NAVIGATION ===== */
+    .tab-nav {
+      display: flex;
+      gap: 4px;
+      background: var(--card);
+      border-radius: 12px;
+      padding: 6px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      margin-bottom: 28px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .tab-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      flex: 1;
+      min-width: 120px;
+      padding: 12px 20px;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .tab-btn:hover {
+      background: #f0f4f8;
+      color: var(--text);
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(26, 26, 46, 0.3);
+    }
+
+    .tab-btn .tab-icon {
+      font-size: 16px;
+    }
+
+    .tab-panel {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .tab-btn {
+        font-size: 12px;
+        padding: 10px 14px;
+      }
+    }
   </style>
   <script src="du_lieu_nhap_lieu.js"></script>
 </head>
@@ -846,299 +960,364 @@
 
   <div class="container">
 
-    <!-- ===== TOP OVERVIEW ===== -->
-    <div class="top-overview">
-      <div class="chart-card" style="display:flex; flex-direction:column; justify-content:center;">
-        <div class="chart-title" style="margin-bottom:10px; text-align:center;">Tỷ trọng mục tiêu T03/2026</div>
-        <div class="chart-container pie">
-          <canvas id="pieChart"></canvas>
-        </div>
-      </div>
-
-      <div id="summary-container" class="summary-cards-grid">
-        <!-- Will be populated by JS -->
-      </div>
-
-    </div><!-- END top-overview -->
-
-    <!-- ===== DATA TABLE ===== -->
-    <div class="section-title"><span class="dot"></span> Bảng Chi Tiết Mục Tiêu Theo Nhóm Sách</div>
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr>
-            <th rowspan="2" style="vertical-align:middle;">Nhóm Sách</th>
-            <th rowspan="2" style="vertical-align:middle;">Mục tiêu<br>T03/2026</th>
-            <th class="group-header" colspan="2">So với TB 3 tháng</th>
-            <th class="group-header" colspan="2">So với T02/2026</th>
-            <th class="group-header" colspan="2">So với T03/2025</th>
-          </tr>
-          <tr>
-            <th class="sub-header">Giá trị</th>
-            <th class="sub-header">%</th>
-            <th class="sub-header">Giá trị</th>
-            <th class="sub-header">%</th>
-            <th class="sub-header">Giá trị</th>
-            <th class="sub-header">%</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><span class="category-tag"><span class="category-dot dot-dt"></span> Đầu Tư (ĐT)</span></td>
-            <td class="num"><strong>523.290.000</strong></td>
-            <td class="num">460.431.000</td>
-            <td class="center"><span class="badge positive">+13,65%</span></td>
-            <td class="num">406.389.000</td>
-            <td class="center"><span class="badge positive">+28,77%</span></td>
-            <td class="num">689.678.000</td>
-            <td class="center"><span class="badge negative">-24,13%</span></td>
-          </tr>
-          <tr>
-            <td><span class="category-tag"><span class="category-dot dot-kd"></span> Kinh Doanh (KD)</span></td>
-            <td class="num"><strong>33.936.000</strong></td>
-            <td class="num">32.415.667</td>
-            <td class="center"><span class="badge positive">+4,69%</span></td>
-            <td class="num">23.714.000</td>
-            <td class="center"><span class="badge positive">+43,11%</span></td>
-            <td class="num">57.681.000</td>
-            <td class="center"><span class="badge negative">-41,17%</span></td>
-          </tr>
-          <tr>
-            <td><span class="category-tag"><span class="category-dot dot-ptbt"></span> Phát Triển Bản Thân
-                (PTBT)</span>
-            </td>
-            <td class="num"><strong>141.892.000</strong></td>
-            <td class="num">163.578.333</td>
-            <td class="center"><span class="badge negative">-13,26%</span></td>
-            <td class="num">119.078.000</td>
-            <td class="center"><span class="badge positive">+19,16%</span></td>
-            <td class="num">124.794.000</td>
-            <td class="center"><span class="badge positive">+13,70%</span></td>
-          </tr>
-          <tr>
-            <td><span class="category-tag"><span class="category-dot dot-khac"></span> Khác</span></td>
-            <td class="num"><strong>2.000.000</strong></td>
-            <td class="num">2.985.000</td>
-            <td class="center"><span class="badge negative">-33,00%</span></td>
-            <td class="num">—</td>
-            <td class="center"><span class="badge neutral">N/A</span></td>
-            <td class="num">2.017.000</td>
-            <td class="center"><span class="badge negative">-0,84%</span></td>
-          </tr>
-          <tr>
-            <td><span class="category-tag"><span class="category-dot dot-tong"></span> <strong>TỔNG
-                  CỘNG</strong></span>
-            </td>
-            <td class="num"><strong>701.118.000</strong></td>
-            <td class="num"><strong>707.332.000</strong></td>
-            <td class="center"><span class="badge negative">-0,88%</span></td>
-            <td class="num"><strong>549.181.000</strong></td>
-            <td class="center"><span class="badge positive">+27,67%</span></td>
-            <td class="num"><strong>874.170.000</strong></td>
-            <td class="center"><span class="badge negative">-19,78%</span></td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- ===== TAB NAVIGATION ===== -->
+    <div class="tab-nav">
+      <button class="tab-btn active" onclick="switchTab('overview')">
+        <span class="tab-icon">📊</span> Tổng Quan
+      </button>
+      <button class="tab-btn" onclick="switchTab('charts')">
+        <span class="tab-icon">📈</span> Biểu Đồ Tổng
+      </button>
+      <button class="tab-btn" onclick="switchTab('dt-detail')">
+        <span class="tab-icon">📚</span> Nhóm Đầu Tư
+      </button>
+      <button class="tab-btn" onclick="switchTab('kd-detail')">
+        <span class="tab-icon">💼</span> Nhóm Kinh Doanh
+      </button>
+      <button class="tab-btn" onclick="switchTab('ptbt-detail')">
+        <span class="tab-icon">🌱</span> Nhóm PTBT
+      </button>
     </div>
 
-    <!-- ===== CHARTS ===== -->
-    <div class="section-title"><span class="dot"></span> Biểu Đồ Phân Tích</div>
-    <div class="charts-grid">
-      <div class="chart-card">
-        <div class="chart-title">YTD 2025 vs 2026 · So sánh theo nhóm sách</div>
-        <div class="chart-container bar-ytd">
-          <canvas id="barChart"></canvas>
+    <!-- ===== TAB 1: TỔNG QUAN ===== -->
+    <div id="tab-overview" class="tab-panel active">
+
+      <!-- TOP OVERVIEW -->
+      <div class="top-overview">
+        <div class="chart-card" style="display:flex; flex-direction:column; justify-content:center;">
+          <div class="chart-title" style="margin-bottom:10px; text-align:center;">Tỷ trọng mục tiêu T03/2026</div>
+          <div class="chart-container pie">
+            <canvas id="pieChart"></canvas>
+          </div>
         </div>
+
+        <div id="summary-container" class="summary-cards-grid">
+          <!-- Will be populated by JS -->
+        </div>
+
+      </div><!-- END top-overview -->
+
+      <!-- ===== DATA TABLE ===== -->
+      <div class="section-title"><span class="dot"></span> Bảng Chi Tiết Mục Tiêu Theo Nhóm Sách</div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th rowspan="2" style="vertical-align:middle;">Nhóm Sách</th>
+              <th rowspan="2" style="vertical-align:middle;">Mục tiêu<br>T03/2026</th>
+              <th class="group-header" colspan="2">So với TB 3 tháng</th>
+              <th class="group-header" colspan="2">So với T02/2026</th>
+              <th class="group-header" colspan="2">So với T03/2025</th>
+            </tr>
+            <tr>
+              <th class="sub-header">Giá trị</th>
+              <th class="sub-header">%</th>
+              <th class="sub-header">Giá trị</th>
+              <th class="sub-header">%</th>
+              <th class="sub-header">Giá trị</th>
+              <th class="sub-header">%</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="category-tag"><span class="category-dot dot-dt"></span> Đầu Tư (ĐT)</span></td>
+              <td class="num"><strong>523.290.000</strong></td>
+              <td class="num">460.431.000</td>
+              <td class="center"><span class="badge positive">+13,65%</span></td>
+              <td class="num">406.389.000</td>
+              <td class="center"><span class="badge positive">+28,77%</span></td>
+              <td class="num">689.678.000</td>
+              <td class="center"><span class="badge negative">-24,13%</span></td>
+            </tr>
+            <tr>
+              <td><span class="category-tag"><span class="category-dot dot-kd"></span> Kinh Doanh (KD)</span></td>
+              <td class="num"><strong>33.936.000</strong></td>
+              <td class="num">32.415.667</td>
+              <td class="center"><span class="badge positive">+4,69%</span></td>
+              <td class="num">23.714.000</td>
+              <td class="center"><span class="badge positive">+43,11%</span></td>
+              <td class="num">57.681.000</td>
+              <td class="center"><span class="badge negative">-41,17%</span></td>
+            </tr>
+            <tr>
+              <td><span class="category-tag"><span class="category-dot dot-ptbt"></span> Phát Triển Bản Thân
+                  (PTBT)</span>
+              </td>
+              <td class="num"><strong>141.892.000</strong></td>
+              <td class="num">163.578.333</td>
+              <td class="center"><span class="badge negative">-13,26%</span></td>
+              <td class="num">119.078.000</td>
+              <td class="center"><span class="badge positive">+19,16%</span></td>
+              <td class="num">124.794.000</td>
+              <td class="center"><span class="badge positive">+13,70%</span></td>
+            </tr>
+            <tr>
+              <td><span class="category-tag"><span class="category-dot dot-khac"></span> Khác</span></td>
+              <td class="num"><strong>2.000.000</strong></td>
+              <td class="num">2.985.000</td>
+              <td class="center"><span class="badge negative">-33,00%</span></td>
+              <td class="num">—</td>
+              <td class="center"><span class="badge neutral">N/A</span></td>
+              <td class="num">2.017.000</td>
+              <td class="center"><span class="badge negative">-0,84%</span></td>
+            </tr>
+            <tr>
+              <td><span class="category-tag"><span class="category-dot dot-tong"></span> <strong>TỔNG
+                    CỘNG</strong></span>
+              </td>
+              <td class="num"><strong>701.118.000</strong></td>
+              <td class="num"><strong>707.332.000</strong></td>
+              <td class="center"><span class="badge negative">-0,88%</span></td>
+              <td class="num"><strong>549.181.000</strong></td>
+              <td class="center"><span class="badge positive">+27,67%</span></td>
+              <td class="num"><strong>874.170.000</strong></td>
+              <td class="center"><span class="badge negative">-19,78%</span></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </div>
 
-    <!-- ===== YOY CHARTS ===== -->
-    <div class="section-title"><span class="dot"></span> So Sánh Doanh Thu 2025 vs 2026 (12 Tháng)</div>
-    <div class="yoy-grid">
-
-      <!-- TỔNG - Full width -->
-      <div class="yoy-card featured">
-        <div class="yoy-header">
-          <div>
-            <div class="yoy-title">📊 Tổng Doanh Thu — 2025 vs 2026</div>
-            <div class="yoy-subtitle">Đơn vị: triệu đồng · Dữ liệu 2026 cập nhật đến T02</div>
+      <!-- ===== MỤC TIÊU INSIGHT ===== -->
+      <div class="insights" style="grid-template-columns: 1fr; margin-bottom: 24px; margin-top: 16px;">
+        <div class="insight-card" style="border-left-color: #00A859;">
+          <div class="insight-label" style="color: #00A859;">💡 Ghi chú</div>
+          <div class="insight-value" style="font-size: 14px; font-weight: 500;">
+            Tháng T03/2025 ra mắt bộ Chart Pattern (10/03): SL: 189 bộ, DT: 282.933.000đ. Mục tiêu nhóm đầu tư T3/2026
+            dù không đạt được mức như cùng kỳ năm trước, nhưng vẫn có sự tăng trưởng so với trung bình 3 tháng và cùng
+            kỳ tháng trước.
           </div>
-          <div class="legend-pills">
-            <div class="legend-pill">
-              <div class="pill-line" style="background:#003d6b;"></div>2025
-            </div>
-            <div class="legend-pill">
-              <div class="pill-line" style="background:#00A859;"></div>2026
-            </div>
-          </div>
-        </div>
-        <div class="chart-container bar-yoy"><canvas id="yoyTong"></canvas></div>
-        <div class="data-note">* Cột 2026 còn trống: dữ liệu chưa cập nhật</div>
-      </div>
-
-      <!-- ĐẦU TƯ -->
-      <div class="yoy-card">
-        <div class="yoy-header">
-          <div>
-            <div class="yoy-title">📈 Nhóm Đầu Tư (ĐT)</div>
-            <div class="yoy-subtitle">2025 vs 2026</div>
-          </div>
-          <div class="legend-pills">
-            <div class="legend-pill">
-              <div class="pill-line" style="background:#003d6b;"></div>2025
-            </div>
-            <div class="legend-pill">
-              <div class="pill-line" style="background:#005596;"></div>2026
-            </div>
-          </div>
-        </div>
-        <div class="chart-container bar-yoy"><canvas id="yoyDT"></canvas></div>
-        <div class="data-note">* 2025 theo nhóm: cần cập nhật dữ liệu</div>
-      </div>
-
-      <!-- KINH DOANH -->
-      <div class="yoy-card">
-        <div class="yoy-header">
-          <div>
-            <div class="yoy-title">💼 Nhóm Kinh Doanh (KD)</div>
-            <div class="yoy-subtitle">2025 vs 2026</div>
-          </div>
-          <div class="legend-pills">
-            <div class="legend-pill">
-              <div class="pill-line" style="background:#e65100;"></div>2025
-            </div>
-            <div class="legend-pill">
-              <div class="pill-line" style="background:#ff9800;"></div>2026
-            </div>
-          </div>
-        </div>
-        <div class="chart-container bar-yoy"><canvas id="yoyKD"></canvas></div>
-        <div class="data-note">* 2025 theo nhóm: cần cập nhật dữ liệu</div>
-      </div>
-
-      <!-- PTBT -->
-      <div class="yoy-card featured">
-        <div class="yoy-header">
-          <div>
-            <div class="yoy-title">🌱 Nhóm Phát Triển Bản Thân (PTBT)</div>
-            <div class="yoy-subtitle">2025 vs 2026</div>
-          </div>
-          <div class="legend-pills">
-            <div class="legend-pill">
-              <div class="pill-line" style="background:#00695c;"></div>2025
-            </div>
-            <div class="legend-pill">
-              <div class="pill-line" style="background:#00A859;"></div>2026
-            </div>
-          </div>
-        </div>
-        <div class="chart-container bar-yoy"><canvas id="yoyPTBT"></canvas></div>
-        <div class="data-note">* 2025 theo nhóm: cần cập nhật dữ liệu</div>
-      </div>
-
-    </div>
-
-
-    <!-- ===== BOOK DETAIL TABLES ===== -->
-    <div class="section-title"><span class="dot"></span> Chi Tiết Mục Tiêu Từng Đầu Sách</div>
-    <div class="book-tables">
-
-      <!-- ĐẦU TƯ -->
-      <div class="book-table-card">
-        <div class="book-titlebar dt">
-          <span>📚 NHÓM ĐẦU TƯ (ĐT) · THÁNG 03/2026</span>
-          <span class="book-pill">Mục tiêu: <span id="dt-total"></span></span>
-        </div>
-        <div class="book-table-wrap book-table-wrap-scroll">
-          <table class="book-table">
-            <thead>
-              <tr>
-                <th>STT</th>
-                <th>Tên Sách</th>
-                <th>TOP</th>
-                <th>TB 3T</th>
-                <th>T2/2026</th>
-                <th>T3/2025</th>
-                <th>Mục Tiêu</th>
-                <th>Doanh Thu</th>
-              </tr>
-            </thead>
-            <tbody id="dt-body"></tbody>
-            <tfoot>
-              <tr>
-                <td class="center" colspan="7">TỔNG CỘNG</td>
-                <td id="dt-sum"></td>
-              </tr>
-            </tfoot>
-          </table>
         </div>
       </div>
 
-      <!-- KINH DOANH -->
-      <div class="book-table-card">
-        <div class="book-titlebar kd">
-          <span>📚 NHÓM KINH DOANH (KD) · THÁNG 03/2026</span>
-          <span class="book-pill">Mục tiêu: <span id="kd-total"></span></span>
-        </div>
-        <div class="book-table-wrap book-table-wrap-scroll">
-          <table class="book-table">
-            <thead>
-              <tr>
-                <th>STT</th>
-                <th>Tên Sách</th>
-                <th>TOP</th>
-                <th>TB 3T</th>
-                <th>T2/2026</th>
-                <th>T3/2025</th>
-                <th>Mục Tiêu</th>
-                <th>Doanh Thu</th>
-              </tr>
-            </thead>
-            <tbody id="kd-body"></tbody>
-            <tfoot>
-              <tr>
-                <td class="center" colspan="7">TỔNG CỘNG</td>
-                <td id="kd-sum"></td>
-              </tr>
-            </tfoot>
-          </table>
+    </div><!-- END TAB 1 -->
+
+    <!-- ===== TAB 2: BIỂU ĐỒ SO SÁNH ===== -->
+    <div id="tab-charts" class="tab-panel">
+
+      <!-- CHARTS -->
+      <div class="section-title"><span class="dot"></span> Biểu Đồ Phân Tích</div>
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-title">YTD 2025 vs 2026 · So sánh theo nhóm sách</div>
+          <div class="chart-container bar-ytd">
+            <canvas id="barChart"></canvas>
+          </div>
         </div>
       </div>
 
-      <!-- PTBT -->
-      <div class="book-table-card">
-        <div class="book-titlebar ptbt">
-          <span>📚 NHÓM PHÁT TRIỂN BẢN THÂN (PTBT) · THÁNG 03/2026</span>
-          <span class="book-pill">Mục tiêu: <span id="ptbt-total"></span></span>
+      <!-- ===== YOY CHARTS ===== -->
+      <div class="section-title"><span class="dot"></span> So Sánh Doanh Thu 2025 vs 2026 (12 Tháng)</div>
+      <div class="yoy-grid">
+
+        <!-- TỔNG - Full width -->
+        <div class="yoy-card featured">
+          <div class="yoy-header">
+            <div>
+              <div class="yoy-title">📊 Tổng Doanh Thu — 2025 vs 2026</div>
+              <div class="yoy-subtitle">Đơn vị: triệu đồng · Dữ liệu 2026 cập nhật đến T02</div>
+            </div>
+            <div class="legend-pills">
+              <div class="legend-pill">
+                <div class="pill-line" style="background:#003d6b;"></div>2025
+              </div>
+              <div class="legend-pill">
+                <div class="pill-line" style="background:#00A859;"></div>2026
+              </div>
+            </div>
+          </div>
+          <div class="chart-container bar-yoy"><canvas id="yoyTong"></canvas></div>
+          <div class="data-note">* Cột 2026 còn trống: dữ liệu chưa cập nhật</div>
         </div>
-        <div class="book-table-wrap book-table-wrap-scroll">
-          <table class="book-table">
-            <thead>
-              <tr>
-                <th>STT</th>
-                <th>Tên Sách</th>
-                <th>TOP</th>
-                <th>TB 3T</th>
-                <th>T2/2026</th>
-                <th>T3/2025</th>
-                <th>Mục Tiêu</th>
-                <th>Doanh Thu</th>
-              </tr>
-            </thead>
-            <tbody id="ptbt-body"></tbody>
-            <tfoot>
-              <tr>
-                <td class="center" colspan="7">TỔNG CỘNG</td>
-                <td id="ptbt-sum"></td>
-              </tr>
-            </tfoot>
-          </table>
+
+      </div>
+
+    </div><!-- END TAB 2 -->
+
+    <!-- ===== TAB 3: NHÓM ĐẦU TƯ ===== -->
+    <div id="tab-dt-detail" class="tab-panel">
+
+      <!-- YOY ĐẦU TƯ -->
+      <div class="section-title"><span class="dot"></span> Doanh Thu Nhóm Đầu Tư — 2025 vs 2026</div>
+      <div class="yoy-grid">
+        <div class="yoy-card featured">
+          <div class="yoy-header">
+            <div>
+              <div class="yoy-title">📈 Nhóm Đầu Tư (ĐT)</div>
+              <div class="yoy-subtitle">Đơn vị: triệu đồng · 2025 vs 2026</div>
+            </div>
+            <div class="legend-pills">
+              <div class="legend-pill">
+                <div class="pill-line" style="background:#64748b;"></div>2025
+              </div>
+              <div class="legend-pill">
+                <div class="pill-line" style="background:#7c3aed;"></div>2026
+              </div>
+            </div>
+          </div>
+          <div class="chart-container bar-yoy"><canvas id="yoyDT"></canvas></div>
+          <div class="data-note">* Cột 2026 còn trống: dữ liệu chưa cập nhật</div>
         </div>
       </div>
 
+      <!-- BẢNG CHI TIẾT ĐT -->
+      <div class="section-title"><span class="dot"></span> Chi Tiết Từng Đầu Sách</div>
+      <div class="book-tables">
+        <div class="book-table-card">
+          <div class="book-titlebar dt">
+            <span>📚 NHÓM ĐẦU TƯ (ĐT) · THÁNG 03/2026</span>
+            <span class="book-pill">Mục tiêu: <span id="dt-total"></span></span>
+          </div>
+          <div class="book-table-wrap book-table-wrap-scroll">
+            <table class="book-table">
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Tên Sách</th>
+                  <th>TOP</th>
+                  <th>TB 3T</th>
+                  <th>T2/2026</th>
+                  <th>T3/2025</th>
+                  <th>Mục Tiêu</th>
+                  <th>Doanh Thu</th>
+                </tr>
+              </thead>
+              <tbody id="dt-body"></tbody>
+              <tfoot>
+                <tr>
+                  <td class="center" colspan="7">TỔNG CỘNG</td>
+                  <td id="dt-sum"></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
 
+    </div><!-- END TAB 3 -->
 
-    </div>
+    <!-- ===== TAB 4: NHÓM KINH DOANH ===== -->
+    <div id="tab-kd-detail" class="tab-panel">
+
+      <!-- YOY KINH DOANH -->
+      <div class="section-title"><span class="dot"></span> Doanh Thu Nhóm Kinh Doanh — 2025 vs 2026</div>
+      <div class="yoy-grid">
+        <div class="yoy-card featured">
+          <div class="yoy-header">
+            <div>
+              <div class="yoy-title">💼 Nhóm Kinh Doanh (KD)</div>
+              <div class="yoy-subtitle">Đơn vị: triệu đồng · 2025 vs 2026</div>
+            </div>
+            <div class="legend-pills">
+              <div class="legend-pill">
+                <div class="pill-line" style="background:#64748b;"></div>2025
+              </div>
+              <div class="legend-pill">
+                <div class="pill-line" style="background:#1d4ed8;"></div>2026
+              </div>
+            </div>
+          </div>
+          <div class="chart-container bar-yoy"><canvas id="yoyKD"></canvas></div>
+          <div class="data-note">* Cột 2026 còn trống: dữ liệu chưa cập nhật</div>
+        </div>
+      </div>
+
+      <!-- BẢNG CHI TIẾT KD -->
+      <div class="section-title"><span class="dot"></span> Chi Tiết Từng Đầu Sách</div>
+      <div class="book-tables">
+        <div class="book-table-card">
+          <div class="book-titlebar kd">
+            <span>📚 NHÓM KINH DOANH (KD) · THÁNG 03/2026</span>
+            <span class="book-pill">Mục tiêu: <span id="kd-total"></span></span>
+          </div>
+          <div class="book-table-wrap book-table-wrap-scroll">
+            <table class="book-table">
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Tên Sách</th>
+                  <th>TOP</th>
+                  <th>TB 3T</th>
+                  <th>T2/2026</th>
+                  <th>T3/2025</th>
+                  <th>Mục Tiêu</th>
+                  <th>Doanh Thu</th>
+                </tr>
+              </thead>
+              <tbody id="kd-body"></tbody>
+              <tfoot>
+                <tr>
+                  <td class="center" colspan="7">TỔNG CỘNG</td>
+                  <td id="kd-sum"></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- END TAB 4 -->
+
+    <!-- ===== TAB 5: NHÓM PTBT ===== -->
+    <div id="tab-ptbt-detail" class="tab-panel">
+
+      <!-- YOY PTBT -->
+      <div class="section-title"><span class="dot"></span> Doanh Thu Nhóm Phát Triển Bản Thân — 2025 vs 2026</div>
+      <div class="yoy-grid">
+        <div class="yoy-card featured">
+          <div class="yoy-header">
+            <div>
+              <div class="yoy-title">🌱 Nhóm Phát Triển Bản Thân (PTBT)</div>
+              <div class="yoy-subtitle">Đơn vị: triệu đồng · 2025 vs 2026</div>
+            </div>
+            <div class="legend-pills">
+              <div class="legend-pill">
+                <div class="pill-line" style="background:#64748b;"></div>2025
+              </div>
+              <div class="legend-pill">
+                <div class="pill-line" style="background:#ea580c;"></div>2026
+              </div>
+            </div>
+          </div>
+          <div class="chart-container bar-yoy"><canvas id="yoyPTBT"></canvas></div>
+          <div class="data-note">* Cột 2026 còn trống: dữ liệu chưa cập nhật</div>
+        </div>
+      </div>
+
+      <!-- BẢNG CHI TIẾT PTBT -->
+      <div class="section-title"><span class="dot"></span> Chi Tiết Từng Đầu Sách</div>
+      <div class="book-tables">
+        <div class="book-table-card">
+          <div class="book-titlebar ptbt">
+            <span>📚 NHÓM PHÁT TRIỂN BẢN THÂN (PTBT) · THÁNG 03/2026</span>
+            <span class="book-pill">Mục tiêu: <span id="ptbt-total"></span></span>
+          </div>
+          <div class="book-table-wrap book-table-wrap-scroll">
+            <table class="book-table">
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Tên Sách</th>
+                  <th>TOP</th>
+                  <th>TB 3T</th>
+                  <th>T2/2026</th>
+                  <th>T3/2025</th>
+                  <th>Mục Tiêu</th>
+                  <th>Doanh Thu</th>
+                </tr>
+              </thead>
+              <tbody id="ptbt-body"></tbody>
+              <tfoot>
+                <tr>
+                  <td class="center" colspan="7">TỔNG CỘNG</td>
+                  <td id="ptbt-sum"></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- END TAB 5 -->
 
     <!-- FOOTER -->
     <div class="footer">
@@ -1169,33 +1348,21 @@
         <div class="card-icon total-icon">📊</div>
         <div class="card-label">Tổng mục tiêu</div>
         <div class="card-value">${s.tong_cong.value}</div>
-        <div class="card-change ${s.tong_cong.isUp ? 'up' : 'down'}">
-          ${s.tong_cong.isUp ? '▲' : '▼'} ${s.tong_cong.change} vs T2
-        </div>
       </div>
       <div class="summary-card">
         <div class="card-icon dt">📈</div>
         <div class="card-label">Đầu Tư</div>
         <div class="card-value">${s.dau_tu.value}</div>
-        <div class="card-change ${s.dau_tu.isUp ? 'up' : 'down'}">
-          ${s.dau_tu.isUp ? '▲' : '▼'} ${s.dau_tu.change} vs T2
-        </div>
       </div>
       <div class="summary-card">
         <div class="card-icon kd">💼</div>
         <div class="card-label">Kinh Doanh</div>
         <div class="card-value">${s.kinh_doanh.value}</div>
-        <div class="card-change ${s.kinh_doanh.isUp ? 'up' : 'down'}">
-          ${s.kinh_doanh.isUp ? '▲' : '▼'} ${s.kinh_doanh.change} vs T2
-        </div>
       </div>
       <div class="summary-card">
         <div class="card-icon ptbt">🌱</div>
         <div class="card-label">Phát Triển Bản Thân</div>
         <div class="card-value">${s.ptbt.value}</div>
-        <div class="card-change ${s.ptbt.isUp ? 'up' : 'down'}">
-          ${s.ptbt.isUp ? '▲' : '▼'} ${s.ptbt.change} vs T2
-        </div>
       </div>
     `;
 
@@ -1227,12 +1394,7 @@
             },
             {
               label: 'YTD 2026 (YTD)',
-              data: [
-                parseInt(s.dau_tu.value.replace(/\./g, "").replace("đ", "")),
-                parseInt(s.kinh_doanh.value.replace(/\./g, "").replace("đ", "")),
-                parseInt(s.ptbt.value.replace(/\./g, "").replace("đ", "")),
-                2000000
-              ],
+              data: [846262000, 53626000, 279384000, 4084000],
               backgroundColor: '#c8102ecc',
               borderColor: '#c8102e',
               borderWidth: 2,
@@ -1300,6 +1462,9 @@
           responsive: true,
           maintainAspectRatio: false,
           cutout: '55%',
+          layout: {
+            padding: { bottom: 20 }
+          },
           plugins: {
             datalabels: { display: false },
             legend: {
@@ -1527,6 +1692,28 @@
       renderTable('dt-body', 'dt-sum', 'dt-total', dashboardData.bookDetails.dt, parseCurrency(s.dau_tu.value));
       renderTable('kd-body', 'kd-sum', 'kd-total', dashboardData.bookDetails.kd, parseCurrency(s.kinh_doanh.value));
       renderTable('ptbt-body', 'ptbt-sum', 'ptbt-total', dashboardData.bookDetails.ptbt, parseCurrency(s.ptbt.value));
+
+      // ===== TAB SWITCHING =====
+      function switchTab(tabId) {
+        // Hide all panels
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        // Deactivate all buttons
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        // Show selected panel
+        document.getElementById('tab-' + tabId).classList.add('active');
+        // Activate clicked button
+        event.currentTarget.classList.add('active');
+        // Resize charts (Chart.js needs this when container was hidden)
+        setTimeout(() => {
+          Chart.helpers.each(Chart.instances, (instance) => {
+            instance.resize();
+          });
+        }, 50);
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      // Make switchTab global
+      window.switchTab = switchTab;
 
     </script>
 
