@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Live - Mục Tiêu Doanh Thu T03/2026</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1a1a2e;
+      --primary-dark: #0d0d1a;
+      --accent: #c8102e;
+      --accent-light: #fdeaed;
+      --red: #c8102e;
+      --red-light: #fdeaed;
+      --orange: #d97706;
+      --bg: #eef0f4;
+      --card: #ffffff;
+      --text: #0d0d1a;
+      --text-secondary: #52596a;
+      --border: #d4d8e1;
+      --shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+      --shadow-hover: 0 6px 24px rgba(0, 0, 0, 0.12);
+      --radius: 8px;
+      --radius-sm: 4px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      text-align: justify;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #0d0d1a 60%, #000000 100%);
+      padding: 32px 40px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -60%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(200, 16, 46, 0.12) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -40%;
+      left: 20%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo-icon {
+      width: 56px;
+      height: 56px;
+      background: #00A859;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 800;
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(0, 168, 89, 0.35);
+    }
+
+    .logo-text {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-text span {
+      color: #00A859;
+    }
+
+    .header-title {
+      text-align: right;
+    }
+
+    .header-title h1 {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+    }
+
+    .header-title .meta {
+      font-size: 13px;
+      opacity: 0.7;
+      font-weight: 400;
+    }
+
+    /* ===== CONTAINER ===== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 40px 48px;
+    }
+
+    /* ===== TOP OVERVIEW ===== */
+    .top-overview {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    /* ===== SUMMARY CARDS ===== */
+    .summary-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .summary-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .summary-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .summary-card.total {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #fff;
+      border: none;
+    }
+
+    .summary-card.total .card-label {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    .summary-card.total .card-value {
+      color: #fff;
+    }
+
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      margin-bottom: 14px;
+    }
+
+    .card-icon.dt {
+      background: #ede9fe;
+      color: #7c3aed;
+    }
+
+    .card-icon.kd {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .card-icon.ptbt {
+      background: #ffedd5;
+      color: #ea580c;
+    }
+
+    .card-icon.total-icon {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    .card-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .card-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.5px;
+    }
+
+    .card-change {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 8px;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .card-change.up {
+      background: #e8eaf0;
+      color: var(--primary);
+    }
+
+    .card-change.down {
+      background: var(--red-light);
+      color: var(--red);
+    }
+
+    /* ===== SECTION TITLE ===== */
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    /* ===== TABLE ===== */
+    .table-wrapper {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      background: var(--primary);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 14px 18px;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    thead th:first-child {
+      text-align: left;
+    }
+
+    thead th.group-header {
+      background: var(--primary-dark);
+      text-align: center;
+      border-left: 2px solid rgba(255, 255, 255, 0.15);
+    }
+
+    thead th.sub-header {
+      background: var(--primary);
+      font-size: 11px;
+      padding: 8px 18px;
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    tbody td {
+      padding: 14px 18px;
+      font-size: 14px;
+      text-align: right;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    tbody td:first-child {
+      text-align: left;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    tbody tr:hover {
+      background: #f7fafd;
+    }
+
+    tbody tr:last-child td {
+      background: #f0f7ff;
+      font-weight: 700;
+      border-bottom: none;
+    }
+
+    tbody tr:last-child td:first-child {
+      color: var(--primary);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .badge.positive {
+      background: #e8eaf0;
+      color: var(--primary);
+      border-left: 3px solid var(--primary);
+    }
+
+    .badge.negative {
+      background: var(--red-light);
+      color: var(--red);
+      border-left: 3px solid var(--red);
+    }
+
+    .badge.neutral {
+      background: #f1f5f9;
+      color: var(--text-secondary);
+    }
+
+    .category-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .category-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+    }
+
+    .dot-dt {
+      background: #7c3aed;
+    }
+
+    .dot-kd {
+      background: #1d4ed8;
+    }
+
+    .dot-ptbt {
+      background: #ea580c;
+    }
+
+    .dot-khac {
+      background: #64748b;
+    }
+
+    .dot-tong {
+      background: var(--primary-dark);
+    }
+
+    /* ===== CHARTS GRID ===== */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .chart-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .chart-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .chart-container {
+      position: relative;
+      width: 100%;
+    }
+
+    /* ===== BOOK DETAIL TABLES ===== */
+    .book-tables {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      margin-bottom: 32px;
+    }
+
+    .book-table-card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .book-titlebar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 18px;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.3px;
+      color: #fff;
+    }
+
+    .book-titlebar.dt {
+      background: #4c1d95;
+    }
+
+    .book-titlebar.kd {
+      background: #1e3a8a;
+    }
+
+    .book-titlebar.ptbt {
+      background: #9a3412;
+    }
+
+    .book-titlebar.khac {
+      background: #374151;
+    }
+
+    .book-pill {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .book-table-wrap {
+      overflow-x: auto;
+    }
+
+    .book-table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 900px;
+      font-size: 13px;
+      table-layout: fixed;
+    }
+
+    .book-table th,
+    .book-table td {
+      padding: 10px 12px;
+      border: 1px solid #d4d8e1;
+    }
+
+    /* Column widths for alignment */
+    .book-table th:nth-child(1),
+    .book-table td:nth-child(1) {
+      width: 45px;
+      text-align: center;
+    }
+
+    .book-table th:nth-child(2),
+    .book-table td:nth-child(2) {
+      width: auto;
+      text-align: left;
+    }
+
+    .book-table th:nth-child(3),
+    .book-table td:nth-child(3) {
+      width: 55px;
+      text-align: center;
+    }
+
+    .book-table th:nth-child(4),
+    .book-table td:nth-child(4) {
+      width: 65px;
+      text-align: right;
+    }
+
+    .book-table th:nth-child(5),
+    .book-table td:nth-child(5) {
+      width: 75px;
+      text-align: right;
+    }
+
+    .book-table th:nth-child(6),
+    .book-table td:nth-child(6) {
+      width: 75px;
+      text-align: right;
+    }
+
+    .book-table th:nth-child(7),
+    .book-table td:nth-child(7) {
+      width: 85px;
+      text-align: right;
+    }
+
+    .book-table th:nth-child(8),
+    .book-table td:nth-child(8) {
+      width: 125px;
+      text-align: right;
+    }
+
+    .book-table thead th {
+      background: #f1f5f9;
+      color: var(--text);
+      border: 1px solid #d4d8e1;
+      padding: 8px 10px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 12px;
+      white-space: nowrap;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    .book-table td {
+      border: 1px solid #e2e8f0;
+      padding: 7px 10px;
+      white-space: nowrap;
+      font-size: 13px;
+    }
+
+    .book-table td.left {
+      text-align: left;
+    }
+
+    .book-table td.center {
+      text-align: center;
+    }
+
+    .book-table td.num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .book-table tbody tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    .book-table tbody tr:hover {
+      background: #f0f4f8;
+    }
+
+    .book-table tfoot td {
+      background: #e2e8f0;
+      font-weight: 700;
+      border: 1px solid #d4d8e1;
+      padding: 8px 10px;
+      text-align: right;
+      position: sticky;
+      bottom: 0;
+    }
+
+    .book-table tfoot td.center {
+      text-align: center;
+    }
+
+    .book-table-wrap-scroll {
+      max-height: 420px;
+      overflow-y: auto;
+    }
+
+    .chart-container.bar-ytd {
+      height: 280px;
+    }
+
+    .chart-container.bar-yoy {
+      height: 340px;
+    }
+
+    .chart-container.pie {
+      height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chart-container.line {
+      height: 280px;
+    }
+
+    /* ===== YOY CHARTS ===== */
+    .yoy-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .yoy-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .yoy-card.featured {
+      grid-column: 1 / -1;
+      border-top: 3px solid var(--primary);
+    }
+
+    .yoy-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      gap: 12px;
+    }
+
+    .yoy-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .yoy-subtitle {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 3px;
+    }
+
+    .legend-pills {
+      display: flex;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .legend-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .legend-pill .pill-line {
+      width: 24px;
+      height: 3px;
+      border-radius: 2px;
+    }
+
+    .data-note {
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-top: 12px;
+      text-align: right;
+      font-style: italic;
+    }
+
+    @media (max-width: 900px) {
+      .yoy-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .yoy-card.featured {
+        grid-column: auto;
+      }
+    }
+
+    /* ===== INSIGHTS ===== */
+    .insights {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .insight-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+    }
+
+    .insight-card.warn {
+      border-left-color: var(--orange);
+    }
+
+    .insight-card.danger {
+      border-left-color: var(--red);
+    }
+
+    .insight-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .insight-value {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      text-align: center;
+      padding: 24px;
+      color: var(--text-secondary);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .header-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+      }
+
+      .header-title {
+        text-align: center;
+      }
+
+      .top-overview {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .charts-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .insights {
+        grid-template-columns: 1fr;
+      }
+
+      .container {
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .summary-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .table-wrapper {
+        overflow-x: auto;
+      }
+    }
+
+    /* ===== PRINT ===== */
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .header {
+        padding: 20px;
+      }
+
+      .container {
+        padding: 20px;
+      }
+
+      .summary-card,
+      .chart-card,
+      .insight-card,
+      .table-wrapper {
+        box-shadow: none;
+        border: 1px solid #ddd;
+      }
+    }
+  </style>
+  <script src="du_lieu_nhap_lieu.js"></script>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo-area">
+        <div class="logo-icon">HL</div>
+        <div class="logo-text">Happy<span>.Live</span></div>
+      </div>
+      <div class="header-title">
+        <h1>MỤC TIÊU DOANH THU THÁNG 03/2026</h1>
+        <div class="meta">Ngày lập: 03/03/2026 · Kỳ báo cáo: Tháng 3, 2026</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- ===== TOP OVERVIEW ===== -->
+    <div class="top-overview">
+      <div class="chart-card" style="display:flex; flex-direction:column; justify-content:center;">
+        <div class="chart-title" style="margin-bottom:10px; text-align:center;">Tỷ trọng mục tiêu T03/2026</div>
+        <div class="chart-container pie">
+          <canvas id="pieChart"></canvas>
+        </div>
+      </div>
+
+      <div id="summary-container" class="summary-cards-grid">
+        <!-- Will be populated by JS -->
+      </div>
+
+    </div><!-- END top-overview -->
+
+    <!-- ===== DATA TABLE ===== -->
+    <div class="section-title"><span class="dot"></span> Bảng Chi Tiết Mục Tiêu Theo Nhóm Sách</div>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th rowspan="2" style="vertical-align:middle;">Nhóm Sách</th>
+            <th rowspan="2" style="vertical-align:middle;">Mục tiêu<br>T03/2026</th>
+            <th class="group-header" colspan="2">So với TB 3 tháng</th>
+            <th class="group-header" colspan="2">So với T02/2026</th>
+            <th class="group-header" colspan="2">So với T03/2025</th>
+          </tr>
+          <tr>
+            <th class="sub-header">Giá trị</th>
+            <th class="sub-header">%</th>
+            <th class="sub-header">Giá trị</th>
+            <th class="sub-header">%</th>
+            <th class="sub-header">Giá trị</th>
+            <th class="sub-header">%</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="category-tag"><span class="category-dot dot-dt"></span> Đầu Tư (ĐT)</span></td>
+            <td class="num"><strong>523.290.000</strong></td>
+            <td class="num">460.431.000</td>
+            <td class="center"><span class="badge positive">+13,65%</span></td>
+            <td class="num">406.389.000</td>
+            <td class="center"><span class="badge positive">+28,77%</span></td>
+            <td class="num">689.678.000</td>
+            <td class="center"><span class="badge negative">-24,13%</span></td>
+          </tr>
+          <tr>
+            <td><span class="category-tag"><span class="category-dot dot-kd"></span> Kinh Doanh (KD)</span></td>
+            <td class="num"><strong>33.936.000</strong></td>
+            <td class="num">32.415.667</td>
+            <td class="center"><span class="badge positive">+4,69%</span></td>
+            <td class="num">23.714.000</td>
+            <td class="center"><span class="badge positive">+43,11%</span></td>
+            <td class="num">57.681.000</td>
+            <td class="center"><span class="badge negative">-41,17%</span></td>
+          </tr>
+          <tr>
+            <td><span class="category-tag"><span class="category-dot dot-ptbt"></span> Phát Triển Bản Thân
+                (PTBT)</span>
+            </td>
+            <td class="num"><strong>141.892.000</strong></td>
+            <td class="num">163.578.333</td>
+            <td class="center"><span class="badge negative">-13,26%</span></td>
+            <td class="num">119.078.000</td>
+            <td class="center"><span class="badge positive">+19,16%</span></td>
+            <td class="num">124.794.000</td>
+            <td class="center"><span class="badge positive">+13,70%</span></td>
+          </tr>
+          <tr>
+            <td><span class="category-tag"><span class="category-dot dot-khac"></span> Khác</span></td>
+            <td class="num"><strong>2.000.000</strong></td>
+            <td class="num">2.985.000</td>
+            <td class="center"><span class="badge negative">-33,00%</span></td>
+            <td class="num">—</td>
+            <td class="center"><span class="badge neutral">N/A</span></td>
+            <td class="num">2.017.000</td>
+            <td class="center"><span class="badge negative">-0,84%</span></td>
+          </tr>
+          <tr>
+            <td><span class="category-tag"><span class="category-dot dot-tong"></span> <strong>TỔNG
+                  CỘNG</strong></span>
+            </td>
+            <td class="num"><strong>701.118.000</strong></td>
+            <td class="num"><strong>707.332.000</strong></td>
+            <td class="center"><span class="badge negative">-0,88%</span></td>
+            <td class="num"><strong>549.181.000</strong></td>
+            <td class="center"><span class="badge positive">+27,67%</span></td>
+            <td class="num"><strong>874.170.000</strong></td>
+            <td class="center"><span class="badge negative">-19,78%</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ===== CHARTS ===== -->
+    <div class="section-title"><span class="dot"></span> Biểu Đồ Phân Tích</div>
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-title">YTD 2025 vs 2026 · So sánh theo nhóm sách</div>
+        <div class="chart-container bar-ytd">
+          <canvas id="barChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== YOY CHARTS ===== -->
+    <div class="section-title"><span class="dot"></span> So Sánh Doanh Thu 2025 vs 2026 (12 Tháng)</div>
+    <div class="yoy-grid">
+
+      <!-- TỔNG - Full width -->
+      <div class="yoy-card featured">
+        <div class="yoy-header">
+          <div>
+            <div class="yoy-title">📊 Tổng Doanh Thu — 2025 vs 2026</div>
+            <div class="yoy-subtitle">Đơn vị: triệu đồng · Dữ liệu 2026 cập nhật đến T02</div>
+          </div>
+          <div class="legend-pills">
+            <div class="legend-pill">
+              <div class="pill-line" style="background:#003d6b;"></div>2025
+            </div>
+            <div class="legend-pill">
+              <div class="pill-line" style="background:#00A859;"></div>2026
+            </div>
+          </div>
+        </div>
+        <div class="chart-container bar-yoy"><canvas id="yoyTong"></canvas></div>
+        <div class="data-note">* Cột 2026 còn trống: dữ liệu chưa cập nhật</div>
+      </div>
+
+      <!-- ĐẦU TƯ -->
+      <div class="yoy-card">
+        <div class="yoy-header">
+          <div>
+            <div class="yoy-title">📈 Nhóm Đầu Tư (ĐT)</div>
+            <div class="yoy-subtitle">2025 vs 2026</div>
+          </div>
+          <div class="legend-pills">
+            <div class="legend-pill">
+              <div class="pill-line" style="background:#003d6b;"></div>2025
+            </div>
+            <div class="legend-pill">
+              <div class="pill-line" style="background:#005596;"></div>2026
+            </div>
+          </div>
+        </div>
+        <div class="chart-container bar-yoy"><canvas id="yoyDT"></canvas></div>
+        <div class="data-note">* 2025 theo nhóm: cần cập nhật dữ liệu</div>
+      </div>
+
+      <!-- KINH DOANH -->
+      <div class="yoy-card">
+        <div class="yoy-header">
+          <div>
+            <div class="yoy-title">💼 Nhóm Kinh Doanh (KD)</div>
+            <div class="yoy-subtitle">2025 vs 2026</div>
+          </div>
+          <div class="legend-pills">
+            <div class="legend-pill">
+              <div class="pill-line" style="background:#e65100;"></div>2025
+            </div>
+            <div class="legend-pill">
+              <div class="pill-line" style="background:#ff9800;"></div>2026
+            </div>
+          </div>
+        </div>
+        <div class="chart-container bar-yoy"><canvas id="yoyKD"></canvas></div>
+        <div class="data-note">* 2025 theo nhóm: cần cập nhật dữ liệu</div>
+      </div>
+
+      <!-- PTBT -->
+      <div class="yoy-card featured">
+        <div class="yoy-header">
+          <div>
+            <div class="yoy-title">🌱 Nhóm Phát Triển Bản Thân (PTBT)</div>
+            <div class="yoy-subtitle">2025 vs 2026</div>
+          </div>
+          <div class="legend-pills">
+            <div class="legend-pill">
+              <div class="pill-line" style="background:#00695c;"></div>2025
+            </div>
+            <div class="legend-pill">
+              <div class="pill-line" style="background:#00A859;"></div>2026
+            </div>
+          </div>
+        </div>
+        <div class="chart-container bar-yoy"><canvas id="yoyPTBT"></canvas></div>
+        <div class="data-note">* 2025 theo nhóm: cần cập nhật dữ liệu</div>
+      </div>
+
+    </div>
+
+
+    <!-- ===== BOOK DETAIL TABLES ===== -->
+    <div class="section-title"><span class="dot"></span> Chi Tiết Mục Tiêu Từng Đầu Sách</div>
+    <div class="book-tables">
+
+      <!-- ĐẦU TƯ -->
+      <div class="book-table-card">
+        <div class="book-titlebar dt">
+          <span>📚 NHÓM ĐẦU TƯ (ĐT) · THÁNG 03/2026</span>
+          <span class="book-pill">Mục tiêu: <span id="dt-total"></span></span>
+        </div>
+        <div class="book-table-wrap book-table-wrap-scroll">
+          <table class="book-table">
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Tên Sách</th>
+                <th>TOP</th>
+                <th>TB 3T</th>
+                <th>T2/2026</th>
+                <th>T3/2025</th>
+                <th>Mục Tiêu</th>
+                <th>Doanh Thu</th>
+              </tr>
+            </thead>
+            <tbody id="dt-body"></tbody>
+            <tfoot>
+              <tr>
+                <td class="center" colspan="7">TỔNG CỘNG</td>
+                <td id="dt-sum"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- KINH DOANH -->
+      <div class="book-table-card">
+        <div class="book-titlebar kd">
+          <span>📚 NHÓM KINH DOANH (KD) · THÁNG 03/2026</span>
+          <span class="book-pill">Mục tiêu: <span id="kd-total"></span></span>
+        </div>
+        <div class="book-table-wrap book-table-wrap-scroll">
+          <table class="book-table">
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Tên Sách</th>
+                <th>TOP</th>
+                <th>TB 3T</th>
+                <th>T2/2026</th>
+                <th>T3/2025</th>
+                <th>Mục Tiêu</th>
+                <th>Doanh Thu</th>
+              </tr>
+            </thead>
+            <tbody id="kd-body"></tbody>
+            <tfoot>
+              <tr>
+                <td class="center" colspan="7">TỔNG CỘNG</td>
+                <td id="kd-sum"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- PTBT -->
+      <div class="book-table-card">
+        <div class="book-titlebar ptbt">
+          <span>📚 NHÓM PHÁT TRIỂN BẢN THÂN (PTBT) · THÁNG 03/2026</span>
+          <span class="book-pill">Mục tiêu: <span id="ptbt-total"></span></span>
+        </div>
+        <div class="book-table-wrap book-table-wrap-scroll">
+          <table class="book-table">
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Tên Sách</th>
+                <th>TOP</th>
+                <th>TB 3T</th>
+                <th>T2/2026</th>
+                <th>T3/2025</th>
+                <th>Mục Tiêu</th>
+                <th>Doanh Thu</th>
+              </tr>
+            </thead>
+            <tbody id="ptbt-body"></tbody>
+            <tfoot>
+              <tr>
+                <td class="center" colspan="7">TỔNG CỘNG</td>
+                <td id="ptbt-sum"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      Happy Live &copy; 2026 · Báo cáo mục tiêu doanh thu nội bộ · Được tạo tự động ngày 03/03/2026
+    </div>
+
+    <!-- ===== CHARTS JS ===== -->
+    <script>
+      // Register datalabels plugin globally
+      Chart.register(ChartDataLabels);
+
+      // Color palette
+      const colors = {
+        primary: '#1a1a2e',
+        primaryDark: '#0d0d1a',
+        accent: '#c8102e',
+        orange: '#d97706',
+        gray: '#64748b',
+        steel: '#334155',
+        blue: '#1e40af'
+      };
+
+      // Populate Summary Cards
+      const summaryContainer = document.getElementById('summary-container');
+      const s = dashboardData.summary;
+      summaryContainer.innerHTML = `
+      <div class="summary-card total">
+        <div class="card-icon total-icon">📊</div>
+        <div class="card-label">Tổng mục tiêu</div>
+        <div class="card-value">${s.tong_cong.value}</div>
+        <div class="card-change ${s.tong_cong.isUp ? 'up' : 'down'}">
+          ${s.tong_cong.isUp ? '▲' : '▼'} ${s.tong_cong.change} vs T2
+        </div>
+      </div>
+      <div class="summary-card">
+        <div class="card-icon dt">📈</div>
+        <div class="card-label">Đầu Tư</div>
+        <div class="card-value">${s.dau_tu.value}</div>
+        <div class="card-change ${s.dau_tu.isUp ? 'up' : 'down'}">
+          ${s.dau_tu.isUp ? '▲' : '▼'} ${s.dau_tu.change} vs T2
+        </div>
+      </div>
+      <div class="summary-card">
+        <div class="card-icon kd">💼</div>
+        <div class="card-label">Kinh Doanh</div>
+        <div class="card-value">${s.kinh_doanh.value}</div>
+        <div class="card-change ${s.kinh_doanh.isUp ? 'up' : 'down'}">
+          ${s.kinh_doanh.isUp ? '▲' : '▼'} ${s.kinh_doanh.change} vs T2
+        </div>
+      </div>
+      <div class="summary-card">
+        <div class="card-icon ptbt">🌱</div>
+        <div class="card-label">Phát Triển Bản Thân</div>
+        <div class="card-value">${s.ptbt.value}</div>
+        <div class="card-change ${s.ptbt.isUp ? 'up' : 'down'}">
+          ${s.ptbt.isUp ? '▲' : '▼'} ${s.ptbt.change} vs T2
+        </div>
+      </div>
+    `;
+
+      // Format helper
+      const fmtBill = v => {
+        if (v == null || v === 0) return '';
+        if (v >= 1e9) return (v / 1e9).toFixed(2) + ' tỷ';
+        if (v >= 1e6) return (v / 1e6).toFixed(0) + ' tr';
+        return new Intl.NumberFormat('vi-VN').format(v);
+      };
+
+      // ===== YTD BAR CHART (horizontal) =====
+      const barCtx = document.getElementById('barChart').getContext('2d');
+      new Chart(barCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Đầu Tư', 'Kinh Doanh', 'PTBT', 'Khác'],
+          datasets: [
+            {
+              label: 'YTD 2025',
+              data: [6474760000, 571065000, 1630800000, 22778000],
+              backgroundColor: '#1a1a2ecc',
+              borderColor: '#1a1a2e',
+              borderWidth: 2,
+              borderRadius: 0,
+              borderSkipped: false,
+              barPercentage: 0.7,
+              categoryPercentage: 0.8
+            },
+            {
+              label: 'YTD 2026 (YTD)',
+              data: [
+                parseInt(s.dau_tu.value.replace(/\./g, "").replace("đ", "")),
+                parseInt(s.kinh_doanh.value.replace(/\./g, "").replace("đ", "")),
+                parseInt(s.ptbt.value.replace(/\./g, "").replace("đ", "")),
+                2000000
+              ],
+              backgroundColor: '#c8102ecc',
+              borderColor: '#c8102e',
+              borderWidth: 2,
+              borderRadius: 0,
+              borderSkipped: false,
+              barPercentage: 0.7,
+              categoryPercentage: 0.8
+            }
+          ]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { padding: 16, usePointStyle: true, pointStyleWidth: 12, font: { family: 'Inter', size: 12, weight: '500' } }
+            },
+            tooltip: {
+              backgroundColor: '#1a2332',
+              titleFont: { family: 'Inter', weight: '600' },
+              bodyFont: { family: 'Inter' },
+              padding: 12, cornerRadius: 10,
+              callbacks: { label: ctx => ctx.dataset.label + ': ' + new Intl.NumberFormat('vi-VN').format(ctx.raw) + 'đ' }
+            },
+            datalabels: {
+              anchor: 'end', align: 'end',
+              formatter: fmtBill,
+              font: { family: 'Inter', size: 11, weight: '600' },
+              color: '#1a2332',
+              clamp: true
+            }
+          },
+          layout: { padding: { right: 70 } },
+          scales: {
+            x: {
+              beginAtZero: true,
+              grid: { color: '#f0f4f8' },
+              ticks: {
+                font: { family: 'Inter', size: 11 },
+                callback: v => v >= 1e9 ? (v / 1e9).toFixed(1) + ' tỷ' : v >= 1e6 ? (v / 1e6).toFixed(0) + ' tr' : v
+              }
+            },
+            y: { grid: { display: false }, ticks: { font: { family: 'Inter', size: 12, weight: '600' } } }
+          }
+        }
+      });
+
+      // ===== PIE CHART =====
+      const pieCtx = document.getElementById('pieChart').getContext('2d');
+      new Chart(pieCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Đầu Tư', 'Kinh Doanh', 'PTBT', 'Khác'],
+          datasets: [{
+            data: dashboardData.pieData,
+            backgroundColor: ['#7c3aed', '#1d4ed8', '#ea580c', '#64748b'],
+            borderWidth: 3,
+            borderColor: '#ffffff',
+            hoverOffset: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '55%',
+          plugins: {
+            datalabels: { display: false },
+            legend: {
+              position: 'bottom',
+              labels: {
+                padding: 16,
+                usePointStyle: true,
+                pointStyleWidth: 12,
+                font: { family: 'Inter', size: 12, weight: '500' },
+                generateLabels: function (chart) {
+                  const data = chart.data;
+                  const total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                  return data.labels.map((label, i) => {
+                    const value = data.datasets[0].data[i];
+                    const pct = ((value / total) * 100).toFixed(1);
+                    return {
+                      text: label + ' (' + pct + '%)',
+                      fillStyle: data.datasets[0].backgroundColor[i],
+                      strokeStyle: '#fff',
+                      lineWidth: 2,
+                      pointStyle: 'circle',
+                      index: i
+                    };
+                  });
+                }
+              }
+            },
+            tooltip: {
+              backgroundColor: '#1a2332',
+              titleFont: { family: 'Inter', weight: '600' },
+              bodyFont: { family: 'Inter' },
+              padding: 12,
+              cornerRadius: 10,
+              callbacks: {
+                label: function (ctx) {
+                  const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                  const pct = ((ctx.raw / total) * 100).toFixed(1);
+                  return ctx.label + ': ' + new Intl.NumberFormat('vi-VN').format(ctx.raw) + 'đ (' + pct + '%)';
+                }
+              }
+            }
+          }
+        }
+      });
+
+      // ===================================================
+      // YOY CHART HELPER (vertical bar)
+      // ===================================================
+      const months = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'];
+
+      function yoyLineOptions(color2025, color2026) {
+        return {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#1a2332',
+              titleFont: { family: 'Inter', weight: '600', size: 13 },
+              bodyFont: { family: 'Inter', size: 12 },
+              padding: 14, cornerRadius: 10,
+              callbacks: {
+                label: ctx => ctx.raw == null
+                  ? ctx.dataset.label + ': Chưa có dữ liệu'
+                  : ctx.dataset.label + ': ' + new Intl.NumberFormat('vi-VN').format(ctx.raw) + 'đ'
+              }
+            },
+            datalabels: {
+              anchor: 'end', align: 'top',
+              formatter: (v) => {
+                if (v == null || v === 0) return '';
+                return (v / 1e6).toFixed(0) + ' tr';
+              },
+              font: { family: 'Inter', size: 9, weight: '600' },
+              color: '#1a2332',
+              clamp: true
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { font: { family: 'Inter', size: 11, weight: '600' } }
+            },
+            y: {
+              beginAtZero: true,
+              grid: { color: '#f0f4f8' },
+              ticks: {
+                font: { family: 'Inter', size: 10 },
+                callback: v => v >= 1e9 ? (v / 1e9).toFixed(1) + ' tỷ' : v >= 1e6 ? (v / 1e6).toFixed(0) + ' tr' : v
+              }
+            }
+          }
+        };
+      }
+
+      function makeYoyDatasets(data2025, data2026, c25, c26) {
+        return [
+          {
+            label: '2025',
+            data: data2025,
+            backgroundColor: c25 + 'dd',
+            borderColor: c25,
+            borderWidth: 2,
+            borderRadius: 0,
+            borderSkipped: false,
+            barPercentage: 0.75,
+            categoryPercentage: 0.8
+          },
+          {
+            label: '2026',
+            data: data2026,
+            backgroundColor: c26 + 'dd',
+            borderColor: c26,
+            borderWidth: 2,
+            borderRadius: 0,
+            borderSkipped: false,
+            barPercentage: 0.75,
+            categoryPercentage: 0.8
+          }
+        ];
+      }
+
+      // ===== TỔNG DOANH THU =====
+      new Chart(document.getElementById('yoyTong'), {
+        type: 'bar',
+        data: {
+          labels: months,
+          datasets: makeYoyDatasets(
+            dashboardData.yoy.tong.data2025,
+            dashboardData.yoy.tong.data2026,
+            '#1a1a2e', '#c8102e'
+          )
+        },
+        options: yoyLineOptions('#1a1a2e', '#c8102e')
+      });
+
+      // ===== ĐẦU TƯ =====
+      new Chart(document.getElementById('yoyDT'), {
+        type: 'bar',
+        data: {
+          labels: months,
+          datasets: makeYoyDatasets(
+            dashboardData.yoy.dauTu.data2025,
+            dashboardData.yoy.dauTu.data2026,
+            '#64748b', '#7c3aed'
+          )
+        },
+        options: yoyLineOptions('#64748b', '#7c3aed')
+      });
+
+      // ===== KINH DOANH =====
+      new Chart(document.getElementById('yoyKD'), {
+        type: 'bar',
+        data: {
+          labels: months,
+          datasets: makeYoyDatasets(
+            dashboardData.yoy.kinhDoanh.data2025,
+            dashboardData.yoy.kinhDoanh.data2026,
+            '#64748b', '#1d4ed8'
+          )
+        },
+        options: yoyLineOptions('#64748b', '#1d4ed8')
+      });
+
+      // ===== PTBT =====
+      new Chart(document.getElementById('yoyPTBT'), {
+        type: 'bar',
+        data: {
+          labels: months,
+          datasets: makeYoyDatasets(
+            dashboardData.yoy.ptbt.data2025,
+            dashboardData.yoy.ptbt.data2026,
+            '#64748b', '#ea580c'
+          )
+        },
+        options: yoyLineOptions('#64748b', '#ea580c')
+      });
+
+
+
+      function renderTable(bodyId, sumId, totalId, dataArray, targetSumOverride = null) {
+        const tbody = document.getElementById(bodyId);
+        tbody.innerHTML = "";
+
+        if (dataArray.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="8" class="center" style="padding:40px; color:#64748b; font-style:italic">Đang cập nhật số liệu...</td></tr>';
+          document.getElementById(sumId).textContent = "0 ₫";
+          document.getElementById(totalId).textContent = "0 ₫";
+          return;
+        }
+
+        let sum = 0;
+        dataArray.forEach(row => {
+          sum += (row.doanh_thu || 0);
+          const tr = document.createElement("tr");
+
+          // Format doanh thu
+          const fmtDToanhThu = typeof row.doanh_thu === 'number'
+            ? new Intl.NumberFormat('vi-VN').format(row.doanh_thu) + " ₫"
+            : "";
+
+          tr.innerHTML = `
+          <td class="center">${row.stt}</td>
+          <td class="left" style="font-weight:600">${row.ten_hang}</td>
+          <td class="center">${row.top}</td>
+          <td class="num">${row.tb_3t}</td>
+          <td class="num">${row.thang_truoc}</td>
+          <td class="num">${row.nam_truoc}</td>
+          <td class="num" style="background:#f1f5f9;font-weight:700">${row.muc_tieu}</td>
+          <td class="num" style="color:#1e40af;font-weight:600">${fmtDToanhThu}</td>
+        `;
+          tbody.appendChild(tr);
+        });
+
+        const finalSum = targetSumOverride !== null ? targetSumOverride : sum;
+        const formattedSum = new Intl.NumberFormat('vi-VN').format(finalSum) + " ₫";
+        document.getElementById(sumId).textContent = formattedSum;
+        document.getElementById(totalId).textContent = formattedSum;
+      }
+
+      // Call renders
+      const parseCurrency = str => parseInt(str.replace(/\./g, "").replace("đ", ""));
+
+      renderTable('dt-body', 'dt-sum', 'dt-total', dashboardData.bookDetails.dt, parseCurrency(s.dau_tu.value));
+      renderTable('kd-body', 'kd-sum', 'kd-total', dashboardData.bookDetails.kd, parseCurrency(s.kinh_doanh.value));
+      renderTable('ptbt-body', 'ptbt-sum', 'ptbt-total', dashboardData.bookDetails.ptbt, parseCurrency(s.ptbt.value));
+
+    </script>
+
+</body>
+
+</html>
