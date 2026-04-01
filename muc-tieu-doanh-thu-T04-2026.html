@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Live - Mục Tiêu Doanh Thu T04/2026</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f0f2f5;
+      --card: #ffffff;
+      --card-hover: #fafbfc;
+      --border: #e5e7eb;
+      --border2: #d1d5db;
+      --text: #111827;
+      --text2: #4b5563;
+      --text3: #9ca3af;
+      --accent: #c8102e;
+      --accent-light: #fef2f2;
+      --green: #16a34a;
+      --green-bg: #f0fdf4;
+      --red: #dc2626;
+      --red-bg: #fef2f2;
+      --purple: #7c3aed;
+      --blue: #2563eb;
+      --orange: #ea580c;
+      --amber: #d97706;
+      --r: 10px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow2: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family:'Inter',-apple-system,sans-serif; background:var(--bg); color:var(--text); line-height:1.5; }
+
+    /* ===== HEADER ===== */
+    .header {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      padding: 28px 32px;
+      color: #fff;
+      text-align: center;
+      border-bottom: 3px solid var(--accent);
+    }
+    .header-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:2.5px; color:#f59e0b; margin-bottom:4px; }
+    .header h1 { font-size:22px; font-weight:800; letter-spacing:-0.3px; }
+    .header-meta { font-size:11px; color:rgba(255,255,255,0.5); margin-top:3px; }
+
+    /* ===== CONTAINER ===== */
+    .container { max-width:1360px; margin:0 auto; padding:24px 28px 48px; }
+
+    /* ===== TAB NAV ===== */
+    .tab-nav {
+      display:flex; gap:4px;
+      background:var(--card);
+      border-radius:12px;
+      padding:5px;
+      box-shadow:var(--shadow);
+      border:1px solid var(--border);
+      margin-bottom:24px;
+      overflow-x:auto;
+    }
+    .tab-nav::-webkit-scrollbar { display:none; }
+    .tab-btn {
+      flex:1; min-width:120px;
+      padding:11px 20px;
+      border:none; background:transparent;
+      color:var(--text2);
+      font-family:'Inter',sans-serif;
+      font-size:13px; font-weight:600;
+      cursor:pointer; border-radius:8px;
+      transition:all .2s;
+      white-space:nowrap;
+      display:flex; align-items:center; justify-content:center; gap:7px;
+    }
+    .tab-btn:hover { background:#f3f4f6; color:var(--text); }
+    .tab-btn.active {
+      background:#0f172a;
+      color:#fff;
+      box-shadow:0 2px 8px rgba(15,23,42,0.2);
+    }
+    .tab-panel { display:none; animation:fadeUp .3s ease; }
+    .tab-panel.active { display:block; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ===== DASHBOARD GRID ===== */
+    .dash-top { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:20px; }
+    .total-card {
+      grid-column:1/-1;
+      background:linear-gradient(135deg,#0f172a,#1e293b);
+      border-radius:var(--r);
+      padding:28px 32px;
+      text-align:center;
+      color:#fff;
+      box-shadow:0 4px 16px rgba(15,23,42,0.15);
+    }
+    .total-label { font-size:11px; font-weight:600; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
+    .total-num {
+      font-size:42px; font-weight:900;
+      background:linear-gradient(135deg,#f59e0b,#ef4444);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      background-clip:text; letter-spacing:-1.5px; line-height:1.1;
+    }
+    .total-sub { font-size:12px; color:rgba(255,255,255,0.4); margin-top:4px; }
+
+    /* GROUP CARDS */
+    .g-cards { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:20px; }
+    .g-card {
+      background:var(--card);
+      border-radius:var(--r);
+      padding:18px 20px;
+      box-shadow:var(--shadow);
+      border:1px solid var(--border);
+      border-top:3px solid transparent;
+      transition:all .2s;
+    }
+    .g-card:hover { transform:translateY(-1px); box-shadow:var(--shadow2); }
+    .g-card.dt { border-top-color:var(--purple); }
+    .g-card.kd { border-top-color:var(--blue); }
+    .g-card.pt { border-top-color:var(--orange); }
+    .g-card.kh { border-top-color:#9ca3af; }
+    .g-label { font-size:11px; font-weight:600; color:var(--text3); text-transform:uppercase; letter-spacing:.5px; margin-bottom:4px; }
+    .g-val { font-size:18px; font-weight:800; margin-bottom:3px; }
+    .g-pct { font-size:11px; font-weight:600; }
+
+    /* COMPARISON */
+    .cmp-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:20px; }
+    .cmp-card {
+      background:var(--card);
+      border-radius:var(--r);
+      padding:16px 20px;
+      box-shadow:var(--shadow);
+      border:1px solid var(--border);
+      text-align:center;
+    }
+    .cmp-title { font-size:10px; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:.8px; margin-bottom:6px; }
+    .cmp-base { font-size:12px; color:var(--text2); margin-bottom:4px; }
+    .cmp-pct { font-size:22px; font-weight:800; }
+    .cmp-abs { font-size:10px; color:var(--text3); margin-top:2px; }
+    .up { color:var(--green); }
+    .dn { color:var(--red); }
+
+    /* BOTTOM ROW */
+    .bottom-row { display:grid; grid-template-columns:280px 1fr; gap:16px; }
+    .pie-card {
+      background:var(--card);
+      border-radius:var(--r);
+      padding:16px;
+      box-shadow:var(--shadow);
+      border:1px solid var(--border);
+      display:flex; flex-direction:column;
+    }
+    .pie-title { font-size:11px; font-weight:700; color:var(--text2); text-align:center; margin-bottom:8px; }
+    .pie-box { flex:1; position:relative; min-height:200px; }
+
+    .tbl-card {
+      background:var(--card);
+      border-radius:var(--r);
+      box-shadow:var(--shadow);
+      border:1px solid var(--border);
+      overflow:hidden;
+      display:flex; flex-direction:column;
+    }
+    .tbl-title { font-size:12px; font-weight:700; color:var(--text2); padding:12px 16px; border-bottom:1px solid var(--border); }
+
+    /* TABLE */
+    table { width:100%; border-collapse:collapse; }
+    thead th {
+      background:#f9fafb;
+      color:var(--text2);
+      font-size:10px; font-weight:600;
+      text-transform:uppercase; letter-spacing:.3px;
+      padding:9px 12px; text-align:right; white-space:nowrap;
+      border-bottom:1px solid var(--border);
+    }
+    thead th:first-child { text-align:left; }
+    tbody td { padding:10px 12px; font-size:12px; text-align:right; border-bottom:1px solid #f3f4f6; }
+    tbody td:first-child { text-align:left; font-weight:600; }
+    tbody tr:hover { background:#f9fafb; }
+    tbody tr:last-child td { background:#fffbeb; font-weight:700; border-top:2px solid #0f172a; }
+    .badge { display:inline-flex; padding:1px 7px; border-radius:4px; font-size:10px; font-weight:600; }
+    .badge.pos { background:var(--green-bg); color:var(--green); }
+    .badge.neg { background:var(--red-bg); color:var(--red); }
+    .badge.na { background:#f3f4f6; color:var(--text3); }
+    .cat-dot { display:inline-block; width:7px; height:7px; border-radius:2px; margin-right:5px; }
+
+    /* ===== SECTION ===== */
+    .section { margin-bottom:24px; }
+    .sh { display:flex; align-items:center; gap:8px; margin-bottom:14px; }
+    .sd { width:6px; height:6px; border-radius:50%; background:var(--accent); }
+    .st { font-size:14px; font-weight:700; }
+    .cc { background:var(--card); border-radius:var(--r); padding:20px; box-shadow:var(--shadow); border:1px solid var(--border); }
+    .cb { position:relative; width:100%; }
+    .cb.yoy { height:300px; } .cb.bar { height:260px; } .cb.daily { height:320px; }
+    .cn { font-size:9px; color:var(--text3); margin-top:6px; text-align:right; font-style:italic; }
+
+    /* BOOK TABLE */
+    .bc { background:var(--card); border-radius:var(--r); box-shadow:var(--shadow); border:1px solid var(--border); overflow:hidden; }
+    .bb { display:flex; align-items:center; justify-content:space-between; padding:12px 18px; font-weight:700; font-size:13px; color:#fff; }
+    .bb.bdt { background:linear-gradient(90deg,#4c1d95,#7c3aed); }
+    .bb.bkd { background:linear-gradient(90deg,#1e3a8a,#3b82f6); }
+    .bb.bpt { background:linear-gradient(90deg,#9a3412,#ea580c); }
+    .bp { padding:2px 10px; border-radius:5px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.25); font-size:11px; }
+    .bs { max-height:480px; overflow:auto; }
+    .bs::-webkit-scrollbar { width:4px; height:4px; }
+    .bs::-webkit-scrollbar-thumb { background:#d1d5db; border-radius:4px; }
+    .bt { border-collapse:collapse; width:100%; min-width:1050px; font-size:12px; }
+    .bt th { background:#f9fafb; color:var(--text2); border:1px solid var(--border); font-weight:700; font-size:10px; padding:8px; text-align:center; position:sticky; top:0; z-index:2; }
+    .bt td { border:1px solid #f3f4f6; padding:7px 8px; white-space:nowrap; font-size:11px; }
+    .bt td.l { text-align:left; } .bt td.c { text-align:center; } .bt td.r { text-align:right; font-variant-numeric:tabular-nums; }
+    .bt tbody tr:nth-child(even) { background:#f9fafb; }
+    .bt tbody tr:hover { background:#f0f4ff; }
+    .bt tfoot td { background:#f1f5f9; font-weight:700; color:#0f172a; text-align:right; position:sticky; bottom:0; border:1px solid var(--border); }
+
+    /* YOY */
+    .yoy-grid { display:grid; grid-template-columns:1fr; gap:16px; }
+    .yf { border-top:3px solid var(--accent); }
+    .yh { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:14px; gap:10px; }
+    .yt { font-size:14px; font-weight:700; }
+    .ys { font-size:10px; color:var(--text3); margin-top:1px; }
+    .lg { display:flex; gap:12px; }
+    .li { display:flex; align-items:center; gap:5px; font-size:10px; font-weight:600; color:var(--text2); }
+    .ll { width:18px; height:3px; border-radius:2px; }
+
+    /* DAILY */
+    .dg { display:grid; grid-template-columns:repeat(7,1fr); gap:5px; }
+    .dh { text-align:center; font-size:10px; font-weight:700; color:var(--text3); padding:4px 0; }
+    .dc { background:var(--card); border-radius:6px; padding:8px 4px; text-align:center; border:1px solid var(--border); min-height:64px; transition:all .2s; box-shadow:var(--shadow); }
+    .dc:hover { box-shadow:var(--shadow2); }
+    .dc.empty { background:transparent; border-color:transparent; box-shadow:none; }
+    .dc.camp { border-color:var(--accent); box-shadow:0 0 8px rgba(200,16,46,0.1); }
+    .dc .ddn { font-size:12px; font-weight:700; margin-bottom:1px; }
+    .dc .ddv { font-size:9px; font-weight:600; color:var(--text2); }
+    .dc .ddt { font-size:7px; font-weight:700; color:#fff; background:var(--accent); padding:1px 4px; border-radius:2px; margin-top:2px; display:inline-block; }
+    .dc.wk .ddn { color:var(--text3); }
+
+    .mg { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:10px; }
+    .mc { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:14px; border-left:3px solid var(--accent); display:flex; gap:12px; box-shadow:var(--shadow); }
+    .mi { font-size:20px; flex-shrink:0; }
+    .mm { font-size:12px; font-weight:700; margin-bottom:2px; }
+    .md { font-size:11px; color:var(--text2); line-height:1.4; }
+
+    .stbl { width:100%; border-collapse:collapse; font-size:11px; }
+    .stbl th { background:#f9fafb; color:var(--text2); font-size:9px; font-weight:600; text-transform:uppercase; padding:8px 12px; text-align:left; border-bottom:1px solid var(--border); }
+    .stbl td { padding:8px 12px; border-bottom:1px solid #f3f4f6; }
+    .stbl td:first-child { font-weight:600; color:var(--accent); white-space:nowrap; }
+
+    .footer { text-align:center; padding:24px; color:var(--text3); font-size:10px; border-top:1px solid var(--border); }
+
+    @media(max-width:1100px) { .g-cards{grid-template-columns:repeat(2,1fr)} .bottom-row{grid-template-columns:1fr} }
+    @media(max-width:768px) { .g-cards{grid-template-columns:1fr 1fr} .cmp-cards{grid-template-columns:1fr} .container{padding:16px} }
+    @media(max-width:500px) { .g-cards{grid-template-columns:1fr} .total-num{font-size:30px} }
+    @media print { .tab-nav{display:none} .tab-panel{display:block!important} .cc,.g-card,.cmp-card,.bc{box-shadow:none;border:1px solid #ddd} }
+  </style>
+  <script src="du_lieu_T04_2026.js"></script>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-label">Mục Tiêu Doanh Thu</div>
+  <h1>THÁNG 04 / 2026</h1>
+  <div class="header-meta">Ngày lập: 01/04/2026 · Kỳ báo cáo: Tháng 4, 2026</div>
+</header>
+
+<div class="container">
+
+  <!-- TAB NAV -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('overview',event)"><span>📊</span> Tổng Quan</button>
+    <button class="tab-btn" onclick="switchTab('dt',event)"><span>📚</span> Nhóm Đầu Tư</button>
+    <button class="tab-btn" onclick="switchTab('kd',event)"><span>💼</span> Nhóm Kinh Doanh</button>
+    <button class="tab-btn" onclick="switchTab('ptbt',event)"><span>🌱</span> Nhóm PTBT</button>
+  </div>
+
+  <!-- ===== TAB: TỔNG QUAN ===== -->
+  <div id="tab-overview" class="tab-panel active">
+
+    <!-- TOTAL -->
+    <div class="total-card" style="margin-bottom:20px">
+      <div class="total-label">Tổng Mục Tiêu Tháng</div>
+      <div class="total-num" id="big-num">Chờ nhập mục tiêu</div>
+      <div class="total-sub" id="big-sub"></div>
+    </div>
+
+    <!-- 4 GROUP CARDS -->
+    <div class="g-cards" id="g-cards"></div>
+
+    <!-- 3 COMPARISON -->
+    <div class="cmp-cards" id="cmp-cards"></div>
+
+    <!-- PIE + TABLE -->
+    <div class="bottom-row">
+      <div class="pie-card">
+        <div class="pie-title" id="pie-title">Tỷ trọng mục tiêu</div>
+        <div class="pie-box"><canvas id="pieChart"></canvas></div>
+      </div>
+      <div class="tbl-card">
+        <div class="tbl-title">Chi tiết so sánh theo nhóm</div>
+        <div style="flex:1;overflow:auto">
+          <table>
+            <thead><tr><th>Nhóm</th><th>Mục tiêu</th><th>TB 3T</th><th>%</th><th>T03/2026</th><th>%</th><th>T04/2025</th><th>%</th></tr></thead>
+            <tbody id="detail-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHARTS -->
+    <div class="section"><div class="sh"><div class="sd"></div><div class="st">Doanh Thu 12 Tháng — 2025 vs 2026</div></div>
+      <div class="yoy-grid"><div class="cc yf"><div class="yh"><div><div class="yt">Tổng Doanh Thu</div><div class="ys">Đơn vị: triệu đồng · 2026 cập nhật đến T03</div></div><div class="lg"><div class="li"><div class="ll" style="background:#cbd5e1"></div>2025</div><div class="li"><div class="ll" style="background:var(--accent)"></div>2026</div></div></div><div class="cb yoy"><canvas id="yoyTong"></canvas></div></div></div>
+    </div>
+
+  </div>
+
+  <!-- ===== TAB: ĐT ===== -->
+  <div id="tab-dt" class="tab-panel">
+    <div class="section"><div class="yoy-grid"><div class="cc yf" style="border-top-color:var(--purple)"><div class="yh"><div><div class="yt">Nhóm Đầu Tư (ĐT) — 2025 vs 2026</div><div class="ys">Đơn vị: triệu đồng</div></div><div class="lg"><div class="li"><div class="ll" style="background:#cbd5e1"></div>2025</div><div class="li"><div class="ll" style="background:var(--purple)"></div>2026</div></div></div><div class="cb yoy"><canvas id="yoyDT"></canvas></div></div></div></div>
+    <div class="section"><div class="sh"><div class="sd"></div><div class="st">Chi Tiết Từng Đầu Sách</div></div>
+      <div class="bc"><div class="bb bdt"><span>NHÓM ĐẦU TƯ · T04/2026</span><span class="bp">MT: <span id="dt-total"></span></span></div><div class="bs"><table class="bt"><thead><tr><th>STT</th><th>Tên Sách</th><th>TOP</th><th>TB 3T</th><th>T3/26</th><th>T4/25</th><th>Giá</th><th>MT SL</th><th>Mục Tiêu DT</th></tr></thead><tbody id="dt-body"></tbody><tfoot><tr><td class="c" colspan="8">TỔNG CỘNG</td><td id="dt-sum"></td></tr></tfoot></table></div></div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: KD ===== -->
+  <div id="tab-kd" class="tab-panel">
+    <div class="section"><div class="yoy-grid"><div class="cc yf" style="border-top-color:var(--blue)"><div class="yh"><div><div class="yt">Nhóm Kinh Doanh (KD) — 2025 vs 2026</div><div class="ys">Đơn vị: triệu đồng</div></div><div class="lg"><div class="li"><div class="ll" style="background:#cbd5e1"></div>2025</div><div class="li"><div class="ll" style="background:var(--blue)"></div>2026</div></div></div><div class="cb yoy"><canvas id="yoyKD"></canvas></div></div></div></div>
+    <div class="section"><div class="sh"><div class="sd"></div><div class="st">Chi Tiết Từng Đầu Sách</div></div>
+      <div class="bc"><div class="bb bkd"><span>NHÓM KINH DOANH · T04/2026</span><span class="bp">MT: <span id="kd-total"></span></span></div><div class="bs"><table class="bt"><thead><tr><th>STT</th><th>Tên Sách</th><th>TOP</th><th>TB 3T</th><th>T3/26</th><th>T4/25</th><th>Giá</th><th>MT SL</th><th>Mục Tiêu DT</th></tr></thead><tbody id="kd-body"></tbody><tfoot><tr><td class="c" colspan="8">TỔNG CỘNG</td><td id="kd-sum"></td></tr></tfoot></table></div></div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: PTBT ===== -->
+  <div id="tab-ptbt" class="tab-panel">
+    <div class="section"><div class="yoy-grid"><div class="cc yf" style="border-top-color:var(--orange)"><div class="yh"><div><div class="yt">Nhóm PTBT — 2025 vs 2026</div><div class="ys">Đơn vị: triệu đồng</div></div><div class="lg"><div class="li"><div class="ll" style="background:#cbd5e1"></div>2025</div><div class="li"><div class="ll" style="background:var(--orange)"></div>2026</div></div></div><div class="cb yoy"><canvas id="yoyPTBT"></canvas></div></div></div></div>
+    <div class="section"><div class="sh"><div class="sd"></div><div class="st">Chi Tiết Từng Đầu Sách</div></div>
+      <div class="bc"><div class="bb bpt"><span>NHÓM PTBT · T04/2026</span><span class="bp">MT: <span id="ptbt-total"></span></span></div><div class="bs"><table class="bt"><thead><tr><th>STT</th><th>Tên Sách</th><th>TOP</th><th>TB 3T</th><th>T3/26</th><th>T4/25</th><th>Giá</th><th>MT SL</th><th>Mục Tiêu DT</th></tr></thead><tbody id="ptbt-body"></tbody><tfoot><tr><td class="c" colspan="8">TỔNG CỘNG</td><td id="ptbt-sum"></td></tr></tfoot></table></div></div>
+    </div>
+  </div>
+
+  <div class="footer">Happy Live &copy; 2026 · Mục tiêu doanh thu nội bộ</div>
+</div>
+
+<script>
+Chart.register(ChartDataLabels);
+Chart.defaults.color='#6b7280';
+Chart.defaults.borderColor='#e5e7eb';
+const D=dashboardData,T=D.targets,C=D.comparison;
+const f=v=>v==null?'—':new Intl.NumberFormat('vi-VN').format(v);
+const fm=v=>{if(!v)return'';return v>=1e9?(v/1e9).toFixed(2)+' tỷ':v>=1e6?(v/1e6).toFixed(0)+' tr':f(v)};
+const pc=(t,b)=>(t!=null&&b)?((t-b)/Math.abs(b)*100):null;
+const bh=p=>{if(p==null)return'<span class="badge na">N/A</span>';return`<span class="badge ${p>=0?'pos':'neg'}">${p>=0?'+':''}${p.toFixed(1)}%</span>`};
+const has=T.dt!=null&&T.kd!=null&&T.ptbt!=null;
+const tong=has?(T.dt+T.kd+T.ptbt+(T.khac||0)):null;
+const PEND='<span style="color:var(--amber)">Chờ nhập</span>';
+const tt={backgroundColor:'#0f172a',borderColor:'#334155',borderWidth:1,titleFont:{family:'Inter',weight:'600'},bodyFont:{family:'Inter'},padding:12,cornerRadius:8,titleColor:'#f1f5f9',bodyColor:'#e2e8f0'};
+
+// BIG NUM
+if(tong){document.getElementById('big-num').textContent=f(tong)+'đ';document.getElementById('big-sub').textContent='Tổng mục tiêu 4 nhóm ngành';}
+
+// GROUP CARDS
+const gc=document.getElementById('g-cards');
+[{l:'Đầu Tư',v:T.dt,c:'dt',cl:'var(--purple)',b:C.thang_truoc.dt},{l:'Kinh Doanh',v:T.kd,c:'kd',cl:'var(--blue)',b:C.thang_truoc.kd},{l:'PTBT',v:T.ptbt,c:'pt',cl:'var(--orange)',b:C.thang_truoc.ptbt},{l:'Khác',v:T.khac,c:'kh',cl:'#6b7280',b:C.cung_ky.khac}].forEach(k=>{
+  const p=pc(k.v,k.b);gc.innerHTML+=`<div class="g-card ${k.c}"><div class="g-label">${k.l}</div><div class="g-val" style="color:${k.cl}">${k.v!=null?fm(k.v):PEND}</div>${p!=null?`<div class="g-pct ${p>=0?'up':'dn'}">${p>=0?'+':''}${p.toFixed(1)}% vs T03</div>`:''}</div>`;
+});
+
+// COMPARISON
+const cc=document.getElementById('cmp-cards');
+[{t:'vs TB 3 Tháng',base:C.tb3t.tong,lbl:'TB T1-T3.2026'},{t:'vs Tháng Trước',base:C.thang_truoc.tong,lbl:'T03/2026'},{t:'vs Cùng Kỳ Năm',base:C.cung_ky.tong,lbl:'T04/2025'}].forEach(c=>{
+  const p=pc(tong,c.base);cc.innerHTML+=`<div class="cmp-card"><div class="cmp-title">${c.t}</div><div class="cmp-base">${c.lbl}: ${fm(c.base)}</div><div class="cmp-pct ${p!=null?(p>=0?'up':'dn'):''}">${p!=null?((p>=0?'+':'')+p.toFixed(1)+'%'):'—'}</div><div class="cmp-abs">${tong!=null&&c.base?'Chênh lệch: '+(tong-c.base>=0?'+':'')+fm(tong-c.base):''}</div></div>`;
+});
+
+// PIE
+const pieD=has?[T.dt,T.kd,T.ptbt,T.khac||0]:[C.tb3t.dt,C.tb3t.kd,C.tb3t.ptbt,5e6];
+if(!has)document.getElementById('pie-title').textContent='Tỷ trọng (TB 3T)';
+new Chart(document.getElementById('pieChart'),{type:'doughnut',data:{labels:['ĐT','KD','PTBT','Khác'],datasets:[{data:pieD,backgroundColor:['#7c3aed','#2563eb','#ea580c','#9ca3af'],borderWidth:2,borderColor:'#fff',hoverOffset:4}]},options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{datalabels:{display:false},legend:{position:'bottom',labels:{padding:8,usePointStyle:true,pointStyleWidth:8,font:{family:'Inter',size:10,weight:'500'},color:'#6b7280'}},tooltip:{...tt,callbacks:{label:c=>{const t=c.dataset.data.reduce((a,b)=>a+b,0);return c.label+': '+f(c.raw)+'đ ('+((c.raw/t)*100).toFixed(1)+'%)';}}}}}});
+
+// DETAIL TABLE
+const dtb=document.getElementById('detail-tbody');
+[{n:'<span class="cat-dot" style="background:var(--purple)"></span>Đầu Tư',t:T.dt,tb:C.tb3t.dt,tt:C.thang_truoc.dt,ck:C.cung_ky.dt},
+{n:'<span class="cat-dot" style="background:var(--blue)"></span>Kinh Doanh',t:T.kd,tb:C.tb3t.kd,tt:C.thang_truoc.kd,ck:C.cung_ky.kd},
+{n:'<span class="cat-dot" style="background:var(--orange)"></span>PTBT',t:T.ptbt,tb:C.tb3t.ptbt,tt:C.thang_truoc.ptbt,ck:C.cung_ky.ptbt},
+{n:'<span class="cat-dot" style="background:#9ca3af"></span>Khác',t:T.khac,tb:null,tt:null,ck:C.cung_ky.khac},
+{n:'<strong><span class="cat-dot" style="background:#0f172a"></span>TỔNG</strong>',t:tong,tb:C.tb3t.tong,tt:C.thang_truoc.tong,ck:C.cung_ky.tong}
+].forEach(r=>{dtb.innerHTML+=`<tr><td>${r.n}</td><td><strong>${r.t!=null?f(r.t):'—'}</strong></td><td>${r.tb?f(Math.round(r.tb)):'—'}</td><td style="text-align:center">${bh(pc(r.t,r.tb))}</td><td>${r.tt?f(r.tt):'—'}</td><td style="text-align:center">${bh(pc(r.t,r.tt))}</td><td>${r.ck?f(r.ck):'—'}</td><td style="text-align:center">${bh(pc(r.t,r.ck))}</td></tr>`;});
+
+// CHARTS (growthChart & barChart removed from HTML)
+
+const months=['T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12'];
+function yO(){return{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{...tt,callbacks:{label:c=>c.raw==null?c.dataset.label+': N/A':c.dataset.label+': '+f(c.raw)+'đ'}},datalabels:{anchor:'end',align:'top',formatter:v=>v==null||v===0?'':(v/1e6).toFixed(0)+' tr',font:{family:'Inter',size:8,weight:'600'},color:'#6b7280',clamp:true}},scales:{x:{grid:{display:false},ticks:{font:{family:'Inter',size:10,weight:'600'},color:'#6b7280'}},y:{beginAtZero:true,grid:{color:'#f3f4f6'},ticks:{font:{family:'Inter',size:9},color:'#9ca3af',callback:v=>fm(v)}}}}}
+function mDS(a,b,ca,cb){return[{label:'2025',data:a,backgroundColor:ca,borderColor:ca,borderWidth:1,borderRadius:3,barPercentage:.75,categoryPercentage:.8},{label:'2026',data:b,backgroundColor:cb+'cc',borderColor:cb,borderWidth:1.5,borderRadius:3,barPercentage:.75,categoryPercentage:.8}]}
+new Chart(document.getElementById('yoyTong'),{type:'bar',data:{labels:months,datasets:mDS(D.yoy.tong.data2025,D.yoy.tong.data2026,'#cbd5e1','#c8102e')},options:yO()});
+new Chart(document.getElementById('yoyDT'),{type:'bar',data:{labels:months,datasets:mDS(D.yoy.dauTu.data2025,D.yoy.dauTu.data2026,'#cbd5e1','#7c3aed')},options:yO()});
+new Chart(document.getElementById('yoyKD'),{type:'bar',data:{labels:months,datasets:mDS(D.yoy.kinhDoanh.data2025,D.yoy.kinhDoanh.data2026,'#cbd5e1','#2563eb')},options:yO()});
+new Chart(document.getElementById('yoyPTBT'),{type:'bar',data:{labels:months,datasets:mDS(D.yoy.ptbt.data2025,D.yoy.ptbt.data2026,'#cbd5e1','#ea580c')},options:yO()});
+
+// METHODOLOGY (only if elements exist)
+if(document.getElementById('mg')) D.methodology.forEach(m=>{document.getElementById('mg').innerHTML+=`<div class="mc"><div class="mi">${m.icon}</div><div><div class="mm">${m.title}</div><div class="md">${m.desc}</div></div></div>`;});
+if(document.getElementById('src')) D.dataSources.forEach(s=>{document.getElementById('src').innerHTML+=`<tr><td>${s.period}</td><td>${s.source}</td></tr>`;});
+
+// DAILY (only if elements exist in current tab layout)
+const dc=document.getElementById('day-cal');
+if(dc){
+  ['T2','T3','T4','T5','T6','T7','CN'].forEach(h=>{dc.innerHTML+=`<div class="dh">${h}</div>`;});
+  if(D.dailyTargets&&D.dailyTargets.length){
+    for(let i=0;i<2;i++)dc.innerHTML+='<div class="dc empty"></div>';
+    D.dailyTargets.forEach(d=>{const w=d.thu==='T7'||d.thu==='CN';const c=d.campaign!=null;dc.innerHTML+=`<div class="dc ${w?'wk':''} ${c?'camp':''}"><div class="ddn">${d.ngay}</div><div class="ddv">${d.tong?(d.tong/1e6).toFixed(0)+' tr':'—'}</div>${c?'<div class="ddt">'+d.campaign+'</div>':''}</div>`;});
+  }else{dc.innerHTML+='<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--amber)">Chưa phân bổ mục tiêu ngày</div>';}
+}
+const dailyBarEl=document.getElementById('dailyBar');
+if(dailyBarEl){
+  if(!D.dailyTargets){dailyBarEl.parentElement.innerHTML='<div style="text-align:center;padding:50px;color:var(--amber)">Chưa có dữ liệu</div>';}
+  else{new Chart(dailyBarEl,{type:'bar',data:{labels:D.dailyTargets.map(d=>d.ngay+'/'+d.thu),datasets:[{data:D.dailyTargets.map(d=>d.tong),backgroundColor:D.dailyTargets.map(d=>d.campaign?'rgba(200,16,46,.75)':(d.thu==='T7'||d.thu==='CN')?'#d1d5db':'#9ca3af'),borderColor:D.dailyTargets.map(d=>d.campaign?'#c8102e':'#9ca3af'),borderWidth:1,borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...tt,callbacks:{label:c=>f(c.raw)+'đ'}},datalabels:{display:c=>D.dailyTargets[c.dataIndex].campaign!=null,anchor:'end',align:'top',formatter:v=>(v/1e6).toFixed(0)+'tr',font:{family:'Inter',size:9,weight:'700'},color:'#c8102e'}},scales:{x:{grid:{display:false},ticks:{font:{family:'Inter',size:7},color:'#9ca3af',maxRotation:90,minRotation:45}},y:{beginAtZero:true,grid:{color:'#f3f4f6'},ticks:{font:{family:'Inter',size:9},color:'#9ca3af',callback:v=>fm(v)}}}}});}
+}
+
+// BOOK TABLES
+function rBT(bid,sid,tid,books,gt){
+  const tb=document.getElementById(bid);tb.innerHTML='';
+  if(!books||!books.length){tb.innerHTML='<tr><td colspan="9" class="c" style="padding:40px;color:var(--text3)">Đang cập nhật...</td></tr>';return;}
+  let sum=0;books.forEach(b=>{sum+=b.muc_tieu_dt||0;const h=b.muc_tieu_sl!=null;
+    tb.innerHTML+=`<tr><td class="c">${b.stt}</td><td class="l" style="font-weight:600">${b.ten_hang}</td><td class="c">${b.top}</td><td class="r">${b.tb_3t||'—'}</td><td class="r">${b.thang_truoc!=null?b.thang_truoc:'—'}</td><td class="r">${b.nam_truoc!=null?b.nam_truoc:'—'}</td><td class="r" style="color:var(--text3)">${f(b.gia_tien)}đ</td><td class="c" style="font-weight:700;color:${h?'var(--accent)':'var(--text3)'}; background:${h?'#fef2f2':'transparent'}">${h?b.muc_tieu_sl:'—'}</td><td class="r" style="font-weight:700;color:${h?'var(--accent)':'var(--text3)'}">${h?f(b.muc_tieu_dt)+' đ':'Chờ'}</td></tr>`;});
+  const fi=gt||(sum>0?sum:null);const s=fi!=null?f(fi)+' đ':'Chờ nhập';
+  document.getElementById(sid).textContent=s;document.getElementById(tid).textContent=s;
+}
+rBT('dt-body','dt-sum','dt-total',D.bookDetails.dt,T.dt);
+rBT('kd-body','kd-sum','kd-total',D.bookDetails.kd,T.kd);
+rBT('ptbt-body','ptbt-sum','ptbt-total',D.bookDetails.ptbt,T.ptbt);
+
+// TAB
+function switchTab(id,e){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  if(e&&e.currentTarget)e.currentTarget.classList.add('active');
+  setTimeout(()=>{Object.values(Chart.instances).forEach(c=>c.resize())},50);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+window.switchTab=switchTab;
+</script>
+</body>
+</html>
