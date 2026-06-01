@@ -457,7 +457,7 @@ function rBT(bid,sid,tid,books,gt){
   const tb=document.getElementById(bid);tb.innerHTML='';
   if(!books||!books.length){tb.innerHTML='<tr><td colspan="9" class="c" style="padding:40px;color:var(--text3)">Đang cập nhật...</td></tr>';return;}
   let sum=0;books.forEach(b=>{sum+=b.muc_tieu_dt||0;const h=b.muc_tieu_sl!=null&&b.muc_tieu_sl>0;
-    tb.innerHTML+=`<tr><td class="c">${b.stt}</td><td class="l" style="font-weight:600">${b.ten_hang}</td><td class="c">${b.top}</td><td class="r">${b.tb_3t||'—'}</td><td class="r">${b.thang_truoc!=null?b.thang_truoc:'—'}</td><td class="r">${b.nam_truoc!=null?b.nam_truoc:'—'}</td><td class="r" style="color:var(--text3)">${f(b.gia_tien)}đ</td><td class="c" style="font-weight:700;color:${h?'var(--accent)':'var(--text3)'}; background:${h?'#fef2f2':'transparent'}">${h?b.muc_tieu_sl:'—'}</td><td class="r" style="font-weight:700;color:${h?'var(--accent)':'var(--text3)'}">${h?f(b.muc_tieu_dt)+' đ':'Chờ'}</td></tr>`;});
+    tb.innerHTML+=`<tr><td class="c">${b.stt}</td><td class="l" style="font-weight:600">${b.ten_hang}</td><td class="c">${b.top}</td><td class="r">${b.tb_3t||'—'}</td><td class="r">${b.thang_truoc!=null?b.thang_truoc:'—'}</td><td class="r">${b.nam_truoc!=null?b.nam_truoc:'—'}</td><td class="r" style="color:var(--text3)">${f(b.gia_tien)}đ</td><td class="c" style="font-weight:700;color:${h?'var(--accent)':'var(--text3)'}; background:${h?'#fef2f2':'transparent'}">${h?b.muc_tieu_sl:'—'}</td><td class="r" style="font-weight:700;color:${h?'var(--accent)':'var(--text3)'}">${h?f(b.muc_tieu_dt)+' đ':'—'}</td></tr>`;});
   const fi=gt||(sum>0?sum:null);const s=fi!=null?f(fi)+' đ':'Chờ nhập';
   document.getElementById(sid).textContent=s;document.getElementById(tid).textContent=s;
 }

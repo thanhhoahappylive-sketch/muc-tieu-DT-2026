@@ -585,7 +585,7 @@ const dashboardData = {
       {
         "stt": 1,
         "ten_hang": "Damn Right! - Vén màn bí ẩn về tỷ phú Charlie Munger",
-        "top": 2,
+        "top": 1,
         "tb_3t": 108,
         "thang_truoc": 155,
         "nam_truoc": 11,
@@ -662,7 +662,7 @@ const dashboardData = {
       {
         "stt": 8,
         "ten_hang": "The Simple Path to Wealth - Con đường đi đến sự giàu có",
-        "top": 2,
+        "top": 1,
         "tb_3t": 46,
         "thang_truoc": 47,
         "nam_truoc": 10,
@@ -673,7 +673,7 @@ const dashboardData = {
       {
         "stt": 9,
         "ten_hang": "Điều Quan Trọng Nhất",
-        "top": 2,
+        "top": 1,
         "tb_3t": 42,
         "thang_truoc": 35,
         "nam_truoc": 41,
@@ -684,7 +684,7 @@ const dashboardData = {
       {
         "stt": 10,
         "ten_hang": "Basic Economics: Kinh tế học cơ bản, a bờ cờ, kinh tế học nhập môn cho nhà đầu tư",
-        "top": 2,
+        "top": 1,
         "tb_3t": 34,
         "thang_truoc": 37,
         "nam_truoc": 25,
@@ -695,7 +695,7 @@ const dashboardData = {
       {
         "stt": 11,
         "ten_hang": "Fibonacci Trading",
-        "top": 2,
+        "top": 1,
         "tb_3t": 33,
         "thang_truoc": 32,
         "nam_truoc": 30,
@@ -706,7 +706,7 @@ const dashboardData = {
       {
         "stt": 12,
         "ten_hang": "Kỹ thuật giao dịch để Kiếm tiền hàng ngày trên thị trường chứng khoán",
-        "top": 2,
+        "top": 1,
         "tb_3t": 11,
         "thang_truoc": 6,
         "nam_truoc": 56,
@@ -717,7 +717,7 @@ const dashboardData = {
       {
         "stt": 13,
         "ten_hang": "Bộ sách giao dịch theo Wyckoff - Làm giàu từ chứng khoán bằng phương pháp VSA chính gốc (Gồm 2 cuốn)",
-        "top": 2,
+        "top": 1,
         "tb_3t": 25,
         "thang_truoc": 21,
         "nam_truoc": 16,
@@ -728,7 +728,7 @@ const dashboardData = {
       {
         "stt": 14,
         "ten_hang": "Hướng Dẫn Giao Dịch Theo Sóng Elliott - Bản mới",
-        "top": 2,
+        "top": 1,
         "tb_3t": 32,
         "thang_truoc": 25,
         "nam_truoc": 34,
@@ -739,7 +739,7 @@ const dashboardData = {
       {
         "stt": 15,
         "ten_hang": "Người đàn ông đánh bại mọi thị trường",
-        "top": 3,
+        "top": 1,
         "tb_3t": 15,
         "thang_truoc": 21,
         "nam_truoc": 12,
@@ -761,7 +761,7 @@ const dashboardData = {
       {
         "stt": 17,
         "ten_hang": "Nghệ thuật đầu tư Dhandho",
-        "top": 3,
+        "top": 2,
         "tb_3t": 41,
         "thang_truoc": 25,
         "nam_truoc": 9,
@@ -783,7 +783,7 @@ const dashboardData = {
       {
         "stt": 19,
         "ten_hang": "Cách kiếm lợi nhuận 18.000% từ thị trường chứng khoán",
-        "top": 3,
+        "top": 2,
         "tb_3t": 12,
         "thang_truoc": 14,
         "nam_truoc": 17,
@@ -794,7 +794,7 @@ const dashboardData = {
       {
         "stt": 20,
         "ten_hang": "Super Trader, Expanded Edition - Thiết lập dòng tiền bền vững trong các thời điểm đỉnh và đáy của thị trường",
-        "top": 3,
+        "top": 2,
         "tb_3t": 14,
         "thang_truoc": 13,
         "nam_truoc": 14,
@@ -805,7 +805,7 @@ const dashboardData = {
       {
         "stt": 21,
         "ten_hang": "Bollinger on Bollinger Bands - Đọc vị biến động thị trường",
-        "top": 3,
+        "top": 2,
         "tb_3t": 9,
         "thang_truoc": 12,
         "nam_truoc": 6,
@@ -816,7 +816,7 @@ const dashboardData = {
       {
         "stt": 22,
         "ten_hang": "Các phương pháp giao dịch ngắn hạn hiệu quả trên thị trường Forex",
-        "top": 3,
+        "top": 2,
         "tb_3t": 15,
         "thang_truoc": 14,
         "nam_truoc": 41,
@@ -827,7 +827,7 @@ const dashboardData = {
       {
         "stt": 23,
         "ten_hang": "Bộ sách Bách khoa toàn thư về các mẫu hình biểu đồ (Gồm 3 cuốn)",
-        "top": 3,
+        "top": 2,
         "tb_3t": 9,
         "thang_truoc": 3,
         "nam_truoc": 35,
@@ -838,7 +838,7 @@ const dashboardData = {
       {
         "stt": 24,
         "ten_hang": "Bộ Sách Giao Dịch Để Kiếm Tiền Hàng Ngày Từ Cơ Bản Đến Nâng Cao (Gồm 2 cuốn)",
-        "top": 3,
+        "top": 2,
         "tb_3t": 11,
         "thang_truoc": 6,
         "nam_truoc": 3,
@@ -849,7 +849,7 @@ const dashboardData = {
       {
         "stt": 25,
         "ten_hang": "Những sự thật và ngụy biện trong kinh tế học",
-        "top": 3,
+        "top": 2,
         "tb_3t": 4,
         "thang_truoc": 8,
         "nam_truoc": 0,
@@ -860,7 +860,7 @@ const dashboardData = {
       {
         "stt": 26,
         "ten_hang": "Tư duy giao dịch theo xu hướng - Trend Following Mindset",
-        "top": 3,
+        "top": 2,
         "tb_3t": 9,
         "thang_truoc": 6,
         "nam_truoc": 8,
@@ -871,7 +871,7 @@ const dashboardData = {
       {
         "stt": 27,
         "ten_hang": "Lột xác để trở thành nhà đầu tư giá trị",
-        "top": 3,
+        "top": 2,
         "tb_3t": 5,
         "thang_truoc": 5,
         "nam_truoc": 6,
@@ -882,7 +882,7 @@ const dashboardData = {
       {
         "stt": 28,
         "ten_hang": "The Art and Science of Technical Analysis - Phân tích kỹ thuật: Sự kết hợp giữa KHOA HỌC và NGHỆ THUẬT trong đầu tư chứng khoán",
-        "top": 3,
+        "top": 2,
         "tb_3t": 7,
         "thang_truoc": 6,
         "nam_truoc": 6,
@@ -893,7 +893,7 @@ const dashboardData = {
       {
         "stt": 29,
         "ten_hang": "Bộ Sách Nhập Môn Kungfu Chứng khoán 2.0 (Gồm 5 cuốn)",
-        "top": 3,
+        "top": 2,
         "tb_3t": 5,
         "thang_truoc": 4,
         "nam_truoc": 5,
@@ -904,7 +904,7 @@ const dashboardData = {
       {
         "stt": 30,
         "ten_hang": "Trend Following - Cách thức để kiếm được vận may lớn và giàu có trong các thị trường Bò, Gấu và các sự kiện Thiên nga đen",
-        "top": 3,
+        "top": 2,
         "tb_3t": 6,
         "thang_truoc": 2,
         "nam_truoc": 17,
@@ -1414,7 +1414,7 @@ const dashboardData = {
       {
         "stt": 5,
         "ten_hang": "Từ Tâm trí đến Vật chất",
-        "top": 2,
+        "top": 1,
         "tb_3t": 64,
         "thang_truoc": 75,
         "nam_truoc": 22,
@@ -1425,7 +1425,7 @@ const dashboardData = {
       {
         "stt": 6,
         "ten_hang": "Vòng Xoáy",
-        "top": 3,
+        "top": 1,
         "tb_3t": 43,
         "thang_truoc": 45,
         "nam_truoc": 0,
@@ -1436,7 +1436,7 @@ const dashboardData = {
       {
         "stt": 7,
         "ten_hang": "Yêu Cầu Đúng, Nhận Đủ",
-        "top": 3,
+        "top": 1,
         "tb_3t": 13,
         "thang_truoc": 22,
         "nam_truoc": 0,
@@ -1447,7 +1447,7 @@ const dashboardData = {
       {
         "stt": 8,
         "ten_hang": "Bộ sách sức mạnh tâm thức (Gồm 4 cuốn)",
-        "top": 3,
+        "top": 1,
         "tb_3t": 23,
         "thang_truoc": 21,
         "nam_truoc": 17,
@@ -1458,7 +1458,7 @@ const dashboardData = {
       {
         "stt": 9,
         "ten_hang": "Thiết kế cuộc đời thịnh vượng",
-        "top": 3,
+        "top": 1,
         "tb_3t": 26,
         "thang_truoc": 22,
         "nam_truoc": 12,
@@ -1469,7 +1469,7 @@ const dashboardData = {
       {
         "stt": 10,
         "ten_hang": "Tiny Habits: Thói quen tí hon - Tiềm năng khổng lồ",
-        "top": 3,
+        "top": 1,
         "tb_3t": 20,
         "thang_truoc": 20,
         "nam_truoc": 17,
@@ -1480,7 +1480,7 @@ const dashboardData = {
       {
         "stt": 11,
         "ten_hang": "Sức Mạnh Kỳ Diệu Của Cảm Xúc",
-        "top": 3,
+        "top": 1,
         "tb_3t": 20,
         "thang_truoc": 21,
         "nam_truoc": 0,
@@ -1491,7 +1491,7 @@ const dashboardData = {
       {
         "stt": 12,
         "ten_hang": "Sức Mạnh Kỳ Diệu Của Ý Định Có Chủ Đích",
-        "top": 3,
+        "top": 1,
         "tb_3t": 11,
         "thang_truoc": 16,
         "nam_truoc": 0,
@@ -1502,7 +1502,7 @@ const dashboardData = {
       {
         "stt": 13,
         "ten_hang": "101 Lời khuyên tài chính cá nhân từ Thái Phạm",
-        "top": 3,
+        "top": 1,
         "tb_3t": 9,
         "thang_truoc": 10,
         "nam_truoc": 9,
@@ -1513,7 +1513,7 @@ const dashboardData = {
       {
         "stt": 14,
         "ten_hang": "Tiền Bạc Và Luật Hấp Dẫn",
-        "top": 2,
+        "top": 1,
         "tb_3t": 11,
         "thang_truoc": 6,
         "nam_truoc": 0,
@@ -1524,7 +1524,7 @@ const dashboardData = {
       {
         "stt": 15,
         "ten_hang": "Poor Richard's Almanack - Tuyển tập các câu châm ngôn và thành ngữ, và một bản phác họa ngắn về cuộc đời của Benjamin Franklin",
-        "top": 3,
+        "top": 2,
         "tb_3t": 22,
         "thang_truoc": 38,
         "nam_truoc": 16,
@@ -1535,7 +1535,7 @@ const dashboardData = {
       {
         "stt": 16,
         "ten_hang": "Bắt đầu để chiến thắng - Thoát khỏi vùng xoáy trì hoãn, khơi dậy lửa sáng tạo!",
-        "top": 3,
+        "top": 2,
         "tb_3t": 6,
         "thang_truoc": 7,
         "nam_truoc": 5,
@@ -1546,7 +1546,7 @@ const dashboardData = {
       {
         "stt": 17,
         "ten_hang": "Bộ sách Luật Hấp Dẫn - Sức Mạnh Thay Đổi Cuộc Đời (Gồm 6 cuốn)",
-        "top": 3,
+        "top": 2,
         "tb_3t": 4,
         "thang_truoc": 4,
         "nam_truoc": 0,
@@ -1557,7 +1557,7 @@ const dashboardData = {
       {
         "stt": 18,
         "ten_hang": "Hiện Thực Hóa Khát Vọng",
-        "top": 3,
+        "top": 2,
         "tb_3t": 4,
         "thang_truoc": 4,
         "nam_truoc": 0,
@@ -1568,7 +1568,7 @@ const dashboardData = {
       {
         "stt": 19,
         "ten_hang": "Làm Chủ Tuổi 20",
-        "top": 3,
+        "top": 2,
         "tb_3t": 4,
         "thang_truoc": 4,
         "nam_truoc": 12,
@@ -1579,7 +1579,7 @@ const dashboardData = {
       {
         "stt": 20,
         "ten_hang": "Bộ sách Thay thói quen - Đổi vận mệnh (Gồm 2 cuốn)",
-        "top": 3,
+        "top": 2,
         "tb_3t": 5,
         "thang_truoc": 7,
         "nam_truoc": 0,
@@ -1590,7 +1590,7 @@ const dashboardData = {
       {
         "stt": 21,
         "ten_hang": "Sổ tay thực hành 66 Ngày Thử Thách",
-        "top": 3,
+        "top": 2,
         "tb_3t": 8,
         "thang_truoc": 6,
         "nam_truoc": 7,
@@ -1601,7 +1601,7 @@ const dashboardData = {
       {
         "stt": 22,
         "ten_hang": "Combo sách 10 cuốn Bí mật của Phan Thiên Ân (Gồm 10 cuốn)",
-        "top": 3,
+        "top": 2,
         "tb_3t": 0,
         "thang_truoc": 0,
         "nam_truoc": 1,
@@ -1612,7 +1612,7 @@ const dashboardData = {
       {
         "stt": 23,
         "ten_hang": "Bộ sách Thiết Kế Cuộc Đời Thịnh Vượng (Gồm 4 cuốn)",
-        "top": 3,
+        "top": 2,
         "tb_3t": 0,
         "thang_truoc": 0,
         "nam_truoc": 2,
@@ -1623,7 +1623,7 @@ const dashboardData = {
       {
         "stt": 24,
         "ten_hang": "Bộ sách Nâng cấp bản thân - Kiến tạo hạnh phúc (Gồm 2 cuốn)",
-        "top": 3,
+        "top": 2,
         "tb_3t": 0,
         "thang_truoc": 0,
         "nam_truoc": 0,
@@ -1634,7 +1634,7 @@ const dashboardData = {
       {
         "stt": 25,
         "ten_hang": "Sổ tay thực hành 6×66 Ngày Thử Thách",
-        "top": 3,
+        "top": 2,
         "tb_3t": 8,
         "thang_truoc": 13,
         "nam_truoc": 1,
@@ -1645,7 +1645,7 @@ const dashboardData = {
       {
         "stt": 26,
         "ten_hang": "Bộ sách 396 Lời khuyên khai thông trí tuệ nâng tầm tư duy (Gồm 3 cuốn)",
-        "top": 3,
+        "top": 2,
         "tb_3t": 1,
         "thang_truoc": 0,
         "nam_truoc": 0,
@@ -1656,7 +1656,7 @@ const dashboardData = {
       {
         "stt": 27,
         "ten_hang": "396 lời khuyên đắt giá về Đầu Tư",
-        "top": 3,
+        "top": 2,
         "tb_3t": 2,
         "thang_truoc": 1,
         "nam_truoc": 3,
@@ -1667,7 +1667,7 @@ const dashboardData = {
       {
         "stt": 28,
         "ten_hang": "396 lời khuyên đắt giá Phát Triển Bản Thân",
-        "top": 3,
+        "top": 2,
         "tb_3t": 1,
         "thang_truoc": 1,
         "nam_truoc": 5,
