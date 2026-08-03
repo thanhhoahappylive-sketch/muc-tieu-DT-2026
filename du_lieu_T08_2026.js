@@ -1,22 +1,22 @@
 /**
  * DỮ LIỆU MỤC TIÊU DT T08/2026
- * Sinh từ Excel T08 · Cập nhật: 01/08/2026
+ * Sinh từ Excel T08 · Cập nhật: 03/08/2026
  * Campaign: 8/8 Flash Sale · 15/8 Mid-month · 25/8 CT25
- * Mục tiêu 4 nhóm: 710,267,000đ. Số T7.2026 là số thực tế (đóng sổ đủ 31 ngày).
+ * Mục tiêu 4 nhóm: 750,289,000đ. Số T7.2026 là số thực tế (đóng sổ đủ 31 ngày).
  */
 
 const dashboardData = {
   "targets": {
-    "dt": 482040000,
-    "kd": 46765000,
-    "ptbt": 181462000,
+    "dt": 500292000,
+    "kd": 50840000,
+    "ptbt": 199157000,
     "khac": 0
   },
   "dailyTargets": [
     {
       "ngay": 1,
       "thu": "T7",
-      "tong": 17500000,
+      "tong": 18500000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -25,7 +25,7 @@ const dashboardData = {
     {
       "ngay": 2,
       "thu": "CN",
-      "tong": 16100000,
+      "tong": 17100000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -34,7 +34,7 @@ const dashboardData = {
     {
       "ngay": 3,
       "thu": "T2",
-      "tong": 22400000,
+      "tong": 23700000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -43,7 +43,7 @@ const dashboardData = {
     {
       "ngay": 4,
       "thu": "T3",
-      "tong": 22400000,
+      "tong": 23700000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -52,7 +52,7 @@ const dashboardData = {
     {
       "ngay": 5,
       "thu": "T4",
-      "tong": 22400000,
+      "tong": 23700000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -61,7 +61,7 @@ const dashboardData = {
     {
       "ngay": 6,
       "thu": "T5",
-      "tong": 22400000,
+      "tong": 23700000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -70,7 +70,7 @@ const dashboardData = {
     {
       "ngay": 7,
       "thu": "T6",
-      "tong": 26000000,
+      "tong": 27500000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -79,7 +79,7 @@ const dashboardData = {
     {
       "ngay": 8,
       "thu": "T7",
-      "tong": 54000000,
+      "tong": 57000000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -88,7 +88,7 @@ const dashboardData = {
     {
       "ngay": 9,
       "thu": "CN",
-      "tong": 16100000,
+      "tong": 17100000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -97,7 +97,7 @@ const dashboardData = {
     {
       "ngay": 10,
       "thu": "T2",
-      "tong": 22400000,
+      "tong": 23700000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -106,7 +106,7 @@ const dashboardData = {
     {
       "ngay": 11,
       "thu": "T3",
-      "tong": 22400000,
+      "tong": 23700000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -115,7 +115,7 @@ const dashboardData = {
     {
       "ngay": 12,
       "thu": "T4",
-      "tong": 22400000,
+      "tong": 23700000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -124,7 +124,7 @@ const dashboardData = {
     {
       "ngay": 13,
       "thu": "T5",
-      "tong": 22400000,
+      "tong": 23700000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -133,7 +133,7 @@ const dashboardData = {
     {
       "ngay": 14,
       "thu": "T6",
-      "tong": 22400000,
+      "tong": 23700000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -142,7 +142,7 @@ const dashboardData = {
     {
       "ngay": 15,
       "thu": "T7",
-      "tong": 36000000,
+      "tong": 37500000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -151,7 +151,7 @@ const dashboardData = {
     {
       "ngay": 16,
       "thu": "CN",
-      "tong": 16100000,
+      "tong": 17100000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -160,7 +160,7 @@ const dashboardData = {
     {
       "ngay": 17,
       "thu": "T2",
-      "tong": 22400000,
+      "tong": 23700000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -169,7 +169,7 @@ const dashboardData = {
     {
       "ngay": 18,
       "thu": "T3",
-      "tong": 22400000,
+      "tong": 23700000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -178,7 +178,7 @@ const dashboardData = {
     {
       "ngay": 19,
       "thu": "T4",
-      "tong": 22400000,
+      "tong": 23700000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -187,7 +187,7 @@ const dashboardData = {
     {
       "ngay": 20,
       "thu": "T5",
-      "tong": 22400000,
+      "tong": 23700000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -196,7 +196,7 @@ const dashboardData = {
     {
       "ngay": 21,
       "thu": "T6",
-      "tong": 22400000,
+      "tong": 23700000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -205,7 +205,7 @@ const dashboardData = {
     {
       "ngay": 22,
       "thu": "T7",
-      "tong": 17500000,
+      "tong": 18500000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -214,7 +214,7 @@ const dashboardData = {
     {
       "ngay": 23,
       "thu": "CN",
-      "tong": 16100000,
+      "tong": 17100000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -223,7 +223,7 @@ const dashboardData = {
     {
       "ngay": 24,
       "thu": "T2",
-      "tong": 22400000,
+      "tong": 23700000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -232,7 +232,7 @@ const dashboardData = {
     {
       "ngay": 25,
       "thu": "T3",
-      "tong": 36000000,
+      "tong": 37500000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -241,7 +241,7 @@ const dashboardData = {
     {
       "ngay": 26,
       "thu": "T4",
-      "tong": 22400000,
+      "tong": 23700000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -250,7 +250,7 @@ const dashboardData = {
     {
       "ngay": 27,
       "thu": "T5",
-      "tong": 22400000,
+      "tong": 23700000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -259,7 +259,7 @@ const dashboardData = {
     {
       "ngay": 28,
       "thu": "T6",
-      "tong": 22400000,
+      "tong": 23700000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -268,7 +268,7 @@ const dashboardData = {
     {
       "ngay": 29,
       "thu": "T7",
-      "tong": 17500000,
+      "tong": 18500000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -277,7 +277,7 @@ const dashboardData = {
     {
       "ngay": 30,
       "thu": "CN",
-      "tong": 16100000,
+      "tong": 17100000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -286,7 +286,7 @@ const dashboardData = {
     {
       "ngay": 31,
       "thu": "T2",
-      "tong": 22067000,
+      "tong": 23189000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -520,32 +520,32 @@ const dashboardData = {
     {
       "icon": "📅",
       "title": "Ngày thường (T2-T6)",
-      "desc": "22.400.000đ/ngày"
+      "desc": "23.700.000đ/ngày"
     },
     {
       "icon": "🌙",
       "title": "Cuối tuần",
-      "desc": "T7 17.500.000đ (−22%) · CN 16.100.000đ (−28%)"
+      "desc": "T7 18.500.000đ (−22%) · CN 17.100.000đ (−28%)"
     },
     {
       "icon": "⚡",
       "title": "Flash Sale 8.8 (T7)",
-      "desc": "54.000.000đ · ~2,4x nền ngày thường"
+      "desc": "57.000.000đ · ~2,4x nền ngày thường"
     },
     {
       "icon": "📈",
       "title": "Mid-month 15.8 (T7)",
-      "desc": "36.000.000đ · ~1,6x (ngày 15 yếu nhất qua 3 lần đo)"
+      "desc": "37.500.000đ · ~1,6x (ngày 15 yếu nhất qua 3 lần đo)"
     },
     {
       "icon": "💰",
       "title": "CT 25.8 (T3)",
-      "desc": "36.000.000đ · ~1,6x, push cuối tháng"
+      "desc": "37.500.000đ · ~1,6x, push cuối tháng"
     },
     {
       "icon": "📊",
       "title": "Tỷ trọng nhóm (T8.2026)",
-      "desc": "ĐT ~67,9%, PTBT ~25,5%, KD ~6,6%"
+      "desc": "ĐT ~66,7%, PTBT ~26,5%, KD ~6,8%"
     },
     {
       "icon": "🔄",
@@ -555,7 +555,7 @@ const dashboardData = {
     {
       "icon": "📕",
       "title": "Lưu ý nền cùng kỳ",
-      "desc": "T8.2025 có Phù thủy tím mới ra mắt gánh 192,1tr (18,8%). Trừ ra còn 830,7tr → mục tiêu tương đương −14,5% cùng kỳ"
+      "desc": "T8.2025 có Phù thủy tím mới ra mắt gánh 192,1tr (18,8%). Trừ ra còn 830,7tr → mục tiêu tương đương −9,7% cùng kỳ"
     }
   ],
   "dataSources": [
@@ -586,8 +586,8 @@ const dashboardData = {
         "thang_truoc": 63,
         "nam_truoc": 131,
         "gia_tien": 700000,
-        "muc_tieu_sl": 90,
-        "muc_tieu_dt": 63000000
+        "muc_tieu_sl": 100,
+        "muc_tieu_dt": 70000000
       },
       {
         "stt": 2,
@@ -597,8 +597,8 @@ const dashboardData = {
         "thang_truoc": 82,
         "nam_truoc": 110,
         "gia_tien": 349000,
-        "muc_tieu_sl": 100,
-        "muc_tieu_dt": 34900000
+        "muc_tieu_sl": 120,
+        "muc_tieu_dt": 41880000
       },
       {
         "stt": 3,
@@ -630,8 +630,8 @@ const dashboardData = {
         "thang_truoc": 33,
         "nam_truoc": 72,
         "gia_tien": 499000,
-        "muc_tieu_sl": 80,
-        "muc_tieu_dt": 39920000
+        "muc_tieu_sl": 90,
+        "muc_tieu_dt": 44910000
       },
       {
         "stt": 6,
@@ -883,8 +883,8 @@ const dashboardData = {
         "thang_truoc": 6,
         "nam_truoc": 17,
         "gia_tien": 359000,
-        "muc_tieu_sl": 7,
-        "muc_tieu_dt": 2513000
+        "muc_tieu_sl": 5,
+        "muc_tieu_dt": 1795000
       },
       {
         "stt": 29,
@@ -1171,8 +1171,8 @@ const dashboardData = {
         "thang_truoc": 23,
         "nam_truoc": 22,
         "gia_tien": 516000,
-        "muc_tieu_sl": 25,
-        "muc_tieu_dt": 12900000
+        "muc_tieu_sl": 30,
+        "muc_tieu_dt": 15480000
       },
       {
         "stt": 4,
@@ -1204,8 +1204,8 @@ const dashboardData = {
         "thang_truoc": 9,
         "nam_truoc": 37,
         "gia_tien": 299000,
-        "muc_tieu_sl": 10,
-        "muc_tieu_dt": 2990000
+        "muc_tieu_sl": 15,
+        "muc_tieu_dt": 4485000
       },
       {
         "stt": 7,
@@ -1382,8 +1382,8 @@ const dashboardData = {
         "thang_truoc": 116,
         "nam_truoc": 139,
         "gia_tien": 349000,
-        "muc_tieu_sl": 130,
-        "muc_tieu_dt": 45370000
+        "muc_tieu_sl": 140,
+        "muc_tieu_dt": 48860000
       },
       {
         "stt": 3,
@@ -1393,8 +1393,8 @@ const dashboardData = {
         "thang_truoc": 87,
         "nam_truoc": 115,
         "gia_tien": 349000,
-        "muc_tieu_sl": 90,
-        "muc_tieu_dt": 31410000
+        "muc_tieu_sl": 100,
+        "muc_tieu_dt": 34900000
       },
       {
         "stt": 4,
@@ -1415,8 +1415,8 @@ const dashboardData = {
         "thang_truoc": 15,
         "nam_truoc": 22,
         "gia_tien": 299000,
-        "muc_tieu_sl": 25,
-        "muc_tieu_dt": 7475000
+        "muc_tieu_sl": 30,
+        "muc_tieu_dt": 8970000
       },
       {
         "stt": 6,
@@ -1437,8 +1437,8 @@ const dashboardData = {
         "thang_truoc": 15,
         "nam_truoc": 7,
         "gia_tien": 299000,
-        "muc_tieu_sl": 15,
-        "muc_tieu_dt": 4485000
+        "muc_tieu_sl": 20,
+        "muc_tieu_dt": 5980000
       },
       {
         "stt": 8,
@@ -1459,8 +1459,8 @@ const dashboardData = {
         "thang_truoc": 14,
         "nam_truoc": 32,
         "gia_tien": 1296000,
-        "muc_tieu_sl": 15,
-        "muc_tieu_dt": 19440000
+        "muc_tieu_sl": 20,
+        "muc_tieu_dt": 25920000
       },
       {
         "stt": 10,
@@ -1514,8 +1514,8 @@ const dashboardData = {
         "thang_truoc": 10,
         "nam_truoc": 0,
         "gia_tien": 249000,
-        "muc_tieu_sl": 15,
-        "muc_tieu_dt": 3735000
+        "muc_tieu_sl": 20,
+        "muc_tieu_dt": 4980000
       },
       {
         "stt": 15,
