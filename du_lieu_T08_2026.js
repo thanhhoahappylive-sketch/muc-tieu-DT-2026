@@ -16,7 +16,7 @@ const dashboardData = {
     {
       "ngay": 1,
       "thu": "T7",
-      "tong": 18500000,
+      "tong": 18250000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -25,7 +25,7 @@ const dashboardData = {
     {
       "ngay": 2,
       "thu": "CN",
-      "tong": 17100000,
+      "tong": 16800000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -34,7 +34,7 @@ const dashboardData = {
     {
       "ngay": 3,
       "thu": "T2",
-      "tong": 23700000,
+      "tong": 23400000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -43,7 +43,7 @@ const dashboardData = {
     {
       "ngay": 4,
       "thu": "T3",
-      "tong": 23700000,
+      "tong": 23400000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -52,7 +52,7 @@ const dashboardData = {
     {
       "ngay": 5,
       "thu": "T4",
-      "tong": 23700000,
+      "tong": 23400000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -61,7 +61,7 @@ const dashboardData = {
     {
       "ngay": 6,
       "thu": "T5",
-      "tong": 23700000,
+      "tong": 23400000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -70,7 +70,7 @@ const dashboardData = {
     {
       "ngay": 7,
       "thu": "T6",
-      "tong": 27500000,
+      "tong": 27000000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -79,7 +79,7 @@ const dashboardData = {
     {
       "ngay": 8,
       "thu": "T7",
-      "tong": 57000000,
+      "tong": 60000000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -88,7 +88,7 @@ const dashboardData = {
     {
       "ngay": 9,
       "thu": "CN",
-      "tong": 17100000,
+      "tong": 16800000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -97,7 +97,7 @@ const dashboardData = {
     {
       "ngay": 10,
       "thu": "T2",
-      "tong": 23700000,
+      "tong": 23400000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -106,7 +106,7 @@ const dashboardData = {
     {
       "ngay": 11,
       "thu": "T3",
-      "tong": 23700000,
+      "tong": 23400000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -115,7 +115,7 @@ const dashboardData = {
     {
       "ngay": 12,
       "thu": "T4",
-      "tong": 23700000,
+      "tong": 23400000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -124,7 +124,7 @@ const dashboardData = {
     {
       "ngay": 13,
       "thu": "T5",
-      "tong": 23700000,
+      "tong": 23400000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -133,7 +133,7 @@ const dashboardData = {
     {
       "ngay": 14,
       "thu": "T6",
-      "tong": 23700000,
+      "tong": 23400000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -142,7 +142,7 @@ const dashboardData = {
     {
       "ngay": 15,
       "thu": "T7",
-      "tong": 37500000,
+      "tong": 40000000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -151,7 +151,7 @@ const dashboardData = {
     {
       "ngay": 16,
       "thu": "CN",
-      "tong": 17100000,
+      "tong": 16800000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -160,7 +160,7 @@ const dashboardData = {
     {
       "ngay": 17,
       "thu": "T2",
-      "tong": 23700000,
+      "tong": 23400000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -169,7 +169,7 @@ const dashboardData = {
     {
       "ngay": 18,
       "thu": "T3",
-      "tong": 23700000,
+      "tong": 23400000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -178,7 +178,7 @@ const dashboardData = {
     {
       "ngay": 19,
       "thu": "T4",
-      "tong": 23700000,
+      "tong": 23400000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -187,7 +187,7 @@ const dashboardData = {
     {
       "ngay": 20,
       "thu": "T5",
-      "tong": 23700000,
+      "tong": 23400000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -196,7 +196,7 @@ const dashboardData = {
     {
       "ngay": 21,
       "thu": "T6",
-      "tong": 23700000,
+      "tong": 23400000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -205,7 +205,7 @@ const dashboardData = {
     {
       "ngay": 22,
       "thu": "T7",
-      "tong": 18500000,
+      "tong": 18250000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -214,7 +214,7 @@ const dashboardData = {
     {
       "ngay": 23,
       "thu": "CN",
-      "tong": 17100000,
+      "tong": 16800000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -223,7 +223,7 @@ const dashboardData = {
     {
       "ngay": 24,
       "thu": "T2",
-      "tong": 23700000,
+      "tong": 23400000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -232,7 +232,7 @@ const dashboardData = {
     {
       "ngay": 25,
       "thu": "T3",
-      "tong": 37500000,
+      "tong": 40000000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -241,7 +241,7 @@ const dashboardData = {
     {
       "ngay": 26,
       "thu": "T4",
-      "tong": 23700000,
+      "tong": 23400000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -250,7 +250,7 @@ const dashboardData = {
     {
       "ngay": 27,
       "thu": "T5",
-      "tong": 23700000,
+      "tong": 23400000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -259,7 +259,7 @@ const dashboardData = {
     {
       "ngay": 28,
       "thu": "T6",
-      "tong": 23700000,
+      "tong": 23400000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -268,7 +268,7 @@ const dashboardData = {
     {
       "ngay": 29,
       "thu": "T7",
-      "tong": 18500000,
+      "tong": 18250000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -277,7 +277,7 @@ const dashboardData = {
     {
       "ngay": 30,
       "thu": "CN",
-      "tong": 17100000,
+      "tong": 16800000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -286,7 +286,7 @@ const dashboardData = {
     {
       "ngay": 31,
       "thu": "T2",
-      "tong": 23189000,
+      "tong": 23339000,
       "dt": null,
       "kd": null,
       "ptbt": null,
@@ -520,42 +520,47 @@ const dashboardData = {
     {
       "icon": "📅",
       "title": "Ngày thường (T2-T6)",
-      "desc": "23.700.000đ/ngày"
+      "desc": "23.400.000đ/ngày"
     },
     {
       "icon": "🌙",
       "title": "Cuối tuần",
-      "desc": "T7 18.500.000đ (−22%) · CN 17.100.000đ (−28%)"
+      "desc": "T7 18.250.000đ (−22%) · CN 16.800.000đ (−28%)"
     },
     {
       "icon": "⚡",
-      "title": "Flash Sale 8.8 (T7)",
-      "desc": "57.000.000đ · ~2,4x nền ngày thường"
+      "title": "CT 8.8 (Flash sale) — ngày 8 (T7)",
+      "desc": "60.000.000đ · ~2.6x nền ngày thường"
     },
     {
-      "icon": "📈",
-      "title": "Mid-month 15.8 (T7)",
-      "desc": "37.500.000đ · ~1,6x (ngày 15 yếu nhất qua 3 lần đo)"
+      "icon": "⚡",
+      "title": "CT 15.8 (Mid-month) — ngày 15 (T7)",
+      "desc": "40.000.000đ · ~1.7x nền ngày thường"
     },
     {
-      "icon": "💰",
-      "title": "CT 25.8 (T3)",
-      "desc": "37.500.000đ · ~1,6x, push cuối tháng"
+      "icon": "⚡",
+      "title": "CT 25.8 (Pre-end push) — ngày 25 (T3)",
+      "desc": "40.000.000đ · ~1.7x nền ngày thường"
     },
     {
       "icon": "📊",
-      "title": "Tỷ trọng nhóm (T8.2026)",
-      "desc": "ĐT ~66,7%, PTBT ~26,5%, KD ~6,8%"
+      "title": "Tỷ trọng nhóm",
+      "desc": "ĐT 66.7% · KD 6.8% · PTBT 26.5%"
+    },
+    {
+      "icon": "📆",
+      "title": "Ngày chương trình",
+      "desc": "3 ngày, chiếm 18.7% mục tiêu tháng (thực tế T7/2026 16,9% · T8/2025 17,1%)"
     },
     {
       "icon": "🔄",
-      "title": "Tham chiếu cùng kỳ",
-      "desc": "T8.2025: 1.022.851.000đ | T7.2026: 513.961.000đ"
+      "title": "Tham chiếu",
+      "desc": "T8.2025: 1.022.851.000đ | T7.2026 thực tế: 513.961.000đ"
     },
     {
       "icon": "📕",
       "title": "Lưu ý nền cùng kỳ",
-      "desc": "T8.2025 có Phù thủy tím mới ra mắt gánh 192,1tr (18,8%). Trừ ra còn 830,7tr → mục tiêu tương đương −9,7% cùng kỳ"
+      "desc": "T8.2025 có cuốn Phù thủy tím mới ra mắt gánh 192,1tr (18,8%). Trừ ra, nền cùng kỳ còn 830,7tr."
     }
   ],
   "dataSources": [

@@ -85,75 +85,72 @@
     .tab-panel.active { display:block; }
     @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
 
-    /* ===== DASHBOARD GRID ===== */
-    .dash-top { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:20px; }
-    .total-card {
-      grid-column:1/-1;
-      background:linear-gradient(135deg,#0f172a,#1e293b);
+    /* ===== BOX HERO: BIG NUMBER + 3 SO SÁNH + BAR NGANG ===== */
+    .hero-box {
+      background:var(--card);
+      border:1px solid var(--border);
       border-radius:var(--r);
-      padding:28px 32px;
-      text-align:center;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      margin-bottom:20px;
+    }
+    .hero {
+      display:grid; grid-template-columns:minmax(260px,1fr) 1.7fr;
+      gap:26px; align-items:center;
+      background:linear-gradient(120deg,#4C1D95 0%,#2E1065 52%,#1E1B4B 100%);
+      padding:26px 30px;
       color:#fff;
-      box-shadow:0 4px 16px rgba(15,23,42,0.15);
     }
-    .total-label { font-size:11px; font-weight:600; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
-    .total-num {
-      font-size:42px; font-weight:900;
-      background:linear-gradient(135deg,#f59e0b,#ef4444);
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-      background-clip:text; letter-spacing:-1.5px; line-height:1.1;
-    }
-    .total-sub { font-size:12px; color:rgba(255,255,255,0.4); margin-top:4px; }
+    .hero-label { font-size:12px; font-weight:700; color:rgba(255,255,255,0.72); text-transform:uppercase; letter-spacing:1.4px; margin-bottom:8px; }
+    .hero-num { font-size:44px; font-weight:900; letter-spacing:-1.8px; line-height:1.05; color:#fff; }
+    .hero-sub { font-size:12.5px; color:rgba(255,255,255,0.62); margin-top:7px; }
+    .hero-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .hs { padding-left:20px; border-left:1px solid rgba(255,255,255,0.16); }
+    .hs-t { font-size:11px; font-weight:700; color:rgba(255,255,255,0.68); text-transform:uppercase; letter-spacing:.9px; margin-bottom:8px; }
+    .hs-p { font-size:25px; font-weight:800; line-height:1.1; letter-spacing:-.5px; }
+    .hs-p.up { color:#4ADE80; }
+    .hs-p.dn { color:#FCA5A5; }
+    .hs-ar { font-size:15px; font-weight:700; margin-left:4px; }
+    .hs-a { font-size:12.5px; color:rgba(255,255,255,0.74); margin-top:6px; }
+    .hs-b { font-size:12px; color:rgba(255,255,255,0.6); margin-top:3px; }
 
-    /* GROUP CARDS */
-    .g-cards { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:20px; }
-    .g-card {
+    /* ===== BAR NGANG THEO NHÓM (phần dưới của box hero) ===== */
+    .hero-bars { padding:20px 30px 24px; }
+    .card {
       background:var(--card);
       border-radius:var(--r);
       padding:18px 20px;
       box-shadow:var(--shadow);
       border:1px solid var(--border);
-      border-top:3px solid transparent;
-      transition:all .2s;
     }
-    .g-card:hover { transform:translateY(-1px); box-shadow:var(--shadow2); }
-    .g-card.dt { border-top-color:var(--s-dt); }
-    .g-card.kd { border-top-color:var(--s-kd); }
-    .g-card.pt { border-top-color:var(--s-ptbt); }
-    .g-card.kh { border-top-color:var(--s-khac); }
-    .g-label { font-size:11px; font-weight:600; color:var(--text3); text-transform:uppercase; letter-spacing:.5px; margin-bottom:4px; }
-    .g-val { font-size:18px; font-weight:800; margin-bottom:3px; }
-    .g-pct { font-size:11px; font-weight:600; }
+    .card-title { font-size:11px; font-weight:700; color:var(--text2); text-transform:uppercase; letter-spacing:.9px; margin-bottom:18px; }
 
-    /* COMPARISON */
-    .cmp-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:20px; }
-    .cmp-card {
-      background:var(--card);
-      border-radius:var(--r);
-      padding:16px 20px;
-      box-shadow:var(--shadow);
-      border:1px solid var(--border);
-      text-align:center;
-    }
-    .cmp-title { font-size:10px; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:.8px; margin-bottom:6px; }
-    .cmp-base { font-size:12px; color:var(--text2); margin-bottom:4px; }
-    .cmp-pct { font-size:22px; font-weight:800; }
-    .cmp-abs { font-size:11px; color:var(--text3); margin-top:2px; }
+    /* Bar ngang theo nhóm */
+    .grp-row { display:grid; grid-template-columns:92px 1fr 68px 104px; align-items:center; gap:12px; margin-bottom:15px; }
+    .grp-row:last-child { margin-bottom:0; }
+    .grp-name { font-size:11px; font-weight:700; color:var(--text2); text-transform:uppercase; letter-spacing:.4px; }
+    .grp-track { height:20px; background:#F4F4F5; border-radius:4px; overflow:hidden; }
+    .grp-fill { height:100%; border-radius:4px; min-width:3px; }
+    .grp-val { font-size:13.5px; font-weight:800; color:var(--text); text-align:right; font-variant-numeric:tabular-nums; }
+    .grp-cmp { font-size:12px; font-weight:700; text-align:right; white-space:nowrap; color:var(--text2); font-variant-numeric:tabular-nums; }
+
+    /* ===== THẺ CHI TIẾT THEO NHÓM ===== */
+    .gc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:20px; }
+    .gcard { background:var(--card); border:1px solid var(--border); border-radius:var(--r); overflow:hidden; box-shadow:var(--shadow); }
+    .gcard-h { color:#fff; font-size:12px; font-weight:800; letter-spacing:1.1px; text-transform:uppercase; padding:11px 18px; }
+    .gcard-b { padding:20px 18px 18px; }
+    .gcard-mt { text-align:center; font-size:18px; font-weight:600; color:var(--text2); margin-bottom:18px; }
+    .gcard-mt strong { font-size:26px; font-weight:900; color:var(--text); letter-spacing:-.6px; }
+    .tiles { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+    .tile { border-radius:10px; padding:12px 10px; text-align:center; }
+    .tile-l { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.4px; color:var(--text2); line-height:1.4; white-space:nowrap; }
+    .tile-g { display:block; font-weight:600; color:var(--text3); letter-spacing:.2px; text-transform:none; font-size:10.5px; margin-top:1px; }
+    .tile-v { font-size:17px; font-weight:800; margin:7px 0 5px; letter-spacing:-.4px; font-variant-numeric:tabular-nums; }
+    .tile-p { font-size:11.5px; font-weight:700; font-variant-numeric:tabular-nums; }
+    .tile-p.na { color:var(--text3); }
+
     .up { color:var(--green); }
     .dn { color:var(--red); }
-
-    /* BOTTOM ROW */
-    .bottom-row { display:grid; grid-template-columns:280px 1fr; gap:16px; }
-    .pie-card {
-      background:var(--card);
-      border-radius:var(--r);
-      padding:16px;
-      box-shadow:var(--shadow);
-      border:1px solid var(--border);
-      display:flex; flex-direction:column;
-    }
-    .pie-title { font-size:11px; font-weight:700; color:var(--text2); text-align:center; margin-bottom:8px; }
-    .pie-box { flex:1; position:relative; min-height:200px; }
 
     .tbl-card {
       background:var(--card);
@@ -249,10 +246,17 @@
 
     .footer { text-align:center; padding:24px; color:var(--text3); font-size:10px; border-top:1px solid var(--border); }
 
-    @media(max-width:1100px) { .g-cards{grid-template-columns:repeat(2,1fr)} .bottom-row{grid-template-columns:1fr} }
-    @media(max-width:768px) { .g-cards{grid-template-columns:1fr 1fr} .cmp-cards{grid-template-columns:1fr} .container{padding:16px} }
-    @media(max-width:500px) { .g-cards{grid-template-columns:1fr} .total-num{font-size:30px} }
-    @media print { .tab-nav{display:none} .tab-panel{display:block!important} .cc,.g-card,.cmp-card,.bc{box-shadow:none;border:1px solid #ddd} }
+    @media(max-width:1100px) { .hero{grid-template-columns:1fr;gap:20px} .gc-grid{grid-template-columns:1fr 1fr} .hs{padding-left:16px} }
+    @media(max-width:768px) {
+      .container{padding:16px}
+      .hero-stats{grid-template-columns:1fr}
+      .hs{padding-left:0;border-left:none;border-top:1px solid rgba(255,255,255,0.16);padding-top:10px}
+      .grp-row{grid-template-columns:80px 1fr 62px}
+      .grp-cmp{grid-column:2/-1;text-align:left}
+      .gc-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:500px) { .hero-num{font-size:30px} .tiles{grid-template-columns:1fr} .tile-l{min-height:0} }
+    @media print { .tab-nav{display:none} .tab-panel{display:block!important} .cc,.card,.tbl-card,.bc{box-shadow:none;border:1px solid #ddd} }
   </style>
   <script src="du_lieu_T08_2026.js"></script>
 </head>
@@ -279,35 +283,26 @@
   <!-- ===== TAB: TỔNG QUAN ===== -->
   <div id="tab-overview" class="tab-panel active">
 
-    <!-- TOTAL -->
-    <div class="total-card" style="margin-bottom:20px">
-      <div class="total-label">Tổng Mục Tiêu Tháng</div>
-      <div class="total-num" id="big-num">Chờ nhập mục tiêu</div>
-      <div class="total-sub" id="big-sub"></div>
+    <!-- HERO + BAR NGANG: chung một box -->
+    <div class="hero-box">
+    <div class="hero">
+      <div>
+        <div class="hero-label">Tổng Mục Tiêu Tháng</div>
+        <div class="hero-num" id="big-num">Chờ nhập mục tiêu</div>
+        <div class="hero-sub" id="big-sub"></div>
+      </div>
+      <div class="hero-stats" id="hero-stats"></div>
     </div>
 
-    <!-- 4 GROUP CARDS -->
-    <div class="g-cards" id="g-cards"></div>
-
-    <!-- 3 COMPARISON -->
-    <div class="cmp-cards" id="cmp-cards"></div>
-
-    <!-- PIE + TABLE -->
-    <div class="bottom-row">
-      <div class="pie-card">
-        <div class="pie-title" id="pie-title">Tỷ trọng mục tiêu</div>
-        <div class="pie-box"><canvas id="pieChart"></canvas></div>
-      </div>
-      <div class="tbl-card">
-        <div class="tbl-title">Chi tiết so sánh theo nhóm</div>
-        <div style="flex:1;overflow:auto">
-          <table>
-            <thead><tr><th>Nhóm</th><th>Mục tiêu</th><th>TB 3T</th><th>%</th><th>T07/2026</th><th>%</th><th>T08/2025</th><th>%</th></tr></thead>
-            <tbody id="detail-tbody"></tbody>
-          </table>
-        </div>
+    <!-- BAR NGANG THEO NHÓM (nằm chung box với hero, xem thẻ đóng ở dưới) -->
+      <div class="hero-bars">
+        <div class="card-title">Doanh thu theo nhóm ngành</div>
+        <div id="grp-list"></div>
       </div>
     </div>
+
+    <!-- CHI TIẾT THEO NHÓM -->
+    <div class="gc-grid" id="gc-grid"></div>
 
     <!-- CHARTS -->
     <div class="section"><div class="sh"><div class="sd"></div><div class="st">Doanh Thu 12 Tháng — 2025 vs 2026</div></div>
@@ -387,40 +382,65 @@ const D=dashboardData,T=D.targets,C=D.comparison;
 const f=v=>v==null?'—':new Intl.NumberFormat('vi-VN').format(v);
 const fm=v=>{if(!v)return'';return v>=1e9?(v/1e9).toFixed(2)+' tỷ':v>=1e6?(v/1e6).toFixed(0)+' tr':f(v)};
 const pc=(t,b)=>(t!=null&&b)?((t-b)/Math.abs(b)*100):null;
-const bh=p=>{if(p==null)return'<span class="badge na">N/A</span>';return`<span class="badge ${p>=0?'pos':'neg'}">${p>=0?'+':''}${p.toFixed(1)}%</span>`};
+// Phần trăm kiểu Việt: dấu phẩy thập phân, dấu trừ dài
+const pv=p=>p==null?'—':(p>=0?'+':'−')+Math.abs(p).toFixed(1).replace('.',',')+'%';
 const has=T.dt!=null&&T.kd!=null&&T.ptbt!=null;
 const tong=has?(T.dt+T.kd+T.ptbt+(T.khac||0)):null;
 const PEND='<span style="color:var(--amber)">Chờ nhập</span>';
 const tt={backgroundColor:'#0f172a',borderColor:'#334155',borderWidth:1,titleFont:{family:'Manrope',weight:'600'},bodyFont:{family:'Manrope'},padding:12,cornerRadius:8,titleColor:'#f1f5f9',bodyColor:'#e2e8f0'};
 
 // BIG NUM
-if(tong){document.getElementById('big-num').textContent=f(tong)+'đ';document.getElementById('big-sub').textContent='Tổng mục tiêu 4 nhóm ngành';}
+if(tong){document.getElementById('big-num').textContent=f(tong)+'đ';document.getElementById('big-sub').textContent='Tổng mục tiêu 4 nhóm ngành · 31 ngày';}
 
-// GROUP CARDS
-const gc=document.getElementById('g-cards');
-[{l:'Đầu Tư',v:T.dt,c:'dt',cl:'var(--s-dt)',b:C.thang_truoc.dt},{l:'Kinh Doanh',v:T.kd,c:'kd',cl:'var(--s-kd)',b:C.thang_truoc.kd},{l:'PTBT',v:T.ptbt,c:'pt',cl:'var(--s-ptbt)',b:C.thang_truoc.ptbt},{l:'Khác',v:T.khac,c:'kh',cl:'var(--s-khac)',b:C.cung_ky.khac}].forEach(k=>{
-  const p=pc(k.v,k.b);gc.innerHTML+=`<div class="g-card ${k.c}"><div class="g-label">${k.l}</div><div class="g-val" style="color:${k.cl}">${k.v!=null?fm(k.v):PEND}</div>${p!=null?`<div class="g-pct ${p>=0?'up':'dn'}">${p>=0?'+':''}${p.toFixed(1)}% vs T07</div>`:''}</div>`;
+// 3 SO SÁNH TRONG HERO
+const hsEl=document.getElementById('hero-stats');
+[{t:'vs Tháng Trước',base:C.thang_truoc.tong,lbl:'T07/2026'},
+ {t:'vs Cùng Kỳ Năm',base:C.cung_ky.tong,lbl:'T08/2025'},
+ {t:'vs TB 3 Tháng',base:C.tb3t.tong,lbl:'TB T5-T7.2026'}].forEach(c=>{
+  const p=pc(tong,c.base),d=(tong!=null&&c.base)?tong-c.base:null;
+  hsEl.innerHTML+=`<div class="hs"><div class="hs-t">${c.t}</div>`
+    +`<div class="hs-p ${p!=null?(p>=0?'up':'dn'):''}">${pv(p)}`
+    +`${p!=null?`<span class="hs-ar">${p>=0?'↑':'↓'}</span>`:''}</div>`
+    +`<div class="hs-a">${d!=null?((d>=0?'+':'−')+f(Math.abs(d))+'đ'):''}</div>`
+    +`<div class="hs-b">${c.lbl}: ${fm(c.base)}</div></div>`;
 });
 
-// COMPARISON
-const cc=document.getElementById('cmp-cards');
-[{t:'vs TB 3 Tháng',base:C.tb3t.tong,lbl:'TB T5-T7.2026'},{t:'vs Tháng Trước',base:C.thang_truoc.tong,lbl:'T07/2026'},{t:'vs Cùng Kỳ Năm',base:C.cung_ky.tong,lbl:'T08/2025'}].forEach(c=>{
-  const p=pc(tong,c.base);cc.innerHTML+=`<div class="cmp-card"><div class="cmp-title">${c.t}</div><div class="cmp-base">${c.lbl}: ${fm(c.base)}</div><div class="cmp-pct ${p!=null?(p>=0?'up':'dn'):''}">${p!=null?((p>=0?'+':'')+p.toFixed(1)+'%'):'—'}</div><div class="cmp-abs">${tong!=null&&c.base?'Chênh lệch: '+(tong-c.base>=0?'+':'')+fm(tong-c.base):''}</div></div>`;
+// BAR NGANG THEO NHÓM
+const gl=document.getElementById('grp-list');
+// Xếp theo doanh thu từ cao xuống thấp; chú thích bên phải là TỶ TRỌNG
+const GRP=[{l:'Đầu Tư',v:T.dt,cl:'var(--s-dt)'},
+ {l:'PTBT',v:T.ptbt,cl:'var(--s-ptbt)'},
+ {l:'Kinh Doanh',v:T.kd,cl:'var(--s-kd)'}].sort((a,b)=>(b.v||0)-(a.v||0));
+const gMax=Math.max(...GRP.map(k=>k.v||0))||1;
+GRP.forEach(k=>{
+  const w=k.v!=null?Math.max(k.v/gMax*100,k.v>0?1.5:0):0,tr=(tong&&k.v!=null)?k.v/tong*100:null;
+  gl.innerHTML+=`<div class="grp-row" title="${k.l}: ${k.v!=null?f(k.v)+'đ':'chờ nhập'}">`
+    +`<div class="grp-name">${k.l}</div>`
+    +`<div class="grp-track"><div class="grp-fill" style="width:${w}%;background:${k.cl}"></div></div>`
+    +`<div class="grp-val">${k.v!=null?(k.v>0?fm(k.v):'0 đ'):'—'}</div>`
+    +`<div class="grp-cmp">${tr!=null?('Tỷ trọng '+tr.toFixed(1).replace('.',',')+'%'):'—'}</div></div>`;
 });
 
-// PIE
-const pieD=has?[T.dt,T.kd,T.ptbt,T.khac||0]:[C.tb3t.dt,C.tb3t.kd,C.tb3t.ptbt,5e6];
-if(!has)document.getElementById('pie-title').textContent='Tỷ trọng (TB 3T)';
-new Chart(document.getElementById('pieChart'),{type:'doughnut',data:{labels:['ĐT','KD','PTBT','Khác'],datasets:[{data:pieD,backgroundColor:['#7C3AED','#EA580C','#059669','#A16207'],borderWidth:2,borderColor:'#fff',hoverOffset:4}]},options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{datalabels:{display:false},legend:{position:'bottom',labels:{padding:8,usePointStyle:true,pointStyleWidth:8,font:{family:'Manrope',size:10,weight:'500'},color:'#6b7280'}},tooltip:{...tt,callbacks:{label:c=>{const t=c.dataset.data.reduce((a,b)=>a+b,0);return c.label+': '+f(c.raw)+'đ ('+((c.raw/t)*100).toFixed(1)+'%)';}}}}}});
-
-// DETAIL TABLE
-const dtb=document.getElementById('detail-tbody');
-[{n:'<span class="cat-dot" style="background:var(--s-dt)"></span>Đầu Tư',t:T.dt,tb:C.tb3t.dt,tt:C.thang_truoc.dt,ck:C.cung_ky.dt},
-{n:'<span class="cat-dot" style="background:var(--s-kd)"></span>Kinh Doanh',t:T.kd,tb:C.tb3t.kd,tt:C.thang_truoc.kd,ck:C.cung_ky.kd},
-{n:'<span class="cat-dot" style="background:var(--s-ptbt)"></span>PTBT',t:T.ptbt,tb:C.tb3t.ptbt,tt:C.thang_truoc.ptbt,ck:C.cung_ky.ptbt},
-{n:'<span class="cat-dot" style="background:var(--s-khac)"></span>Khác',t:T.khac,tb:null,tt:null,ck:C.cung_ky.khac},
-{n:'<strong><span class="cat-dot" style="background:#0f172a"></span>TỔNG</strong>',t:tong,tb:C.tb3t.tong,tt:C.thang_truoc.tong,ck:C.cung_ky.tong}
-].forEach(r=>{dtb.innerHTML+=`<tr><td>${r.n}</td><td><strong>${r.t!=null?f(r.t):'—'}</strong></td><td>${r.tb?f(Math.round(r.tb)):'—'}</td><td style="text-align:center">${bh(pc(r.t,r.tb))}</td><td>${r.tt?f(r.tt):'—'}</td><td style="text-align:center">${bh(pc(r.t,r.tt))}</td><td>${r.ck?f(r.ck):'—'}</td><td style="text-align:center">${bh(pc(r.t,r.ck))}</td></tr>`;});
+// THẺ CHI TIẾT THEO NHÓM
+const gcg=document.getElementById('gc-grid');
+const oT=(mt,goc,nhan,ghi)=>{
+  const p=pc(mt,goc),cls=p==null?'na':(p>=0?'up':'dn'),mui=p==null?'':(p>=0?'▲':'▼');
+  return `<div class="tile" style="background:var(--tile-bg)"><div class="tile-l">${nhan}<span class="tile-g">${ghi}</span></div>`
+    +`<div class="tile-v">${goc?f(Math.round(goc)):'—'}</div>`
+    +`<div class="tile-p ${cls}">${mui} ${pv(p)}</div></div>`;
+};
+// Cùng thứ tự với bar ngang: doanh thu từ cao xuống thấp
+[{l:'Đầu Tư',mt:T.dt,cl:'var(--s-dt)',dm:'#4C1D95',bg:'#F5F3FF',tb:C.tb3t.dt,t7:C.thang_truoc.dt,ck:C.cung_ky.dt},
+ {l:'PTBT',mt:T.ptbt,cl:'var(--s-ptbt)',dm:'#065F46',bg:'#ECFDF5',tb:C.tb3t.ptbt,t7:C.thang_truoc.ptbt,ck:C.cung_ky.ptbt},
+ {l:'Kinh Doanh',mt:T.kd,cl:'var(--s-kd)',dm:'#9A3412',bg:'#FFF7ED',tb:C.tb3t.kd,t7:C.thang_truoc.kd,ck:C.cung_ky.kd}
+].sort((a,b)=>(b.mt||0)-(a.mt||0)).forEach(g=>{
+  gcg.innerHTML+=`<div class="gcard" style="--tile-bg:${g.bg}">`
+    +`<div class="gcard-h" style="background:linear-gradient(90deg,${g.dm},${g.cl})">Chi tiết: ${g.l}</div>`
+    +`<div class="gcard-b"><div class="gcard-mt">Mục tiêu: <strong>${g.mt!=null?f(g.mt):'Chờ nhập'}</strong></div>`
+    +`<div class="tiles">${oT(g.mt,g.tb,'TB 3 tháng','T5–T7.2026')}`
+    +`${oT(g.mt,g.t7,'Tháng 7/2026','thực tế')}`
+    +`${oT(g.mt,g.ck,'Tháng 8/2025','cùng kỳ')}</div></div></div>`;
+});
 
 // CHARTS (growthChart & barChart removed from HTML)
 
