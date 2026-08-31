@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Live - Mục Tiêu Doanh Thu T09/2026</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #FAFAFA;
+      --card: #FFFFFF;
+      --card-hover: #FAFAFA;
+      --border: #E7E5E4;
+      --border2: #D6D3D1;
+      --text: #18181B;
+      --text2: #52525B;
+      --text3: #6B7280;
+      --accent: #C8102E;
+      --accent-light: #FEF2F2;
+      --green: #16A34A;
+      --green-bg: #F0FDF4;
+      --red: #DC2626;
+      --red-bg: #FEF2F2;
+      --s-dt: #7C3AED;      /* Đầu tư  — tím */
+      --s-kd: #EA580C;      /* Kinh doanh — cam */
+      --s-ptbt: #059669;    /* PTBT — xanh lá */
+      --s-khac: #A16207;    /* Khác — nâu vàng */
+      --amber: #B45309;
+      --r: 14px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow2: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family:'Manrope',-apple-system,sans-serif; background:var(--bg); color:var(--text); line-height:1.5; }
+
+    /* ===== HEADER ===== */
+    .header {
+      background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 45%, #3B0764 100%);
+      padding: 34px 32px 30px;
+      color: #fff;
+      text-align: center;
+      border-bottom: 3px solid var(--accent);
+    }
+    .header-label { font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:3px; color:#FDE68A; margin-bottom:8px; }
+    .header h1 { font-size:46px; font-weight:900; letter-spacing:-1.4px; line-height:1.05; }
+    .header-meta { font-size:11.5px; color:rgba(255,255,255,0.62); margin-top:3px; }
+
+    /* ===== CONTAINER ===== */
+    .container { max-width:1360px; margin:0 auto; padding:24px 28px 48px; }
+
+    /* ===== TAB NAV ===== */
+    .tab-nav {
+      display:flex; gap:4px;
+      background:var(--card);
+      border-radius:12px;
+      padding:5px;
+      box-shadow:var(--shadow);
+      border:1px solid var(--border);
+      margin-bottom:24px;
+      overflow-x:auto;
+    }
+    .tab-nav::-webkit-scrollbar { display:none; }
+    .tab-btn {
+      flex:1; min-width:120px;
+      padding:11px 20px;
+      border:none; background:transparent;
+      color:var(--text2);
+      font-family:'Manrope',sans-serif;
+      font-size:13px; font-weight:600;
+      cursor:pointer; border-radius:8px;
+      transition:all .2s;
+      white-space:nowrap;
+      display:flex; align-items:center; justify-content:center; gap:7px;
+    }
+    .tab-btn:hover { background:#f3f4f6; color:var(--text); }
+    .tab-btn.active {
+      background:#0f172a;
+      color:#fff;
+      box-shadow:0 2px 8px rgba(15,23,42,0.2);
+    }
+    .tab-panel { display:none; animation:fadeUp .3s ease; }
+    .tab-panel.active { display:block; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ===== BOX HERO: BIG NUMBER + 3 SO SÁNH + BAR NGANG ===== */
+    .hero-box {
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--r);
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      margin-bottom:20px;
+    }
+    .hero {
+      display:grid; grid-template-columns:minmax(260px,1fr) 1.7fr;
+      gap:26px; align-items:center;
+      background:linear-gradient(120deg,#4C1D95 0%,#2E1065 52%,#1E1B4B 100%);
+      padding:26px 30px;
+      color:#fff;
+    }
+    .hero-label { font-size:12px; font-weight:700; color:rgba(255,255,255,0.72); text-transform:uppercase; letter-spacing:1.4px; margin-bottom:8px; }
+    .hero-num { font-size:44px; font-weight:900; letter-spacing:-1.8px; line-height:1.05; color:#fff; }
+    .hero-sub { font-size:12.5px; color:rgba(255,255,255,0.62); margin-top:7px; }
+    .hero-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .hs { padding-left:20px; border-left:1px solid rgba(255,255,255,0.16); }
+    .hs-t { font-size:11px; font-weight:700; color:rgba(255,255,255,0.68); text-transform:uppercase; letter-spacing:.9px; margin-bottom:8px; }
+    .hs-p { font-size:25px; font-weight:800; line-height:1.1; letter-spacing:-.5px; }
+    .hs-p.up { color:#4ADE80; }
+    .hs-p.dn { color:#FCA5A5; }
+    .hs-ar { font-size:15px; font-weight:700; margin-left:4px; }
+    .hs-a { font-size:12.5px; color:rgba(255,255,255,0.74); margin-top:6px; }
+    .hs-b { font-size:12px; color:rgba(255,255,255,0.6); margin-top:3px; }
+
+    /* ===== BAR NGANG THEO NHÓM (phần dưới của box hero) ===== */
+    .hero-bars { padding:20px 30px 24px; }
+    .card {
+      background:var(--card);
+      border-radius:var(--r);
+      padding:18px 20px;
+      box-shadow:var(--shadow);
+      border:1px solid var(--border);
+    }
+    .card-title { font-size:11px; font-weight:700; color:var(--text2); text-transform:uppercase; letter-spacing:.9px; margin-bottom:18px; }
+
+    /* Bar ngang theo nhóm */
+    .grp-row { display:grid; grid-template-columns:92px 1fr 68px 104px; align-items:center; gap:12px; margin-bottom:15px; }
+    .grp-row:last-child { margin-bottom:0; }
+    .grp-name { font-size:11px; font-weight:700; color:var(--text2); text-transform:uppercase; letter-spacing:.4px; }
+    .grp-track { height:20px; background:#F4F4F5; border-radius:4px; overflow:hidden; }
+    .grp-fill { height:100%; border-radius:4px; min-width:3px; }
+    .grp-val { font-size:13.5px; font-weight:800; color:var(--text); text-align:right; font-variant-numeric:tabular-nums; }
+    .grp-cmp { font-size:12px; font-weight:700; text-align:right; white-space:nowrap; color:var(--text2); font-variant-numeric:tabular-nums; }
+
+    /* ===== THẺ CHI TIẾT THEO NHÓM ===== */
+    .gc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:20px; }
+    .gcard { background:var(--card); border:1px solid var(--border); border-radius:var(--r); overflow:hidden; box-shadow:var(--shadow); }
+    .gcard-h { color:#fff; font-size:12px; font-weight:800; letter-spacing:1.1px; text-transform:uppercase; padding:11px 18px; }
+    .gcard-b { padding:20px 18px 18px; }
+    .gcard-mt { text-align:center; font-size:18px; font-weight:600; color:var(--text2); margin-bottom:18px; }
+    .gcard-mt strong { font-size:26px; font-weight:900; color:var(--text); letter-spacing:-.6px; }
+    .tiles { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+    .tile { border-radius:10px; padding:12px 10px; text-align:center; }
+    .tile-l { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.4px; color:var(--text2); line-height:1.4; white-space:nowrap; }
+    .tile-g { display:block; font-weight:600; color:var(--text3); letter-spacing:.2px; text-transform:none; font-size:10.5px; margin-top:1px; }
+    .tile-v { font-size:17px; font-weight:800; margin:7px 0 5px; letter-spacing:-.4px; font-variant-numeric:tabular-nums; }
+    .tile-p { font-size:11.5px; font-weight:700; font-variant-numeric:tabular-nums; }
+    .tile-p.na { color:var(--text3); }
+
+    .up { color:var(--green); }
+    .dn { color:var(--red); }
+
+    .tbl-card {
+      background:var(--card);
+      border-radius:var(--r);
+      box-shadow:var(--shadow);
+      border:1px solid var(--border);
+      overflow:hidden;
+      display:flex; flex-direction:column;
+    }
+    .tbl-title { font-size:12px; font-weight:700; color:var(--text2); padding:12px 16px; border-bottom:1px solid var(--border); }
+
+    /* TABLE */
+    table { width:100%; border-collapse:collapse; }
+    thead th {
+      background:#EDE9FE;
+      color:#4C1D95;
+      font-size:11px; font-weight:800;
+      text-transform:uppercase; letter-spacing:.3px;
+      padding:9px 12px; text-align:right; white-space:nowrap;
+      border-bottom:1px solid var(--border);
+    }
+    thead th:first-child { text-align:left; }
+    tbody td { padding:11px 12px; font-size:13px; text-align:right; border-bottom:1px solid #f3f4f6; }
+    tbody td:first-child { text-align:left; font-weight:600; }
+    tbody tr:hover { background:#f9fafb; }
+    tbody tr:last-child td { background:#fffbeb; font-weight:700; border-top:2px solid #0f172a; }
+    .badge { display:inline-flex; padding:1px 7px; border-radius:4px; font-size:10px; font-weight:600; }
+    .badge.pos { background:var(--green-bg); color:var(--green); }
+    .badge.neg { background:var(--red-bg); color:var(--red); }
+    .badge.na { background:#f3f4f6; color:var(--text3); }
+    .cat-dot { display:inline-block; width:7px; height:7px; border-radius:2px; margin-right:5px; }
+
+    /* ===== SECTION ===== */
+    .section { margin-bottom:24px; }
+    .sh { display:flex; align-items:center; gap:8px; margin-bottom:14px; }
+    .sd { width:6px; height:6px; border-radius:50%; background:var(--accent); }
+    .st { font-size:14px; font-weight:700; }
+    .cc { background:var(--card); border-radius:var(--r); padding:20px; box-shadow:var(--shadow); border:1px solid var(--border); }
+    .cb { position:relative; width:100%; }
+    .cb.yoy { height:300px; } .cb.bar { height:260px; } .cb.daily { height:420px; }
+    .cn { font-size:9px; color:var(--text3); margin-top:6px; text-align:right; font-style:italic; }
+
+    /* BOOK TABLE */
+    .bc { background:var(--card); border-radius:var(--r); box-shadow:var(--shadow); border:1px solid var(--border); overflow:hidden; }
+    .bb { display:flex; align-items:center; justify-content:space-between; padding:12px 18px; font-weight:700; font-size:13px; color:#fff; }
+    .bb.bdt { background:linear-gradient(90deg,#4C1D95,#7C3AED); }
+    .bb.bkd { background:linear-gradient(90deg,#9A3412,#EA580C); }
+    .bb.bpt { background:linear-gradient(90deg,#065F46,#059669); }
+    .bp { padding:2px 10px; border-radius:5px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.25); font-size:11px; }
+    .bs { max-height:480px; overflow:auto; }
+    .bs::-webkit-scrollbar { width:4px; height:4px; }
+    .bs::-webkit-scrollbar-thumb { background:#d1d5db; border-radius:4px; }
+    .bt { border-collapse:collapse; width:100%; min-width:1050px; font-size:13px; }
+    .bt th { background:#EDE9FE; color:#4C1D95; border:1px solid #DDD6FE; font-weight:800; font-size:11px; padding:9px 8px; text-align:center; position:sticky; top:0; z-index:2; }
+    .bt td { border:1px solid #F4F4F5; padding:8px; white-space:nowrap; font-size:12.5px; }
+    .bt td.l { text-align:left; font-size:13px; white-space:normal; } .bt td.c { text-align:center; } .bt td.r { text-align:right; font-variant-numeric:tabular-nums; }
+    .bt tbody tr:nth-child(even) { background:#f9fafb; }
+    .bt tbody tr:hover { background:#f0f4ff; }
+    .bt tfoot td { background:#f1f5f9; font-weight:700; color:#0f172a; text-align:right; position:sticky; bottom:0; border:1px solid var(--border); }
+
+    /* YOY */
+    .yoy-grid { display:grid; grid-template-columns:1fr; gap:16px; }
+    .yf { border-top:3px solid var(--accent); }
+    .yh { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:14px; gap:10px; }
+    .yt { font-size:14px; font-weight:700; }
+    .ys { font-size:11px; color:var(--text3); margin-top:1px; }
+    .lg { display:flex; gap:12px; }
+    .li { display:flex; align-items:center; gap:5px; font-size:11px; font-weight:600; color:var(--text2); }
+    .ll { width:18px; height:3px; border-radius:2px; }
+
+    /* DAILY */
+    .dg { display:grid; grid-template-columns:repeat(7,1fr); gap:5px; }
+    .dh { text-align:center; font-size:10px; font-weight:700; color:var(--text3); padding:4px 0; }
+    .dc { background:var(--card); border-radius:6px; padding:8px 4px 7px; text-align:center; border:1px solid var(--border); min-height:74px; transition:all .2s; box-shadow:var(--shadow); }
+    .dc:hover { box-shadow:var(--shadow2); }
+    .dc.empty { background:transparent; border-color:transparent; box-shadow:none; }
+    .dc.camp { border-color:var(--accent); box-shadow:0 0 8px rgba(200,16,46,0.1); }
+    .dc .ddn { font-size:12px; font-weight:700; margin-bottom:1px; }
+    .dc .ddv { font-size:9px; font-weight:600; color:var(--text2); }
+    .dc .ddt { font-size:7px; font-weight:700; color:#fff; background:var(--accent); padding:1px 4px; border-radius:2px; margin-top:2px; display:inline-block; }
+    .dc.wk .ddn { color:var(--text3); }
+
+    .mg { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:10px; }
+    .mc { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:14px; border-left:3px solid var(--accent); display:flex; gap:12px; box-shadow:var(--shadow); }
+    .mi { font-size:20px; flex-shrink:0; }
+    .mm { font-size:12px; font-weight:700; margin-bottom:2px; }
+    .md { font-size:11px; color:var(--text2); line-height:1.4; }
+
+    .stbl { width:100%; border-collapse:collapse; font-size:11px; }
+    .stbl th { background:#f9fafb; color:var(--text2); font-size:9px; font-weight:600; text-transform:uppercase; padding:8px 12px; text-align:left; border-bottom:1px solid var(--border); }
+    .stbl td { padding:8px 12px; border-bottom:1px solid #f3f4f6; }
+    .stbl td:first-child { font-weight:600; color:var(--accent); white-space:nowrap; }
+
+    .footer { text-align:center; padding:24px; color:var(--text3); font-size:10px; border-top:1px solid var(--border); }
+
+    @media(max-width:1100px) { .hero{grid-template-columns:1fr;gap:20px} .gc-grid{grid-template-columns:1fr 1fr} .hs{padding-left:16px} }
+    @media(max-width:768px) {
+      .container{padding:16px}
+      .hero-stats{grid-template-columns:1fr}
+      .hs{padding-left:0;border-left:none;border-top:1px solid rgba(255,255,255,0.16);padding-top:10px}
+      .grp-row{grid-template-columns:80px 1fr 62px}
+      .grp-cmp{grid-column:2/-1;text-align:left}
+      .gc-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:700px) { .header h1{font-size:34px} .header-label{font-size:11px;letter-spacing:2.2px} }
+    @media(max-width:500px) { .header h1{font-size:27px} .hero-num{font-size:30px} .tiles{grid-template-columns:1fr} .tile-l{min-height:0} }
+
+    /* ===== TIMELINE CHƯƠNG TRÌNH ===== */
+    .tl { position:relative; padding-left:26px; }
+    .tl::before { content:''; position:absolute; left:7px; top:6px; bottom:6px; width:2px; background:var(--border2); }
+    .tl-item { position:relative; padding-bottom:20px; }
+    .tl-item:last-child { padding-bottom:0; }
+    .tl-dot { position:absolute; left:-26px; top:3px; width:16px; height:16px; border-radius:50%; border:3px solid var(--card); box-shadow:0 0 0 1.5px var(--border2); }
+    .tl-head { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    .tl-day { font-size:12px; font-weight:800; letter-spacing:-.2px; padding:2px 9px; border-radius:5px; color:#fff; }
+    .tl-name { font-size:14px; font-weight:700; }
+    .tl-tag { font-size:9.5px; font-weight:800; letter-spacing:.5px; padding:2px 7px; border-radius:4px; border:1px solid var(--border2); color:var(--text2); background:var(--bg); text-transform:uppercase; }
+    .tl-desc { font-size:13px; color:var(--text2); margin-top:6px; line-height:1.55; }
+    .tl-ul { margin:8px 0 0; padding-left:16px; }
+    .tl-ul li { font-size:13.5px; color:var(--text2); line-height:1.75; padding-left:2px; }
+
+    /* ===== THẺ ĐỀ XUẤT CHƯƠNG TRÌNH ===== */
+    .pg-lead { font-size:11.5px; color:var(--text2); line-height:1.7; padding-bottom:16px; margin-bottom:18px; border-bottom:1px solid var(--border); }
+    .pg-lead b { color:var(--text); font-weight:700; }
+    .pg-body { display:grid; grid-template-columns:1fr 244px; gap:16px; margin-top:12px; align-items:start; }
+    .pg-h5 { font-size:11px; font-weight:800; letter-spacing:.6px; text-transform:uppercase; color:var(--text3); margin:0 0 7px; }
+    .pg-tbl { width:100%; border-collapse:collapse; }
+    .pg-tbl th { font-size:10.5px; font-weight:800; letter-spacing:.4px; text-transform:uppercase; color:#4C1D95;
+                 text-align:left; padding:8px 10px; border-bottom:1.5px solid #C4B5FD; white-space:nowrap;
+                 background:#EDE9FE; }
+    .pg-tbl th:first-child { border-radius:6px 0 0 6px; }
+    .pg-tbl th:last-child { border-radius:0 6px 6px 0; }
+    .pg-tbl tbody td { text-align:left; font-weight:400; }
+    .pg-tbl tbody td:first-child { padding-left:10px; }
+    .pg-tbl tbody tr:last-child td { background:none; font-weight:400; border-top:none; }
+    .pg-tbl tbody tr:hover { background:none; }
+    .pg-tbl th.r, .pg-tbl td.r { text-align:right; padding-right:0; padding-left:18px; }
+    .pg-tbl td { font-size:13.5px; color:var(--text2); padding:7px 8px 7px 0; border-bottom:1px solid var(--border); vertical-align:top; line-height:1.45; }
+    .pg-tbl tr:last-child td { border-bottom:none; }
+    .pg-moc { font-weight:700; color:var(--text); white-space:nowrap; }
+    .pg-kn { display:block; font-size:10.5px; font-weight:700; letter-spacing:.3px; text-transform:uppercase; color:var(--text3); margin-top:2px; }
+    .pg-qua { font-weight:600; color:var(--text); }
+    .pg-why { display:block; font-size:11.5px; color:var(--text3); margin-top:2px; line-height:1.45; }
+    .pg-num { font-variant-numeric:tabular-nums; white-space:nowrap; }
+    .pg-side { display:flex; flex-direction:column; gap:9px; }
+    .pg-kpi { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:10px 12px; }
+    .pg-kpi .k { font-size:10px; font-weight:800; letter-spacing:.5px; text-transform:uppercase; color:var(--text3); }
+    .pg-kpi .v { font-size:19px; font-weight:800; letter-spacing:-.6px; margin-top:3px; font-variant-numeric:tabular-nums; }
+    .pg-kpi .s { font-size:11.5px; color:var(--text3); margin-top:2px; line-height:1.4; }
+    .pg-kpi.up { background:#FEF2F2; border-color:#FECACA; } .pg-kpi.up .v { color:var(--red); }
+    .pg-kpi.na .v { font-size:14px; color:var(--text2); letter-spacing:-.2px; }
+    .pg-mini { display:flex; gap:8px; }
+    .pg-mini .pg-kpi { flex:1; padding:8px 10px; } .pg-mini .v { font-size:14px; }
+    .pg-note { margin-top:14px; font-size:13px; line-height:1.65; color:var(--text2);
+               background:var(--bg); border-left:3px solid var(--border2); border-radius:0 6px 6px 0; padding:9px 12px; }
+    .pg-note b { color:var(--text); font-weight:700; }
+    .pg-note.warn { background:#FFFBEB; border-left-color:var(--amber); color:#78350F; }
+    /* ===== BẢNG KẾ HOẠCH CHƯƠNG TRÌNH (theo khuôn BBC) ===== */
+    .kh-scroll { overflow-x:auto; }
+    .kh-tbl { width:100%; border-collapse:collapse; min-width:1000px; font-size:13px; color:#000; }
+    .kh-tbl td, .kh-tbl th { border:1px solid #000; padding:7px 9px; vertical-align:middle; line-height:1.45;
+                             text-align:left; font-weight:400; }
+    .kh-tbl tbody tr:last-child td { background:#fff; font-weight:400; border-top:1px solid #000; }
+    .kh-tbl tbody tr:hover { background:none; }
+    .kh-tbl tbody td:first-child { text-align:center; }
+    .kh-tbl td.kh-title { background:#fff; text-align:center; font-size:16px; font-weight:800; letter-spacing:.2px; padding:10px; }
+    .kh-tbl td.kh-lbl { background:#FCE8CD; font-weight:800; font-size:11.5px; text-transform:uppercase;
+                        text-align:center; width:150px; letter-spacing:.2px; }
+    .kh-tbl td.kh-time { background:#FCE8CD; color:#C00000; font-weight:800; font-size:15px; text-align:center; }
+    .kh-tbl td.kh-co { background:#fff; font-weight:800; font-size:11.5px; text-transform:uppercase;
+                       text-align:center; width:150px; letter-spacing:.2px; }
+    .kh-tbl td.kh-blank { background:#fff; }
+    .kh-tbl td.kh-head { background:#FFFF00; font-weight:800; text-align:center; font-size:13px; }
+    .kh-tbl td.kh-nen { text-align:center; font-weight:600; width:120px; }
+    .kh-tbl td.kh-moc { text-align:center; width:170px; font-weight:400; }
+    .kh-tbl td.kh-ghi { width:290px; }
+
+    /* ===== BẢNG TỔNG HỢP PROMOTION ===== */
+    .sum-scroll { overflow-x:auto; }
+    .sum-tbl { width:100%; border-collapse:collapse; min-width:760px; }
+    .sum-tbl th { font-size:10.5px; font-weight:800; letter-spacing:.4px; text-transform:uppercase; color:#4C1D95;
+                  text-align:left; padding:9px 12px; border-bottom:1.5px solid #C4B5FD; white-space:nowrap;
+                  background:#EDE9FE; }
+    .sum-tbl th:first-child { border-radius:6px 0 0 6px; }
+    .sum-tbl th:last-child { border-radius:0 6px 6px 0; }
+    .sum-tbl tbody td:first-child { padding-left:12px; }
+    .sum-tbl tbody td { text-align:left; font-weight:400; }
+    .sum-tbl tbody tr:last-child td { background:none; font-weight:400; border-top:none; }
+    .sum-tbl tbody tr:hover { background:none; }
+    .sum-tbl th.r, .sum-tbl td.r { text-align:right; padding-right:0; padding-left:18px; }
+    .sum-tbl td { font-size:13px; color:var(--text2); padding:11px 14px 11px 0; border-bottom:1px solid var(--border);
+                  vertical-align:top; line-height:1.5; }
+    .sum-tbl tr:last-child td { border-bottom:none; }
+    .sum-day { display:inline-block; font-size:11.5px; font-weight:800; color:#fff; border-radius:5px;
+               padding:3px 8px; white-space:nowrap; }
+    .sum-name { font-weight:700; color:var(--text); }
+    .sum-kenh { font-size:11px; font-weight:700; letter-spacing:.3px; text-transform:uppercase; color:var(--text3); white-space:nowrap; }
+    .sum-dt { font-weight:800; color:var(--text); font-variant-numeric:tabular-nums; white-space:nowrap; }
+    .sum-dt.na { font-weight:600; color:var(--text3); font-size:12px; }
+    .sum-note { display:block; font-size:11px; color:var(--text3); margin-top:2px; font-weight:600; }
+    .pg-sep td { font-size:10.5px; font-weight:800; letter-spacing:.4px; text-transform:uppercase; color:var(--text3);
+                 padding:12px 0 5px; border-bottom:1px solid var(--border2) !important; }
+    @media(max-width:820px){ .pg-body{grid-template-columns:1fr} }
+
+    /* ===== GANTT CHƯƠNG TRÌNH ===== */
+    .gt { display:grid; grid-template-columns:190px 1fr; gap:0 10px; align-items:center; }
+    .gt-h { font-size:9.5px; color:var(--text3); font-weight:700; text-align:center; }
+    .gt-days { display:grid; grid-template-columns:repeat(30,1fr); gap:2px; }
+    .gt-lb { font-size:11.5px; font-weight:700; padding:5px 0; display:flex; align-items:center; gap:7px; }
+    .gt-lb small { font-weight:500; color:var(--text3); font-size:10px; }
+    .gt-sw { width:9px; height:9px; border-radius:2px; flex-shrink:0; }
+    .gt-cell { height:20px; border-radius:3px; background:#F4F4F5; }
+    .gt-cell.on { position:relative; }
+    .gt-cell.dash { background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.75) 0 3px,transparent 3px 7px); }
+    .gt-cnt { height:22px; border-radius:3px; display:flex; align-items:center; justify-content:center;
+              font-size:10px; font-weight:800; color:var(--text3); background:#F4F4F5; }
+    .gt-cnt.c1 { background:#EDE9FE; color:#5B21B6; }
+    .gt-cnt.c2 { background:var(--accent); color:#fff; }
+    .gt-cnt.c3 { background:#7C1D2A; color:#fff; }
+    .gt-num { font-size:8.5px; color:var(--text3); text-align:center; }
+    .gt-scroll { overflow-x:auto; }
+    .gt-inner { min-width:760px; }
+
+    /* ===== CHIP CHƯƠNG TRÌNH TRONG Ô LỊCH ===== */
+    .dc { position:relative; }
+    .dc .ddc { display:flex; gap:2px; justify-content:center; margin-top:3px; }
+    .dc .ddc i { width:100%; max-width:22px; height:3px; border-radius:2px; display:block; }
+    .dc .dbadge { position:absolute; top:3px; right:4px; font-size:7.5px; font-weight:800;
+                  padding:1px 4px; border-radius:3px; background:#EDE9FE; color:#5B21B6; }
+    .dc .dbadge.two { background:var(--accent); color:#fff; }
+    .dc.ct1 { border-color:#C4B5FD; }
+    .dc.ct2 { border-color:var(--accent); box-shadow:0 0 8px rgba(200,16,46,0.12); }
+    @media print { .tab-nav{display:none} .tab-panel{display:block!important} .cc,.card,.tbl-card,.bc{box-shadow:none;border:1px solid #ddd} }
+  </style>
+  <script src="du_lieu_T09_2026.js"></script>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-label">Mục Tiêu Doanh Thu</div>
+  <h1>THÁNG 09 / 2026</h1>
+</header>
+
+<div class="container">
+
+  <!-- TAB NAV -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('overview',event)"><span>📊</span> Tổng Quan</button>
+    <button class="tab-btn" onclick="switchTab('daily',event)"><span>📅</span> Mục Tiêu Ngày</button>
+  </div>
+
+  <!-- ===== TAB: TỔNG QUAN ===== -->
+  <div id="tab-overview" class="tab-panel active">
+
+    <!-- HERO + BAR NGANG: chung một box -->
+    <div class="hero-box">
+    <div class="hero">
+      <div>
+        <div class="hero-label">Tổng Mục Tiêu Tháng</div>
+        <div class="hero-num" id="big-num">Chờ nhập mục tiêu</div>
+        <div class="hero-sub" id="big-sub"></div>
+      </div>
+      <div class="hero-stats" id="hero-stats"></div>
+    </div>
+
+    <!-- BAR NGANG THEO NHÓM (nằm chung box với hero, xem thẻ đóng ở dưới) -->
+      <div class="hero-bars">
+        <div class="card-title">Doanh thu theo nhóm ngành</div>
+        <div id="grp-list"></div>
+      </div>
+    </div>
+
+    <!-- CHI TIẾT THEO NHÓM -->
+    <div class="gc-grid" id="gc-grid"></div>
+
+    <!-- CHARTS -->
+    <div class="section"><div class="sh"><div class="sd"></div><div class="st">Doanh Thu 12 Tháng — 2025 vs 2026</div></div>
+      <div class="yoy-grid"><div class="cc yf"><div class="yh"><div><div class="yt">Tổng Doanh Thu</div><div class="ys">Đơn vị: triệu đồng · 2026 đến T08 (T08 là số dự phóng)</div></div><div class="lg"><div class="li"><div class="ll" style="background:#D4D4D8"></div>2025</div><div class="li"><div class="ll" style="background:var(--accent)"></div>2026</div></div></div><div class="cb yoy"><canvas id="yoyTong"></canvas></div></div></div>
+    </div>
+
+    <!-- ===== NHÓM ĐẦU TƯ — CHI TIẾT ===== -->
+    <div class="section" style="margin-top:30px">
+      <div class="sh"><div class="sd" style="background:var(--s-dt)"></div><div class="st">Nhóm Đầu Tư — Chi Tiết</div></div>
+    <div class="section"><div class="yoy-grid"><div class="cc yf" style="border-top-color:var(--s-dt)"><div class="yh"><div><div class="yt">Nhóm Đầu Tư (ĐT) — 2025 vs 2026</div><div class="ys">Đơn vị: triệu đồng</div></div><div class="lg"><div class="li"><div class="ll" style="background:#D4D4D8"></div>2025</div><div class="li"><div class="ll" style="background:var(--s-dt)"></div>2026</div></div></div><div class="cb yoy"><canvas id="yoyDT"></canvas></div></div></div></div>
+    <div class="section"><div class="sh"><div class="sd"></div><div class="st">Chi Tiết Từng Đầu Sách</div></div>
+      <div class="bc"><div class="bb bdt"><span>NHÓM ĐẦU TƯ · T09/2026</span><span class="bp">MT: <span id="dt-total"></span></span></div><div class="bs"><table class="bt"><thead><tr><th>STT</th><th>Tên Sách</th><th>TOP</th><th>TB 3T</th><th>T8/26*</th><th>T9/25</th><th>Giá</th><th>MT SL</th><th>Mục Tiêu DT</th></tr></thead><tbody id="dt-body"></tbody><tfoot><tr><td class="c" colspan="8">TỔNG CỘNG &nbsp;<span style="font-weight:400;opacity:.7">(*) T8/26 = số dự phóng</span></td><td id="dt-sum"></td></tr></tfoot></table></div></div>
+    </div>
+    </div>
+
+    <!-- ===== NHÓM PTBT — CHI TIẾT ===== -->
+    <div class="section" style="margin-top:30px">
+      <div class="sh"><div class="sd" style="background:var(--s-ptbt)"></div><div class="st">Nhóm PTBT — Chi Tiết</div></div>
+    <div class="section"><div class="yoy-grid"><div class="cc yf" style="border-top-color:var(--s-ptbt)"><div class="yh"><div><div class="yt">Nhóm PTBT — 2025 vs 2026</div><div class="ys">Đơn vị: triệu đồng</div></div><div class="lg"><div class="li"><div class="ll" style="background:#D4D4D8"></div>2025</div><div class="li"><div class="ll" style="background:var(--s-ptbt)"></div>2026</div></div></div><div class="cb yoy"><canvas id="yoyPTBT"></canvas></div></div></div></div>
+    <div class="section"><div class="sh"><div class="sd"></div><div class="st">Chi Tiết Từng Đầu Sách</div></div>
+      <div class="bc"><div class="bb bpt"><span>NHÓM PTBT · T09/2026</span><span class="bp">MT: <span id="ptbt-total"></span></span></div><div class="bs"><table class="bt"><thead><tr><th>STT</th><th>Tên Sách</th><th>TOP</th><th>TB 3T</th><th>T8/26*</th><th>T9/25</th><th>Giá</th><th>MT SL</th><th>Mục Tiêu DT</th></tr></thead><tbody id="ptbt-body"></tbody><tfoot><tr><td class="c" colspan="8">TỔNG CỘNG &nbsp;<span style="font-weight:400;opacity:.7">(*) T8/26 = số dự phóng</span></td><td id="ptbt-sum"></td></tr></tfoot></table></div></div>
+    </div>
+    </div>
+
+    <!-- ===== NHÓM KINH DOANH — CHI TIẾT ===== -->
+    <div class="section" style="margin-top:30px">
+      <div class="sh"><div class="sd" style="background:var(--s-kd)"></div><div class="st">Nhóm Kinh Doanh — Chi Tiết</div></div>
+    <div class="section"><div class="yoy-grid"><div class="cc yf" style="border-top-color:var(--s-kd)"><div class="yh"><div><div class="yt">Nhóm Kinh Doanh (KD) — 2025 vs 2026</div><div class="ys">Đơn vị: triệu đồng</div></div><div class="lg"><div class="li"><div class="ll" style="background:#D4D4D8"></div>2025</div><div class="li"><div class="ll" style="background:var(--s-kd)"></div>2026</div></div></div><div class="cb yoy"><canvas id="yoyKD"></canvas></div></div></div></div>
+    <div class="section"><div class="sh"><div class="sd"></div><div class="st">Chi Tiết Từng Đầu Sách</div></div>
+      <div class="bc"><div class="bb bkd"><span>NHÓM KINH DOANH · T09/2026</span><span class="bp">MT: <span id="kd-total"></span></span></div><div class="bs"><table class="bt"><thead><tr><th>STT</th><th>Tên Sách</th><th>TOP</th><th>TB 3T</th><th>T8/26*</th><th>T9/25</th><th>Giá</th><th>MT SL</th><th>Mục Tiêu DT</th></tr></thead><tbody id="kd-body"></tbody><tfoot><tr><td class="c" colspan="8">TỔNG CỘNG &nbsp;<span style="font-weight:400;opacity:.7">(*) T8/26 = số dự phóng</span></td><td id="kd-sum"></td></tr></tfoot></table></div></div>
+    </div>
+    </div>
+
+  </div>
+
+  <!-- ===== TAB: MỤC TIÊU NGÀY ===== -->
+  <div id="tab-daily" class="tab-panel">
+
+
+    <!-- Timeline chương trình -->
+    <div class="section">
+      <div class="sh"><div class="sd"></div><div class="st">Timeline Chương Trình — Tháng 9/2026</div></div>
+      <div class="cc">
+        <div class="gt-scroll"><div class="gt-inner"><div class="gt" id="gt"></div></div></div>
+        <div style="display:flex;gap:18px;justify-content:center;margin-top:14px;font-size:11px;color:var(--text2);flex-wrap:wrap">
+          <span><span class="cat-dot" style="background:#EDE9FE;border:1px solid #C4B5FD"></span>Ngày chạy 1 chương trình</span>
+          <span><span class="cat-dot" style="background:var(--accent)"></span>Ngày chạy 2 chương trình</span>
+          <span><span class="cat-dot" style="background:#7C1D2A"></span>Ngày chạy 3 chương trình</span>
+          <span><span class="cat-dot" style="background:#F4F4F5;border:1px solid #d1d5db"></span>Không có chương trình</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bảng kế hoạch chương trình -->
+    <div class="section">
+      <div class="sh"><div class="sd"></div><div class="st">Kế Hoạch Chương Trình Tháng 9/2026</div></div>
+      <div class="cc">
+        <div class="kh-scroll"><table class="kh-tbl"><tbody id="khtbl"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- Chi tiết từng chương trình -->
+    <div class="section">
+      <div class="sh"><div class="sd"></div><div class="st">Đề Xuất Chi Tiết 5 Chương Trình</div></div>
+      <div class="cc">
+        <div class="tl" id="tl"></div>
+      </div>
+    </div>
+
+    <!-- Calendar -->
+    <div class="section">
+      <div class="sh"><div class="sd"></div><div class="st">Phân Bổ Mục Tiêu Theo Ngày — Tháng 9/2026</div></div>
+      <div class="cc">
+        <div class="dg" id="day-cal"></div>
+        <div style="display:flex;gap:16px;justify-content:center;margin-top:14px;font-size:11px;color:var(--text2)">
+          <span><span class="cat-dot" style="background:#EDE9FE;border:1px solid #C4B5FD"></span>1 chương trình</span>
+          <span><span class="cat-dot" style="background:var(--accent)"></span>2 chương trình</span>
+          <span><span class="cat-dot" style="background:#9ca3af"></span>Cuối tuần (T7-CN)</span>
+          <span><span class="cat-dot" style="background:#fff;border:1px solid #d1d5db"></span>Không có CT</span>
+          <span style="opacity:.75">Vạch màu dưới đáy ô = chương trình đang chạy</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bar chart -->
+    <div class="section">
+      <div class="sh"><div class="sd"></div><div class="st">Biểu Đồ Doanh Thu Theo Ngày</div></div>
+      <div class="cc"><div class="cb daily"><canvas id="dailyBar"></canvas></div></div>
+    </div>
+
+  </div>
+
+
+  <div class="footer">Happy Live &copy; 2026 · Mục tiêu doanh thu nội bộ</div>
+</div>
+
+<script>
+Chart.register(ChartDataLabels);
+Chart.defaults.color='#6b7280';
+Chart.defaults.borderColor='#e5e7eb';
+const D=dashboardData,T=D.targets,C=D.comparison;
+const f=v=>v==null?'—':new Intl.NumberFormat('vi-VN').format(v);
+const fm=v=>{if(!v)return'';return v>=1e9?(v/1e9).toFixed(2)+' tỷ':v>=1e6?(v/1e6).toFixed(0)+' tr':f(v)};
+const pc=(t,b)=>(t!=null&&b)?((t-b)/Math.abs(b)*100):null;
+// Phần trăm kiểu Việt: dấu phẩy thập phân, dấu trừ dài
+const pv=p=>p==null?'—':(p>=0?'+':'−')+Math.abs(p).toFixed(1).replace('.',',')+'%';
+const has=T.dt!=null&&T.kd!=null&&T.ptbt!=null;
+const tong=has?(T.dt+T.kd+T.ptbt+(T.khac||0)):null;
+const PEND='<span style="color:var(--amber)">Chờ nhập</span>';
+const tt={backgroundColor:'#0f172a',borderColor:'#334155',borderWidth:1,titleFont:{family:'Manrope',weight:'600'},bodyFont:{family:'Manrope'},padding:12,cornerRadius:8,titleColor:'#f1f5f9',bodyColor:'#e2e8f0'};
+
+// BIG NUM
+if(tong){document.getElementById('big-num').textContent=f(tong)+'đ';document.getElementById('big-sub').textContent='Tổng mục tiêu 4 nhóm ngành · 30 ngày';}
+
+// 3 SO SÁNH TRONG HERO
+const hsEl=document.getElementById('hero-stats');
+[{t:'vs Tháng Trước',base:C.thang_truoc.tong,lbl:'T08/2026 (dự phóng)'},
+ {t:'vs Cùng Kỳ Năm',base:C.cung_ky.tong,lbl:'T09/2025'},
+ {t:'vs TB 3 Tháng',base:C.tb3t.tong,lbl:'TB T6-T8.2026'}].forEach(c=>{
+  const p=pc(tong,c.base),d=(tong!=null&&c.base)?tong-c.base:null;
+  hsEl.innerHTML+=`<div class="hs"><div class="hs-t">${c.t}</div>`
+    +`<div class="hs-p ${p!=null?(p>=0?'up':'dn'):''}">${pv(p)}`
+    +`${p!=null?`<span class="hs-ar">${p>=0?'↑':'↓'}</span>`:''}</div>`
+    +`<div class="hs-a">${d!=null?((d>=0?'+':'−')+f(Math.abs(d))+'đ'):''}</div>`
+    +`<div class="hs-b">${c.lbl}: ${fm(c.base)}</div></div>`;
+});
+
+// BAR NGANG THEO NHÓM
+const gl=document.getElementById('grp-list');
+// Xếp theo doanh thu từ cao xuống thấp; chú thích bên phải là TỶ TRỌNG
+const GRP=[{l:'Đầu Tư',v:T.dt,cl:'var(--s-dt)'},
+ {l:'PTBT',v:T.ptbt,cl:'var(--s-ptbt)'},
+ {l:'Kinh Doanh',v:T.kd,cl:'var(--s-kd)'}].sort((a,b)=>(b.v||0)-(a.v||0));
+const gMax=Math.max(...GRP.map(k=>k.v||0))||1;
+GRP.forEach(k=>{
+  const w=k.v!=null?Math.max(k.v/gMax*100,k.v>0?1.5:0):0,tr=(tong&&k.v!=null)?k.v/tong*100:null;
+  gl.innerHTML+=`<div class="grp-row" title="${k.l}: ${k.v!=null?f(k.v)+'đ':'chờ nhập'}">`
+    +`<div class="grp-name">${k.l}</div>`
+    +`<div class="grp-track"><div class="grp-fill" style="width:${w}%;background:${k.cl}"></div></div>`
+    +`<div class="grp-val">${k.v!=null?(k.v>0?fm(k.v):'0 đ'):'—'}</div>`
+    +`<div class="grp-cmp">${tr!=null?('Tỷ trọng '+tr.toFixed(1).replace('.',',')+'%'):'—'}</div></div>`;
+});
+
+// THẺ CHI TIẾT THEO NHÓM
+const gcg=document.getElementById('gc-grid');
+const oT=(mt,goc,nhan,ghi)=>{
+  const p=pc(mt,goc),cls=p==null?'na':(p>=0?'up':'dn'),mui=p==null?'':(p>=0?'▲':'▼');
+  return `<div class="tile" style="background:var(--tile-bg)"><div class="tile-l">${nhan}<span class="tile-g">${ghi}</span></div>`
+    +`<div class="tile-v">${goc?f(Math.round(goc)):'—'}</div>`
+    +`<div class="tile-p ${cls}">${mui} ${pv(p)}</div></div>`;
+};
+// Cùng thứ tự với bar ngang: doanh thu từ cao xuống thấp
+[{l:'Đầu Tư',mt:T.dt,cl:'var(--s-dt)',dm:'#4C1D95',bg:'#F5F3FF',tb:C.tb3t.dt,t7:C.thang_truoc.dt,ck:C.cung_ky.dt},
+ {l:'PTBT',mt:T.ptbt,cl:'var(--s-ptbt)',dm:'#065F46',bg:'#ECFDF5',tb:C.tb3t.ptbt,t7:C.thang_truoc.ptbt,ck:C.cung_ky.ptbt},
+ {l:'Kinh Doanh',mt:T.kd,cl:'var(--s-kd)',dm:'#9A3412',bg:'#FFF7ED',tb:C.tb3t.kd,t7:C.thang_truoc.kd,ck:C.cung_ky.kd}
+].sort((a,b)=>(b.mt||0)-(a.mt||0)).forEach(g=>{
+  gcg.innerHTML+=`<div class="gcard" style="--tile-bg:${g.bg}">`
+    +`<div class="gcard-h" style="background:linear-gradient(90deg,${g.dm},${g.cl})">Chi tiết: ${g.l}</div>`
+    +`<div class="gcard-b"><div class="gcard-mt">Mục tiêu: <strong>${g.mt!=null?f(g.mt):'Chờ nhập'}</strong></div>`
+    +`<div class="tiles">${oT(g.mt,g.tb,'TB 3 tháng','T6–T8.2026')}`
+    +`${oT(g.mt,g.t7,'Tháng 8/2026','dự phóng')}`
+    +`${oT(g.mt,g.ck,'Tháng 9/2025','cùng kỳ')}</div></div></div>`;
+});
+
+// ===== GANTT + DANH SÁCH CHƯƠNG TRÌNH =====
+if(D.programs){
+  const PG=D.programs, N=30, cnt=d=>PG.filter(p=>d>=p.tu&&d<=p.den).length;
+  let h='<div></div><div class="gt-days">'
+      +Array.from({length:N},(_,k)=>`<div class="gt-num">${k+1}</div>`).join('')+'</div>';
+  PG.forEach(p=>{
+    h+=`<div class="gt-lb"><span class="gt-sw" style="background:${p.mau}"></span>`
+      +`<span>${p.tat}<br><small>${p.kenh}</small></span></div><div class="gt-days">`;
+    for(let d=1;d<=N;d++){
+      const on=d>=p.tu&&d<=p.den;
+      h+=`<div class="gt-cell${on?' on':''}" `
+        +`style="${on?'background-color:'+p.mau:''}" title="${on?p.ten+' — ngày '+d+'/9':''}"></div>`;
+    }
+    h+='</div>';
+  });
+  h+='<div class="gt-lb" style="color:var(--text2)">Số chương trình / ngày</div><div class="gt-days">';
+  for(let d=1;d<=N;d++){const c=cnt(d);h+=`<div class="gt-cnt c${c}">${c||''}</div>`;}
+  h+='</div>';
+  document.getElementById('gt').innerHTML=h;
+
+  const tr = v => (v/1e6).toFixed(2).replace('.',',')+'tr';
+  const pct = v => (v>=0?'+':'−')+Math.abs(v).toFixed(1).replace('.',',')+'%';
+
+  document.getElementById('tl').innerHTML=PG.map(p=>{
+    const ngay=p.tu===p.den?`${p.tu}/9`:`${p.tu} – ${p.den}/9`;
+
+    // --- Bảng mốc đơn · quà · đơn giá ---
+    const rows=(p.moc||[]).map(m=>{
+      const g=m.gia==null?'—':(m.gia<0?'−':'')+f(Math.abs(m.gia))+'đ';
+      const sl=m.sl==null?'—':m.sl;
+      const tt=(m.gia==null||m.sl==null)?'—':(m.gia*m.sl<0?'−':'')+f(Math.abs(m.gia*m.sl))+'đ';
+      const sep=m.tach?`<tr class="pg-sep"><td colspan="5">${m.tach}</td></tr>`:'';
+      return sep+`<tr><td><span class="pg-moc">${m.muc}</span><span class="pg-kn">${m.kenh}</span></td>`
+       +`<td><span class="pg-qua">${m.qua}</span></td>`
+       +`<td class="r pg-num">${g}</td><td class="r pg-num">${sl}</td>`
+       +`<td class="r pg-num">${tt}</td></tr>`;}).join('');
+    const tbl=rows?`<div><table class="pg-tbl"><thead><tr><th>Mốc / đối tượng</th><th>Quà</th>`
+       +`<th class="r">Đơn giá</th><th class="r">SL</th><th class="r">Thành tiền</th></tr></thead>`
+       +`<tbody>${rows}</tbody></table></div>`:'<div></div>';
+
+    // --- Khối doanh thu kỳ vọng ---
+    const k=p.kv||{}, co=k.dt!=null;
+    const ch=(co&&k.nen)?(k.dt/k.nen-1)*100:null;
+    const nhan=k.nhan||('Doanh thu kỳ vọng · '+k.ngay+' ngày');
+    const phu=k.nen
+      ? `Nền cùng thứ ${tr(k.nen)} · ${pct(ch)} (×${(k.dt/k.nen).toFixed(2).replace('.',',')})`
+      : (k.phu||'');
+    const kpi=co
+      ? `<div class="pg-kpi up"><div class="k">${nhan}</div>`
+        +`<div class="v">${tr(k.dt)}</div><div class="s">${phu}</div></div>`
+      : `<div class="pg-kpi na"><div class="k">Doanh thu kỳ vọng</div>`
+        +`<div class="v">Không đặt trực tiếp</div><div class="s">Chương trình thu hút, tăng tiếp cận — đo bằng lượt tham gia</div></div>`;
+    const side=`<div class="pg-side">${kpi}<div class="pg-mini">`
+      +`<div class="pg-kpi"><div class="k">Trị giá quà</div><div class="v">${p.qua.tri_gia?tr(p.qua.tri_gia):'—'}</div><div class="s">${p.qua.tri_gia?'theo giá bìa':'chưa chốt số lượng'}</div></div>`
+      +`<div class="pg-kpi"><div class="k">Tiền mặt</div><div class="v">${p.qua.tien_mat?tr(p.qua.tien_mat):'0'}</div><div class="s">thật chi</div></div>`
+      +`</div></div>`;
+
+    const warn=/^⚠/.test(p.ghi_chu_kenh||'');
+    const note=p.ghi_chu_kenh?`<div class="pg-note${warn?' warn':''}"><b>So với ngày thường của kênh —</b> ${p.ghi_chu_kenh}</div>`:'';
+
+    return `<div class="tl-item"><div class="tl-dot" style="background:${p.mau}"></div>`
+      +`<div class="tl-head"><span class="tl-day" style="background:${p.mau}">${ngay}</span>`
+      +`<span class="tl-name">${p.ten}</span><span class="tl-tag">${p.kenh}</span></div>`
+      +(p.mo_ta?`<div class="tl-desc">${p.mo_ta}</div>`:'')
+      +`<div class="pg-body">${tbl}${side}</div>${note}</div>`;
+  }).join('');
+
+}
+
+// ===== BẢNG KẾ HOẠCH CHƯƠNG TRÌNH (khuôn BBC) =====
+if(D.recap && document.getElementById('khtbl')){
+  let h=`<tr><td class="kh-title" colspan="5">${D.recapTitle||''}</td></tr>`;
+  D.recap.forEach(k=>{
+    h+=`<tr><td class="kh-lbl">Thời gian áp dụng ưu đãi</td>`
+      +`<td class="kh-time" colspan="4">${k.thoi_gian}</td></tr>`
+      +`<tr><td class="kh-blank"></td><td class="kh-head">Nền tảng</td><td class="kh-head">${k.cot3}</td>`
+      +`<td class="kh-head">Quà tặng</td><td class="kh-head">Ghi chú</td></tr>`;
+    k.dong.forEach((d,n)=>{
+      h+='<tr>'
+        +(n===0?`<td class="kh-co" rowspan="${k.dong.length}">Cơ cấu ưu đãi chương trình</td>`:'')
+        +(d.nen_tang!=null?`<td class="kh-nen" rowspan="${d.gop||1}">${d.nen_tang}</td>`:'')
+        +`<td class="kh-moc">${d.moc||''}</td><td>${d.qua||''}</td>`
+        +`<td class="kh-ghi">${d.ghi||''}</td></tr>`;
+    });
+  });
+  document.getElementById('khtbl').innerHTML=h;
+}
+
+// CHARTS (growthChart & barChart removed from HTML)
+
+const months=['T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12'];
+function yO(){return{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{...tt,callbacks:{label:c=>c.raw==null?c.dataset.label+': N/A':c.dataset.label+': '+f(c.raw)+'đ'}},datalabels:{anchor:'end',align:'top',formatter:v=>{if(v==null||v===0)return'';const m=v/1e6,d=m%1;return(d<0.5?Math.floor(m):d<0.7?m.toFixed(1):Math.ceil(m))+' tr';},font:{family:'Manrope',size:8,weight:'600'},color:'#6b7280',clamp:true}},scales:{x:{grid:{display:false},ticks:{font:{family:'Manrope',size:10,weight:'600'},color:'#6b7280'}},y:{beginAtZero:true,grid:{color:'#F4F4F5'},ticks:{font:{family:'Manrope',size:9},color:'#A1A1AA',callback:v=>fm(v)}}}}}
+function mDS(a,b,ca,cb){return[{label:'2025',data:a,backgroundColor:ca,borderColor:ca,borderWidth:1,borderRadius:3,barPercentage:.75,categoryPercentage:.8},{label:'2026',data:b,backgroundColor:cb+'cc',borderColor:cb,borderWidth:1.5,borderRadius:3,barPercentage:.75,categoryPercentage:.8}]}
+new Chart(document.getElementById('yoyTong'),{type:'bar',data:{labels:months,datasets:mDS(D.yoy.tong.data2025,D.yoy.tong.data2026,'#D4D4D8','#C8102E')},options:yO()});
+new Chart(document.getElementById('yoyDT'),{type:'bar',data:{labels:months,datasets:mDS(D.yoy.dauTu.data2025,D.yoy.dauTu.data2026,'#D4D4D8','#7C3AED')},options:yO()});
+new Chart(document.getElementById('yoyKD'),{type:'bar',data:{labels:months,datasets:mDS(D.yoy.kinhDoanh.data2025,D.yoy.kinhDoanh.data2026,'#D4D4D8','#EA580C')},options:yO()});
+new Chart(document.getElementById('yoyPTBT'),{type:'bar',data:{labels:months,datasets:mDS(D.yoy.ptbt.data2025,D.yoy.ptbt.data2026,'#D4D4D8','#059669')},options:yO()});
+
+
+// DAILY (only if elements exist in current tab layout)
+const dc=document.getElementById('day-cal');
+if(dc){
+  ['T2','T3','T4','T5','T6','T7','CN'].forEach(h=>{dc.innerHTML+=`<div class="dh">${h}</div>`;});
+  if(D.dailyTargets&&D.dailyTargets.length){
+    const dowIdx={'T2':0,'T3':1,'T4':2,'T5':3,'T6':4,'T7':5,'CN':6};
+    const offset=dowIdx[D.dailyTargets[0].thu]||0;
+    for(let i=0;i<offset;i++)dc.innerHTML+='<div class="dc empty"></div>';
+    const PGM={};(D.programs||[]).forEach(p=>PGM[p.id]=p);
+  D.dailyTargets.forEach(d=>{
+    const w=d.thu==='T7'||d.thu==='CN', c=d.campaign!=null, n=(d.progs||[]).length;
+    const chips=n?`<div class="ddc">${d.progs.map(id=>`<i style="background:${PGM[id]?PGM[id].mau:'#ccc'}" title="${PGM[id]?PGM[id].ten:''}"></i>`).join('')}</div>`:'';
+    const badge=n?`<div class="dbadge ${n>1?'two':''}">${n} CT</div>`:'';
+    dc.innerHTML+=`<div class="dc ${w?'wk':''} ${n?'ct'+Math.min(n,2):''} ${c?'camp':''}">${badge}`
+      +`<div class="ddn">${d.ngay}</div><div class="ddv">${d.tong?(d.tong/1e6).toFixed(0)+' tr':'—'}</div>`
+      +`${c?'<div class="ddt">'+d.campaign+'</div>':''}${chips}</div>`;});
+  }else{dc.innerHTML+='<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--amber)">Chưa phân bổ mục tiêu ngày</div>';}
+}
+const dailyBarEl=document.getElementById('dailyBar');
+if(dailyBarEl){
+  if(!D.dailyTargets){dailyBarEl.parentElement.innerHTML='<div style="text-align:center;padding:50px;color:var(--amber)">Chưa có dữ liệu</div>';}
+  else{
+    // Màu may mắn: ngày vàng = vàng kim · ngày thường = tím · cuối tuần = tím nhạt
+    const mVang='#F0A500', mVangVien='#C97F00', mTim='#7C3AED', mTimNhat='#C4B5FD';
+    const nen=D.dailyTargets.map(d=>d.campaign?mVang:(d.thu==='T7'||d.thu==='CN')?mTimNhat:mTim);
+    const vien=D.dailyTargets.map(d=>d.campaign?mVangVien:(d.thu==='T7'||d.thu==='CN')?'#A78BFA':'#5B21B6');
+    new Chart(dailyBarEl,{type:'bar',
+      data:{labels:D.dailyTargets.map(d=>d.ngay+'/'+d.thu),
+            datasets:[{data:D.dailyTargets.map(d=>d.tong),backgroundColor:nen,borderColor:vien,borderWidth:1.5,borderRadius:4}]},
+      options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},
+        plugins:{legend:{display:false},tooltip:{...tt,callbacks:{label:c=>f(c.raw)+'đ'}},
+          datalabels:{display:true,anchor:'end',align:'top',offset:2,
+            formatter:v=>(v/1e6).toFixed(0)+'tr',
+            font:c=>({family:'Manrope',size:D.dailyTargets[c.dataIndex].campaign?15:12,weight:'800'}),
+            color:c=>D.dailyTargets[c.dataIndex].campaign?'#B45309':'#4C1D95'}},
+        scales:{x:{grid:{display:false},
+            ticks:{font:c=>({family:'Manrope',size:11,weight:D.dailyTargets[c.index]&&D.dailyTargets[c.index].campaign?'800':'700'}),
+                   color:c=>D.dailyTargets[c.index]&&D.dailyTargets[c.index].campaign?'#B45309':'#3F3F46',
+                   maxRotation:90,minRotation:45}},
+          y:{beginAtZero:true,grid:{color:'#F4F4F5'},ticks:{font:{family:'Manrope',size:11,weight:'600'},color:'#52525B',callback:v=>fm(v)}}}}});}
+}
+
+// BOOK TABLES
+function rBT(bid,sid,tid,books,gt){
+  const tb=document.getElementById(bid);tb.innerHTML='';
+  if(!books||!books.length){tb.innerHTML='<tr><td colspan="9" class="c" style="padding:40px;color:var(--text3)">Đang cập nhật...</td></tr>';return;}
+  let sum=0;books.forEach(b=>{sum+=b.muc_tieu_dt||0;const h=b.muc_tieu_sl!=null&&b.muc_tieu_sl>0;
+    tb.innerHTML+=`<tr><td class="c">${b.stt}</td><td class="l" style="font-weight:600">${b.ten_hang}</td><td class="c">${b.top}</td><td class="r">${b.tb_3t||'—'}</td><td class="r">${b.thang_truoc!=null?b.thang_truoc:'—'}</td><td class="r">${b.nam_truoc!=null?b.nam_truoc:'—'}</td><td class="r" style="color:var(--text3)">${f(b.gia_tien)}đ</td><td class="c" style="font-weight:700;color:${h?'var(--accent)':'var(--text3)'}; background:${h?'#fef2f2':'transparent'}">${h?b.muc_tieu_sl:'—'}</td><td class="r" style="font-weight:700;color:${h?'var(--accent)':'var(--text3)'}">${h?f(b.muc_tieu_dt)+' đ':'—'}</td></tr>`;});
+  const fi=gt||(sum>0?sum:null);const s=fi!=null?f(fi)+' đ':'Chờ nhập';
+  document.getElementById(sid).textContent=s;document.getElementById(tid).textContent=s;
+}
+rBT('dt-body','dt-sum','dt-total',D.bookDetails.dt,T.dt);
+rBT('kd-body','kd-sum','kd-total',D.bookDetails.kd,T.kd);
+rBT('ptbt-body','ptbt-sum','ptbt-total',D.bookDetails.ptbt,T.ptbt);
+
+// TAB
+function switchTab(id,e){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  if(e&&e.currentTarget)e.currentTarget.classList.add('active');
+  setTimeout(()=>{Object.values(Chart.instances).forEach(c=>c.resize())},50);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+window.switchTab=switchTab;
+</script>
+</body>
+</html>
